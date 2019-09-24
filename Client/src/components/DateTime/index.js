@@ -1,6 +1,3 @@
-/**
- * Created by CJJ on 2019/7/9.
- */
 import React from 'react'
 import Style from "./index.less"
 import projectConfig from '../../project.config';

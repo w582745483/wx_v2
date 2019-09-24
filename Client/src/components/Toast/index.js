@@ -1,6 +1,3 @@
-/**
- * Created by lei_sun on 2019/7/30.
- */
 import React from 'react'
 import Style from "./index.less"
 

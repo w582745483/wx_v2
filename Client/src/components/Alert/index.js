@@ -1,9 +1,5 @@
-/**
- * Created by CJJ on 2019/7/9.
- */
 import React from 'react'
 import Style from "./index.less"
-import projectConfig from '../../project.config';
 /*
  组件传入参数
     赋值并button方法跟名字 this.refs.alert.setValButton("请选择收件人所在地区",[{

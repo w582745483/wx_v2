@@ -1,6 +1,3 @@
-/**
- * Created by lei_sun on 2019/8/16.
- */
 import React from 'react'
 import Style from "./gradient.less"
 import projectConfig from '../../project.config'
