@@ -1,0 +1,56 @@
+@import "../../styles/index.less";
+
+.component-gradient-header {
+  .component-gradient-header-area, .component-gradient-header-area2 {
+    &:extend(.ls-flex);
+    &:extend(.ls-flex1);
+    &:extend(.ls-row);
+    &:extend(.ls-justify-space-between);
+    &:extend(.ls-align-center);
+    position: absolute;
+    height: 44px;
+    padding-top: 20px;
+    width: 100%;
+    z-index: 10;
+
+    .component-gradient-header-left {
+      margin-left: 15px;
+    }
+    .component-gradient-header-center {
+      font-size: 17px;
+      color: #222222;
+      letter-spacing: 0;
+      line-height: 17px;
+    }
+    .component-gradient-header-right {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .component-gradient-header-area2 {
+    background-color: transparent;
+  }
+
+  .component-gradient-content-area {
+    background-color: #FAFAFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    overflow: auto;
+
+    .component-gradient-content-header {
+      position: relative;
+      background-image: linear-gradient(90deg, #FFDB55 0%, #FFC300 100%);
+    }
+
+    .component-gradient-content {
+      margin-top: -95px;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

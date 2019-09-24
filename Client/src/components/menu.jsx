@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Avatar, List } from 'antd'
-import PubSub from 'pubsub-js'
 import { connect } from 'react-redux'
 
-import Logo from '../component/logo'
 import '../assets/css/main.css'
 import { WxLogin } from '../redux/actions'
 
@@ -81,7 +79,7 @@ class Menu extends Component {
                             )}
                         />
                     </div>
-                    {this.state.isShow ? <Logo /> : null}
+                  
                 </div>
 
             </div>

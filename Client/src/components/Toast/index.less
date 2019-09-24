@@ -1,0 +1,37 @@
+@import "../../styles/index.less";
+
+.component-toast {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+  z-index: 100;
+
+  .toast-area {
+    height: 100%;
+    &:extend(.ls-flex);
+    &:extend(.ls-column);
+    &:extend(.ls-justify-center);
+    &:extend(.ls-align-center);
+
+    .toast-content {
+      &:extend(.ls-flex);
+      &:extend(.ls-column);
+      &:extend(.ls-justify-center);
+      &:extend(.ls-align-center);
+      background: rgba(0,0,0,0.70);
+      border-radius: 12px;
+      padding: 8px 14px 8px 14px;
+
+      p{
+        padding-top: 6px;
+        padding-bottom: 6px;
+        color: white;
+        font-size: 15px;
+        line-height: 19px;
+      }
+    }
+  }
+}

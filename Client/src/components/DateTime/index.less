@@ -1,0 +1,241 @@
+@import "../../styles/index.less";
+
+.component_date_time_big_box{
+  position: fixed;
+  z-index: 106;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .date_time_box_black{
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .date_time_box{
+    background-color: #fff;
+    position: absolute;
+    z-index: 101;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    .date_time_closed{
+      position: absolute;
+      right:11px;
+      top:11px;
+      width:22px;
+    }
+    p{
+      font-size:15px;
+      color: #222;
+      font-weight: 400;
+      text-align: center;
+      line-height: 45px;
+    }
+    .date_tips{
+      color:#FF6600;
+      text-align:center;
+      font-size: 12px;
+      line-height: 30px;
+      background-color:#FFF5D1 ;
+    }
+    .day_list_box{
+      width:96%;
+      margin: 0 auto;
+      &:extend(.ls-flex);
+      div{
+        text-align: center;
+        font-size: 12px;
+        line-height:25px ;
+      }
+      .day_list_holiday{
+        color: #FF5040;
+      }
+    }
+    .day_time_float_ymd{
+      position: absolute;
+      top:99px;
+      width:100%;
+      background-color: #F3F3F8;
+      font-size: 20px;
+      text-align: left;
+      line-height: 35px;
+      color: #222;
+      z-index: 2;
+      font-weight:bold;
+      box-sizing: border-box;
+      padding-left: 15px;
+    }
+    .day_time_box{
+      position: absolute;
+      top:100px;
+      bottom:0;
+      width:100%;
+      overflow: auto;
+      .day_time_ymd{
+        width:100%;
+        .day_time_ym{
+          width:100%;
+          background-color: #F3F3F8;
+          font-size: 20px;
+          text-align: left;
+          line-height:35px;
+          color: #222;
+          box-sizing: border-box;
+          padding-left: 15px;
+          font-weight:bold;
+        }
+        .day_list_choose{
+          background-color: transparent;
+          background-image: linear-gradient(90deg, #FFDB55 0%, #FFC300 100%);
+          color:#222222;
+          border-radius: 2px;
+          p{
+            color:#222!important;
+          }
+        }
+        .day_list_chooseSecond{
+          background-color: #FFF5D1;
+          color:#222222;
+        }
+        .day_time_d_down{
+          color:#ccc
+        }
+        .day_list_holiday{
+          color: #222!important;
+          p{
+            color:#FF5040!important;
+          }
+        }
+        .day_time_d{
+          width:96%;
+          margin: 0 auto;
+          &:extend(.ls-flex);
+          &:extend(.ls-flex-wrap);
+          text-align: center;
+          padding-top: 10px;
+          div{
+            position: relative;
+            margin-bottom: 5px;
+            font-weight: bold;
+            .day_list_money{
+              position: absolute;
+              bottom:6%;
+              color:#222!important;
+              top:auto;
+            }
+            p{
+              position: absolute;
+              text-align: center;
+              font-size: 10px;
+              line-height: 10px;
+              color:#222;
+              top:6%;
+              width:100%;
+            }
+            .hotel_come_go{
+              bottom:10%;
+              top:auto;
+            }
+            .date_bubble{
+              position: absolute;
+              width: 200%;
+              left: -50%;
+              top: -44px;
+              background: rgba(0, 0, 0, .7);
+              border-radius: 5px;
+              font-size: 12px;
+              font-weight: normal;
+              color: white;
+              line-height: 40px;
+            }
+            .date_bubble:after {
+              position: absolute;
+              bottom: -5.5px;
+              left: 50%;
+              -webkit-transform: translateX(-50%);
+              transform: translateX(-50%);
+              content: "";
+              width: 0;
+              height: 0;
+              border-width:5.5px 5.5px 0 5.5px;
+              border-style: solid;
+              border-color: rgba(0,0,0,.7) transparent transparent transparent;
+            }
+          }
+        }
+      }
+    }
+    .fixed_price{
+      position: absolute;
+      bottom: 0;
+      z-index: 10;
+      background: white;
+      box-shadow: 0 0 20px #c7c7c7;
+      width:100%;
+      p{
+        width: 90%;
+        margin: 0 auto;
+        display: block;
+        line-height: 42px;
+        height: 42px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+        span{
+          float: right;
+          span{
+            color: #FF3A31;
+          }
+        }
+      }
+      button{
+        display: block;
+        width: 92%;
+        margin: 0 auto;
+        background-image:linear-gradient(90deg, #FFDB55 0%, #FFC300 100%);
+        color:#000;
+        letter-spacing: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 22px;
+        height: 44px;
+        border: none;
+      }
+      h6{
+        font-size:12px;
+        text-align: center;
+        line-height: 17px;
+        color:#666;
+        margin: 8px 0;
+      }
+      .button_do_not{
+        color: #fff;
+        background: #bcbcbc;
+      }
+    }
+  }
+  .date_time_box{
+    animation: animate 0.6s;
+    -moz-animation: animate 0.6s;	/* Firefox */
+    -webkit-animation: animate 0.6s;	/* Safari 和 Chrome */
+    -o-animation: animate 0.6s;	/* Opera */
+    overflow: hidden;
+  }
+  @keyframes animate{
+    from {
+      bottom : -400px;
+      opacity: 0;
+    }
+    to {
+      bottom : 0;
+      opacity: 1;
+    }
+  }
+}

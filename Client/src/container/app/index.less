@@ -1,0 +1,61 @@
+@import '../../styles/index.less';
+
+.app-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: auto;
+    background-image: url("../../assets/img/background.jpg");
+    &:extend(.ls-flex);
+    &:extend(.ls-justify-center);
+    &:extend(.ls-align-center);
+    &:extend(.ls-column);
+
+    .containee {
+        opacity: 0.8;
+        background: #FFFFFF;
+        width: 85%;
+        height: 80%;
+        border-radius: 0.15rem;
+        box-sizing: border-box;
+        position: relative;
+
+        .bottom {
+            padding: 1.5rem 2rem;
+            position: absolute;
+            bottom: 1.3rem;
+
+            .login-content {
+                &:extend(.ls-flex);
+                &:extend(.ls-align-center);
+                border-bottom: 1px solid gray;
+                padding-bottom: 0.3rem;
+
+                img {
+                    width: 2rem;
+                    height: 2rem;
+                    overflow: visible;
+                }
+
+                input {
+                    margin-left: 1.5rem;
+                }
+            }
+
+            .login-button {
+                height: 2.5rem;
+                font-size: 16px;
+                color: #000000;
+                text-align: center;
+                background-image: linear-gradient(90deg, #FFDB55 0%, #FFC300 100%);
+                border-radius: 22px;
+                line-height: 2.5rem;
+                margin-top:40px;
+               
+            }
+        }
+
+    }
+
+}

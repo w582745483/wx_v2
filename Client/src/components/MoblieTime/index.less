@@ -1,0 +1,121 @@
+.component_screenTimeBox{
+   position: fixed;
+  top:0;
+  bottom: 0;
+  left:0;
+  right:0;
+  height:auto;
+  width:auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99;
+    ul, li {
+      list-style-type:none;
+    }
+    button{
+      outline:none;
+    }
+    .clearBoth{
+      clear:both;
+    }
+    .screenTimeBody{
+      position: absolute;
+      bottom:0;
+      width:100%;
+      border-top-left-radius:0.15rem ;
+      border-top-right-radius:0.15rem ;
+      min-height: 0.75rem;
+      background: white;
+    }
+    .screenTimeBody p{
+      text-align: center;
+      font-size: 0.16125rem;
+      color:#333;
+      margin-top:0.05625rem ;
+    }
+    .timeScroll{
+      position: relative;
+      width:100%;
+      overflow: hidden;
+    }
+    .dwwo{
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(#ffffff 0%,rgba(245,245,245,0) 52%, rgba(245,245,245,0) 48%, #ffffff 100%);
+      background: -webkit-gradient(linear,left bottom,left top,from(#ffffff),color-stop(0.52, rgba(245,245,245,0)),color-stop(0.48, rgba(245,245,245,0)),to(#ffffff));
+      background: -moz-linear-gradient(#ffffff 0%,rgba(245,245,245,0) 52%, rgba(245,245,245,0) 48%, #ffffff 100%);
+      background: -o-linear-gradient(#ffffff 0%,rgba(245,245,245,0) 52%, rgba(245,245,245,0) 48%, #ffffff 100%);
+    }
+    .timeMean{
+      width: 100%;
+
+    }
+    .timeMean h6{
+      float: left;
+      line-height:0.375rem;
+      height: 0.375rem;
+      text-align: center;
+      font-size: 0.140625rem;
+      font-weight:bold;
+    }
+    .timeScroll .ulBox{
+      position: relative;
+      float: left;
+      z-index: 10;
+      /*  background: #444;*/
+      /*  background: linear-gradient(#000 0%,#444 45%, #444 55%, #000 100%);
+        background: -webkit-gradient(linear,left bottom,left top,from(#000),color-stop(0.45, #444),color-stop(0.55, #444),to(#000));
+        background: -moz-linear-gradient(#000 0%,#444 45%, #444 55%, #000 100%);
+        background: -o-linear-gradient(#000 0%,#444 45%, #444 55%, #000 100%);*/
+    }
+    .ulBox ul{
+      position: relative;
+      z-index: 2;
+    }
+    .timeScroll .ulBox li{
+      width:100%;
+      line-height:0.375rem;
+      height: 0.375rem;
+      text-align: center;
+      font-size: 0.140625rem;
+      color:#373737;
+      font-weight:bold;
+    }
+    .timeScrollBoutton{
+      width:100%;
+      height:0.54rem;
+      position:relative;
+      text-align: center;
+      font-size:0.16rem;
+      color:#222;
+      &:extend(.ls-flex);
+      &:extend(.ls-align-center);
+      &:extend(.ls-justify-center);
+      .closed{
+        position: absolute;
+        width:0.16rem;
+        left: 0.2rem;
+      }
+      .sure{
+        position: absolute;
+        font-size:0.16rem;
+        color:#222;
+        right: 0.2rem;
+      }
+    }
+   .screenTimeBodyP{
+     display: none;
+   }
+    .lookTimeLine{
+      position: absolute;
+      top:50%;
+      left:0;
+      width:100%;
+      box-sizing: border-box;
+      border-top: 1px solid #dcdcdc;
+      border-bottom: 1px solid #dcdcdc;
+    }
+}

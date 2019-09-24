@@ -1,0 +1,66 @@
+@import "../../styles/index.less";
+
+.component_alert_big_box{
+  position: fixed;
+  top:0;
+  bottom: 0;
+  left:0;
+  right:0;
+  height: auto;
+  width:100%;
+  z-index: 922299;
+  &:extend(.ls-flex);
+  &:extend(.ls-align-center);
+  .alert_big_black_box{
+    position: fixed;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    height: auto;
+    width:100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 922299;
+  }
+  .alert_box{
+    width:2.81rem;
+    box-sizing: border-box;
+    border-radius: 0.08rem;
+    background-color: white;
+    margin : 0 auto;
+    position: relative;
+    z-index: 922300;
+    p{
+      box-sizing: border-box;
+      width:100%;
+      padding:0.28rem  0.3rem;
+      text-align: center;
+      font-size:0.17rem;
+      line-height: 0.21rem;
+      color: #333;
+      letter-spacing: 1px;
+      span{
+        text-align: left;
+        //display: inline-block;
+      }
+    }
+    .button_list_box{
+      height:0.44rem;
+      width:100%;
+      &:extend(.ls-flex);
+      border-top:1px solid #E0E0E0;
+      .button_list{
+        text-align: center;
+        line-height: 0.44rem;
+        width:100%;
+        font-size:0.17rem ;
+        color:#FFC100;
+        letter-spacing: 1px;
+        box-sizing: border-box;
+      }
+      .button_list_border{
+        border-left: 1px solid #E0E0E0;
+      }
+    }
+  }
+}
