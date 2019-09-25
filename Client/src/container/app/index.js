@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Background from '../../assets/img/background.jpg'
 import Style from './index.less'
 export default class App extends Component {
     render() {
