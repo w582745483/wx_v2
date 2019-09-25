@@ -14,8 +14,9 @@ const authSuccess = user => ({ type: AUTH_SUCCESS, data: user })
 export const WxLogin = (uuid) => {
 
     return dispatch => {
-        ws(uuid).onmessage = (evt) => {
-            heartCheck.reset();
+        const wsInstace = ws(uuid)
+        wsInstace.onmessage = (evt) => {
+            heartCheck.reset(wsInstace);
             var msg = JSON.parse(evt.data);
             switch (msg.action) {
                 case 'log':

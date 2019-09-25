@@ -4,7 +4,17 @@ export const ws = (uuid) => {
     if ('WebSocket' in window) {
         var ws = new WebSocket("ws://" + host + "/?action=scan&uuid=" + uuid + "&devicename=mars-ipad&isreset=true&proxyip=" + "121.201.102.250:16816" +"&username=123qwe"+"&password=123www"+ "&posturl="  + "");
         ws.onopen = function () {
+            console.log("onopen");
             heartCheck.start(ws);
+        };
+        ws.onerror = function (evt) {
+            console.log("onerror",evt);
+            ws.onopen();
+        };
+        ws.onclose = function () {
+            // 断线重连
+            console.log("onclose");
+            ws.onopen();
         };
         return ws
     }
@@ -18,10 +28,10 @@ export const heartCheck = {
     timeout: 60000, //60ms
     timeoutObj: null,
     serverTimeoutObj: null,
-    reset: function () {
+    reset: function (ws) {
         clearTimeout(this.timeoutObj);
         clearTimeout(this.serverTimeoutObj);
-        this.start();
+        this.start(ws);
     },
     start: function (ws) {
         var self = this;
@@ -29,6 +39,7 @@ export const heartCheck = {
             try {
                 ws.send("HeartBeat");
             } catch (e) {
+                console.log("catch",e)
                 ws.onopen();
             }
         }, this.timeout)
