@@ -8,6 +8,11 @@ export default class App extends Component {
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
+                        <div className="top">  
+                        <img src={require("../../assets/img/qrcode.png")} />
+                            <div className="qrCode">二维码获取成功</div>
+                            <div className="card-details">卡类型: 周卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: Warrors</div>
+                        </div>
                         <div className="bottom">
                             <div className="login-content">
                                 <img src={require("../../assets/img/login.png")} />
