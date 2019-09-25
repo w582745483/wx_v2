@@ -2,11 +2,13 @@ import { combineReducers } from 'redux'
 
 import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS } from './action-types'
 const initQr = {
+    loading:true,
     qr: "",
     uuid: '',
     wxid: '',
     header: '',
     nickname: '',
+    token:'',
     loginSuccess: false
 }
 const inintUser = {
@@ -19,7 +21,7 @@ const inintUser = {
 function Qr(state = initQr, action) {
     switch (action.type) {
         case GET_QR:
-            return { ...state, ...action.data }
+            return { ...state,loading:false, ...action.data }
         case GET_HEADER:
             return { ...state, ...action.data }
         case GET_NICK_NAME:

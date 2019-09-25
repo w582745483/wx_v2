@@ -1,4 +1,4 @@
-import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS } from './action-types'
+import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS,GET_TOKEN } from './action-types'
 import { ws, heartCheck } from '../components/socket'
 
 
@@ -7,6 +7,7 @@ const getQr = ({ qr, uuid }) => ({ type: GET_QR, data: { qr, uuid } })
 const getWxID = (wxid) => ({ type: GET_WXID, data: { wxid } })
 const getHeader = (header) => ({ type: GET_HEADER, data: { header } })
 const getNickname = (nickname) => ({ type: GET_NICK_NAME, data: { nickname } })
+const getToken=(token)=>({type:GET_TOKEN,data:{token}})
 const getloginSuccess = (loginSuccess) => ({ type: GET_LOGIN, data: { loginSuccess } })
 const getregister = user => ({ type: REGISTER, data: user })
 const errorMsg = msg => ({ type: ERROR_MSG, data: msg })
@@ -43,6 +44,10 @@ export const WxLogin = (uuid) => {
                 case 'nickname':
                     const nickname = msg.context//昵称
                     dispatch(getNickname(nickname))
+                    break;
+                case 'token':
+                    const token=msg.token 
+                    dispatch(getToken(token))//token
                     break;
                 case "getcontact"://获取联系人信息。会多次传输
                     break;

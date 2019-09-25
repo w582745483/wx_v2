@@ -14,7 +14,7 @@ only screen and (min-device-height:700px) {
 
     .containee {
         .top {
-            margin-top: 5rem;
+            margin-top: 11rem;
         }
     }
 }
@@ -24,7 +24,7 @@ only screen and (min-device-height:1000px) {
 
     .containee {
         .top {
-            margin-top: 3rem;
+            margin-top: 6rem;
         }
     }
 }
@@ -34,7 +34,7 @@ only screen and (max-device-height:700px) {
 
     .containee {
         .top {
-            margin-top: 3rem;
+            margin-top: 6rem;
         }
     }
 }
@@ -67,7 +67,7 @@ only screen and (max-device-width:550px) {
         &:extend(.ls-justify-center);
         //display: flex;
         //justify-content: center;
-        background: rgba(193, 246, 144, 0.5);
+        background: rgba(239, 246, 144, 0.157);
 
         border-radius: 0.15rem;
         box-sizing: border-box;
@@ -89,15 +89,36 @@ only screen and (max-device-width:550px) {
 
             img {
                 &:extend(.ls-flex);
-                width: 50%;
+                width: 10rem;
+                height: 10rem;
             }
 
             .card-details {
                 margin-top: 0.5rem;
+                height: 12px;
+                line-height: 12px;
                 &:extend(.ls-flex);
                 justify-content: center;
+
             }
 
+            .connect-server {
+                padding: 0 4rem 0;
+                height: 2.5rem;
+                font-size: 16px;
+                color: #000000;
+                text-align: center;
+                background-image: linear-gradient(90deg, #FFDB55 0%, #FFC300 100%);
+                border-radius: 22px;
+                line-height: 2.5rem;
+                margin-top: 40px;
+            }
+
+            .info-content{
+                margin-top: 1rem;
+                font-size: 0.7rem;
+                color: #999999;
+            }
         }
 
         .bottom {
