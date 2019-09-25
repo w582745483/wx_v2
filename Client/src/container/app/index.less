@@ -32,10 +32,10 @@ only screen and (max-device-width:750px) {
     &:extend(.ls-column);
 
     .containee {
-        //&:extend(.ls-flex);
-        //&:extend(.ls-justify-center);
-        display: flex;
-        justify-content: center;
+        &:extend(.ls-flex);
+        &:extend(.ls-justify-center);
+        //display: flex;
+        //justify-content: center;
         background: rgba(193, 246, 144, 0.5);
 
         border-radius: 0.15rem;
@@ -44,18 +44,20 @@ only screen and (max-device-width:750px) {
 
         .top {
             color: white;
-            display: block;
             margin-top: 10%;
             font-size: 0.7rem;
             &:extend(.ls-column);
             &:extend(.ls-flex);
-
+            &:extend(.ls-align-center);
             .qrCode {
                 margin-top: 3rem;
                 &:extend(.ls-flex);
                 justify-content: center;
             }
-
+            img{
+                &:extend(.ls-flex);
+                width: 50%;
+            }
             .card-details {
                 margin-top: 0.5rem;
                 &:extend(.ls-flex);

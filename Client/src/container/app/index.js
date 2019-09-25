@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
+import { uuid } from '../../components/socket'
+import { connect } from 'react-redux'
 import Style from './index.less'
-export default class App extends Component {
+import { WxLogin } from '../../redux/actions'
+class App extends Component {
+    componentDidMount(){
+         //开启websicket
+         this.props.WxLogin(uuid())
+    }
     render() {
         return (
             <React.Fragment>
@@ -8,7 +15,7 @@ export default class App extends Component {
                 <div className="app-container">
                     <div className="containee">
                         <div className="top">  
-                        <img src={require("../../assets/img/qrcode.png")} />
+                       <img alt="" src={"data:image/jpg;base64," + this.props.qr} />
                             <div className="qrCode">二维码获取成功</div>
                             <div className="card-details">卡类型: 周卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: Warrors</div>
                         </div>
@@ -39,3 +46,7 @@ export default class App extends Component {
 
     }
 }
+export default connect(
+    state => state.Qr,
+    { WxLogin }
+)(App)

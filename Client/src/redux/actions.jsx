@@ -1,5 +1,5 @@
-import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER,ERROR_MSG,AUTH_SUCCESS} from './action-types'
-import { ws, heartCheck } from '../component/socket'
+import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS } from './action-types'
+import { ws, heartCheck } from '../components/socket'
 
 
 
@@ -8,9 +8,9 @@ const getWxID = (wxid) => ({ type: GET_WXID, data: { wxid } })
 const getHeader = (header) => ({ type: GET_HEADER, data: { header } })
 const getNickname = (nickname) => ({ type: GET_NICK_NAME, data: { nickname } })
 const getloginSuccess = (loginSuccess) => ({ type: GET_LOGIN, data: { loginSuccess } })
-const getregister=user=>({type:REGISTER,data:user})
-const errorMsg=msg=>({type:ERROR_MSG,data:msg})
-const authSuccess=user=>({type:AUTH_SUCCESS,data:user})
+const getregister = user => ({ type: REGISTER, data: user })
+const errorMsg = msg => ({ type: ERROR_MSG, data: msg })
+const authSuccess = user => ({ type: AUTH_SUCCESS, data: user })
 export const WxLogin = (uuid) => {
 
     return dispatch => {
@@ -21,10 +21,10 @@ export const WxLogin = (uuid) => {
                 case 'log':
                     const loginSuccess = msg.context
                     if (loginSuccess == '登录成功') {
-                        dispatch(getloginSuccess({loginSuccess:true}))
+                        dispatch(getloginSuccess({ loginSuccess: true }))
                     }
-                    if(loginSuccess=='正在登录中'){
-                        dispatch(getloginSuccess({loginSuccess:'正在登录中'}))
+                    if (loginSuccess == '正在登录中') {
+                        dispatch(getloginSuccess({ loginSuccess: '正在登录中' }))
                     }
                     break;
                 case 'qrcode'://返回二维码
@@ -43,13 +43,21 @@ export const WxLogin = (uuid) => {
                     const nickname = msg.context//昵称
                     dispatch(getNickname(nickname))
                     break;
+                case "getcontact"://获取联系人信息。会多次传输
+                    break;
+                case "getgroup"://获取群组信息。会多次传输
+                    break;
+                case "getgzh"://获取公众号信息。会多次传输
+                    break;
+                case "msgcallback"://微信消息回调事件
+                    break;
             }
         };
     }
 }
-export const register=({username,password,email,phone})=>{
-    return  dispatch=>{
-         fetch('http://e24589943k.wicp.vip/users/register',{
+export const register = ({ username, password, email, phone }) => {
+    return dispatch => {
+        fetch('http://e24589943k.wicp.vip/users/register', {
             method: 'POST',
             //credentials: 'include',
             mode: 'cors',
@@ -57,41 +65,41 @@ export const register=({username,password,email,phone})=>{
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({username,password,email,phone})
-        }).then(data=>data.json())
-        .then(data=>{
-            if(data.code==0){
-                dispatch(getregister(data.data))
-            }else{
-                dispatch(errorMsg(data.msg))
-            }
-        })
-        
-       
+            body: JSON.stringify({ username, password, email, phone })
+        }).then(data => data.json())
+            .then(data => {
+                if (data.code == 0) {
+                    dispatch(getregister(data.data))
+                } else {
+                    dispatch(errorMsg(data.msg))
+                }
+            })
+
+
     }
 }
-export const login=({username,password})=>{
-    return dispatch=>{
-        fetch('http://e24589943k.wicp.vip/users/login',{
-            method:'POST',
+export const login = ({ username, password }) => {
+    return dispatch => {
+        fetch('http://e24589943k.wicp.vip/users/login', {
+            method: 'POST',
             mode: 'cors',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body:JSON.stringify({username,password})
-        }).then(data=>data.json())
-        .then(data=>{
-            if(data.code==0){
-                dispatch(authSuccess(data.data))
-            }else{
-                dispatch(errorMsg(data.msg))
-            }
-        })
+            body: JSON.stringify({ username, password })
+        }).then(data => data.json())
+            .then(data => {
+                if (data.code == 0) {
+                    dispatch(authSuccess(data.data))
+                } else {
+                    dispatch(errorMsg(data.msg))
+                }
+            })
     }
 }
-export const Sendline=()=>{
-    return dispatch=>{
-        
+export const Sendline = () => {
+    return dispatch => {
+
     }
 }
