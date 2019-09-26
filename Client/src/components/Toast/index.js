@@ -44,7 +44,7 @@ class Toast extends React.Component {
 
         let timeout = 0;
         if(toastLen < 5){
-            timeout = 1000;
+            timeout = 2000;
         } else if(toastLen >= 5 && toastLen < 20){
             timeout = 3000;
         }
@@ -85,9 +85,9 @@ class Toast extends React.Component {
             return (
                 <React.Fragment>
                     <style dangerouslySetInnerHTML={{ __html: Style }} />
-                    <div class="component-toast">
-                        <div class="toast-area">
-                            <div class="toast-content">
+                    <div className="component-toast">
+                        <div className="toast-area">
+                            <div className="toast-content">
                                 {toast1 && <p>{toast1}</p>}
                                 {toast2 && <p>{toast2}</p>}
                             </div>
