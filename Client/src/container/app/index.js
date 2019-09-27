@@ -30,15 +30,16 @@ class App extends Component {
     render() {
         const { header, nickname, qr, loading } = this.props
         const { isSubmit } = this.state
+        console.log("loading",(isSubmit&&Loading)==true)
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
-                   
+                    {(!qr&&isSubmit)&&<Loading message="正在加载"/>}
                         {isSubmit && <div className="top">
-                            <img className="img" alt="" src={header ? header : `data:image/jpg;base64,${qr}`} style={header ? { borderRadius: '50%' } : {}} />
-                            {Loading&&<Loading message="正在加载"/>}
+                            <img className="qrImg" alt="" src={header ? header : `data:image/jpg;base64,${qr}`} style={header ? { borderRadius: '50%' } : {}} />
+                            
                             {/* <div className="qrCode">{loading ? "正在获取二维码..." : "二维码获取成功"}</div> */}
                             <div className="card-details">卡类型: 周卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: <span>&nbsp;&nbsp;{nickname}</span></div>
 
