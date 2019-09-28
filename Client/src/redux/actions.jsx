@@ -49,11 +49,12 @@ export const WxLogin = (uuid) => {
                 //     break;
                 case 'token':
                     const token = msg.token
-                    
+               
                     const wxid = msg.wxid//wxid
                     dispatch(getToken(token))//token
                     
                     dispatch(getWxID(wxid))
+                    
                     break;
                 case 'UUID':
                     const UUID = msg.UUID

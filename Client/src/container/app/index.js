@@ -5,11 +5,13 @@ import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
 import { WxLogin } from '../../redux/actions'
+let flag=false
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isSubmit: false
+            isSubmit: false,
+    
         }
     }
     componentDidMount() {
@@ -18,19 +20,26 @@ class App extends Component {
 
     }
     componentWillReceiveProps(nextprops){
-       console.log("token",nextprops.token) 
-        const data={     
+        console.log("nextprops",nextprops)
+        console.log("thisprops",this.props)
+        if(nextprops.token!=""&&nextprops.wxid!=""){  
+        const data={  
+            action:"token",
+            UUID:nextprops.uuid,
             token:nextprops.token,
             data62:nextprops.data62,
             wxid:nextprops.wxid
         }
         console.log("data",data)
-        if ('WebSocket' in window) {
+        if (flag==false&&'WebSocket' in window) {
+           flag=true
+            console.log("新开websocket实力")
             var ws = new WebSocket("ws://localhost:7181");
             ws.onopen = function () {
                 console.log("onopen");
+                ws.send(JSON.stringify(data) );
             };
-            ws.send(data);
+           
             ws.onerror = function (evt) {
                 console.log("onerror",evt);
                 ws.onopen();
@@ -42,9 +51,9 @@ class App extends Component {
             };
             return ws
         }
-        else {
-            alert('当前浏览器 Not support websocket')
         }
+
+       
     }
     onSubmit() {
         if (this.refs.password.value != "001") {
