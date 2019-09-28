@@ -16,3 +16,7 @@ export const REGISTER='REGISTER'
 export const ERROR_MSG='ERROR_MSG'
 //验证成功
 export const AUTH_SUCCESS='AUTH_SUCCESS'
+//获取UUID
+export const GET_UUID='GET_UUID'
+//获取62
+export const GET_DATA62='GET_DATA62'

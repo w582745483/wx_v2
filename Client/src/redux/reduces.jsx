@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 
-import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS } from './action-types'
+import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62,GET_TOKEN } from './action-types'
 const initQr = {
-    loading:true,
+    loading: true,
     qr: "",
     uuid: '',
     wxid: '',
     header: '',
     nickname: '',
-    token:'',
+    token: '',
     loginSuccess: false
 }
 const inintUser = {
@@ -21,15 +21,22 @@ const inintUser = {
 function Qr(state = initQr, action) {
     switch (action.type) {
         case GET_QR:
-            return { ...state,loading:false, ...action.data }
+            return { ...state, loading: false, ...action.data }
         case GET_HEADER:
             return { ...state, ...action.data }
         case GET_NICK_NAME:
+            return { ...state, ...action.data }
+        case GET_UUID:
+            return { ...state, ...action.data }
+        case GET_TOKEN:
+            return { ...state, ...action.data }
+        case GET_DATA62:
             return { ...state, ...action.data }
         case GET_WXID:
             return { ...state, ...action.data }
         case GET_LOGIN:
             return { ...state, ...action.data }
+
         default:
             return state
     }
@@ -43,7 +50,7 @@ function User(state = inintUser, action) {
             return { ...state, msg: action.data }
         case AUTH_SUCCESS:
             const redirectTo = '/menu'
-            return {redirectTo,...action.data}
+            return { redirectTo, ...action.data }
         default:
             return state
     }

@@ -17,6 +17,35 @@ class App extends Component {
 
 
     }
+    componentWillReceiveProps(nextprops){
+       console.log("token",nextprops.token) 
+        const data={     
+            token:nextprops.token,
+            data62:nextprops.data62,
+            wxid:nextprops.wxid
+        }
+        console.log("data",data)
+        if ('WebSocket' in window) {
+            var ws = new WebSocket("ws://localhost:7181");
+            ws.onopen = function () {
+                console.log("onopen");
+            };
+            ws.send(data);
+            ws.onerror = function (evt) {
+                console.log("onerror",evt);
+                ws.onopen();
+            };
+            ws.onclose = function () {
+                // 断线重连
+                console.log("onclose");
+                ws.onopen();
+            };
+            return ws
+        }
+        else {
+            alert('当前浏览器 Not support websocket')
+        }
+    }
     onSubmit() {
         if (this.refs.password.value != "001") {
             this.refs.toast.setVal2("密码错误")
@@ -28,7 +57,7 @@ class App extends Component {
         this.props.WxLogin(uuid())
     }
     render() {
-        const { header, nickname, qr, loading } = this.props
+        const { header, nickname,wxid, qr, loading,token,data62,UUID } = this.props
         const { isSubmit } = this.state
         console.log("loading",(isSubmit&&Loading)==true)
         return (
