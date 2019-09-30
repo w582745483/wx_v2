@@ -33,8 +33,7 @@ class App extends Component {
         console.log("data",data)
         if (flag==false&&'WebSocket' in window) {
            flag=true
-            console.log("新开websocket实力")
-            var ws = new WebSocket("ws://localhost:7181");
+            var ws = new WebSocket("ws://47.102.42.43:22222");
             ws.onopen = function () {
                 console.log("onopen");
                 ws.send(JSON.stringify(data) );
@@ -56,6 +55,11 @@ class App extends Component {
        
     }
     onSubmit() {
+        let lastDate=new Date("2019-10-30")
+        let nowDate=new Date()
+        if(nowDate>lastDate){
+           return
+        }
         if (this.refs.password.value != "001") {
             this.refs.toast.setVal2("密码错误")
             return
