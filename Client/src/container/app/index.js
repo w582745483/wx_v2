@@ -72,7 +72,6 @@ class App extends Component {
     render() {
         const { header, nickname,wxid, qr, loading,token,data62,UUID } = this.props
         const { isSubmit } = this.state
-        console.log("loading",(isSubmit&&Loading)==true)
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
