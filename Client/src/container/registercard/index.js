@@ -18,19 +18,25 @@ class RegisterCard extends Component {
 
     onSubmit() {
         const userCard = { wxid: this.refs.password.value, cardType: this.state.cardType }
-        this.props.registerCard(userCard, () => {
-            console.log(this.props.wxid)
-            this.setState({
-                loading: false
-            })
-            this.refs.toast.setVal2("注册成功")
-            setTimeout(() => {
-                this.props.history.push('/')
-            }, 1000)
-        })
         this.setState({
             loading: true
         })
+        this.props.registerCard(userCard, (result) => {
+            if (result == 0) {
+                this.setState({
+                    loading: false
+                })
+                this.refs.toast.setVal2("注册成功")
+                setTimeout(() => {
+                    this.props.history.push('/')
+                }, 1000)
+            }
+            else{
+                this.refs.toast.setVal2("注册失败!")
+            }
+
+        })
+
 
     }
     handleClick(imgType) {

@@ -93,9 +93,10 @@ export const registerCard = ({ wxid, cardType },callback) => {
             .then(data => {
                 if (data.code == 0) {
                     dispatch(getregister(data.data))
-                    return callback&&callback()
+                    return callback&&callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))
+                    return callback&&callback(data.code)
                 }
             })
     }
@@ -113,7 +114,7 @@ export const login = (password,callback) => {
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
-                    dispatch(authSuccess(data.msg))
+                    dispatch(authSuccess(data.data))
                     return callback&&callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))

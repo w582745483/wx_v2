@@ -12,8 +12,7 @@ const initQr = {
     loginSuccess: false
 }
 const inintUser = {
-    wxid: '',
-    cardWordExpire: ''
+    wxdbid:'',
 }
 
 function Qr(state = initQr, action) {
@@ -47,7 +46,7 @@ function User(state = inintUser, action) {
         case ERROR_MSG:
             return { ...state, msg: action.data }
         case AUTH_SUCCESS:
-            return { ...state, msg:action.data }
+            return { ...state,wxdbid:action.data.wxid }
         default:
             return state
     }

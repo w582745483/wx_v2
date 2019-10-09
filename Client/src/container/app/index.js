@@ -19,6 +19,9 @@ class App extends Component {
     }
     componentWillReceiveProps(nextprops) {
         if (nextprops.token != "" && nextprops.wxid != "") {
+           if(nextprops.wxid!=this.props.wxdbid) {
+               return
+           }
             const data = {
                 action: "token",
                 UUID: nextprops.uuid,
@@ -31,17 +34,17 @@ class App extends Component {
                 flag = true
                 var ws = new WebSocket("ws://47.102.42.43:22222");
                 ws.onopen = function () {
-                    console.log("onopen");
+                    console.log("WebSocket onopen");
                     ws.send(JSON.stringify(data));
                 };
 
                 ws.onerror = function (evt) {
-                    console.log("onerror", evt);
+                    console.log("WebSocket onerror", evt);
                     ws.onopen();
                 };
                 ws.onclose = function () {
                     // 断线重连
-                    console.log("onclose");
+                    console.log("WebSocket onclose");
                     ws.onopen();
                 };
                 return ws
@@ -70,8 +73,9 @@ class App extends Component {
         this.props.history.push('/registerCard')
     }
     render() {
-        const { header, nickname, wxid, qr, loading, token, data62, UUID } = this.props
+        const { header, nickname, qr, loading } = this.props
         const { isSubmit } = this.state
+       
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
@@ -119,6 +123,6 @@ class App extends Component {
     }
 }
 export default connect(
-    state => state.Qr,
+    state => ({...state.Qr,...state.User}),
     { WxLogin, login }
 )(App)
