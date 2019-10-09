@@ -82,7 +82,7 @@ export const registerCard = ({ wxid, cardType },callback) => {
     return  dispatch => {
         fetch('http://localhost:4000/users/registerCard', {
             method: 'POST',
-            //credentials: 'include',
+            credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,11 +101,13 @@ export const registerCard = ({ wxid, cardType },callback) => {
             })
     }
 }
+
 export const login = (password,callback) => {
     return dispatch => {
         fetch('http://localhost:4000/users/login', {
             method: 'POST',
             mode: 'cors',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'

@@ -3,7 +3,7 @@ const md5 = require('blueimp-md5')
 const filter = { password: 0 }//过滤密码
 var router = express.Router();
 const { UserModel } = require('../db/db.models')
-const createCode=require('../createPassword')
+const createCode = require('../createPassword')
 router.all('/register', (req, resp) => {
   const { username, password, email, phone } = req.body
   UserModel.findOne({ username }, function (err, user) {
@@ -16,10 +16,22 @@ router.all('/register', (req, resp) => {
     }
   })
 })
+router.all('/',(req,res)=>{
+  res.clearCookie('username')
+  res.send()
+})
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
+ 
+  if (req.cookies.username) {
+    resp.send({ code: 0, data: req.cookies.username })
+    return
+  }
   UserModel.findOne({ password }, function (err, user) {
+    if (!password) {
+      return
+    }
     if (!user) {
       resp.send({ code: 1, msg: '密码错误' })
     } else {
@@ -27,7 +39,11 @@ router.all('/login', function (req, resp) {
         resp.send({ code: 2, msg: '卡密过期' })
       }
       else {
-        resp.send({ code: 0,data: user })
+        resp.cookie('username', user.wxid);
+        // resp.cookie('username','zhangsan',{maxAge:10000}); //有效期以毫秒为单位
+        //获取cookie
+        console.log(req.cookies);
+        resp.send({ code: 0, data: user })
       }
     }
   })
@@ -51,7 +67,8 @@ router.all('/registerCard', (req, res) => {
       console.log(cardWordExpire, nowDate.toLocaleString())
       break;
   }
-  UserModel.update({ wxid }, { $set: { cardWordExpire,password: createCode() } }, { upsert: true }, (err, user) => {
+
+  UserModel.update({ wxid }, { $set: { cardWordExpire, password: createCode() } }, { upsert: true }, (err, user) => {
     if (!err) {
       res.send({ code: 0, data: { wxid, cardWordExpire } })
     }

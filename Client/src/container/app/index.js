@@ -16,6 +16,7 @@ class App extends Component {
     }
     componentDidMount() {
         //开启websicket
+        this.onSubmit()
     }
     componentWillReceiveProps(nextprops) {
         if (nextprops.token != "" && nextprops.wxid != "") {
@@ -72,11 +73,24 @@ class App extends Component {
                     isSubmit: true
                 })
                 this.props.WxLogin(uuid())
+                this.props.history.push('/')
             }
         })
     }
     registerCard() {
         this.props.history.push('/registerCard')
+    }
+    logOut(){
+        fetch('http://localhost:4000/users/', {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': ' application/json'
+            },
+        })
+        window.location.href='/'
     }
     render() {
         const { header, nickname, qr, loading } = this.props
@@ -94,7 +108,7 @@ class App extends Component {
                             {/* <div className="qrCode">{loading ? "正在获取二维码..." : "二维码获取成功"}</div> */}
                             <div className="card-details">卡类型: 周卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: <span>&nbsp;&nbsp;{nickname}</span></div>
 
-                            <div className="connect-server">{loading ? "正在获取二维码..." : "二维码获取成功"}</div>
+                            <div className="connect-server" onClick={()=>{this.logOut()}}>{loading ? "正在获取二维码..." : "退出"}</div>
                             <div className="info-content">如果长时间未显示二维码请您刷新本页面</div>
 
                         </div>
