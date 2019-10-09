@@ -9,6 +9,11 @@ const AsyncMenu=Loadable({
     loading:Loading
 })
 
+const AsyncRegister=Loadable({
+    loader:()=>import('../registercard'),
+    loading:Loading
+})
+
 
 
 export default class Main extends React.Component {
@@ -16,6 +21,7 @@ export default class Main extends React.Component {
         return (
             <Switch>
                 <Route path='/' exact={true} component={AsyncMenu}></Route>
+                <Route path='/registerCard' component={AsyncRegister} ></Route>
             </Switch>
         )
     }

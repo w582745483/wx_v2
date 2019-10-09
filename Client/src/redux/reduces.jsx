@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62,GET_TOKEN } from './action-types'
+import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62, GET_TOKEN } from './action-types'
 const initQr = {
     loading: true,
     qr: "",
@@ -12,10 +12,8 @@ const initQr = {
     loginSuccess: false
 }
 const inintUser = {
-    username: '',
-    password: '',
-    email: '',
-    phone: '',
+    wxid: '',
+    cardWordExpire: ''
 }
 
 function Qr(state = initQr, action) {
@@ -49,8 +47,7 @@ function User(state = inintUser, action) {
         case ERROR_MSG:
             return { ...state, msg: action.data }
         case AUTH_SUCCESS:
-            const redirectTo = '/menu'
-            return { redirectTo, ...action.data }
+            return { ...state, msg:action.data }
         default:
             return state
     }

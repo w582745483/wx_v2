@@ -1,4 +1,4 @@
-import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN,GET_UUID,GET_DATA62 } from './action-types'
+import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62 } from './action-types'
 import { ws, heartCheck } from '../components/socket'
 
 
@@ -8,8 +8,8 @@ const getWxID = (wxid) => ({ type: GET_WXID, data: { wxid } })
 const getHeader = (header) => ({ type: GET_HEADER, data: { header } })
 const getNickname = (nickname) => ({ type: GET_NICK_NAME, data: { nickname } })
 const getToken = (token) => ({ type: GET_TOKEN, data: { token } })
-const getUUID =(UUID)=>({type:GET_UUID,data:{UUID}})
-const getData62=(data62)=>({type:GET_DATA62,data:{data62}})
+const getUUID = (UUID) => ({ type: GET_UUID, data: { UUID } })
+const getData62 = (data62) => ({ type: GET_DATA62, data: { data62 } })
 const getloginSuccess = (loginSuccess) => ({ type: GET_LOGIN, data: { loginSuccess } })
 const getregister = user => ({ type: REGISTER, data: user })
 const errorMsg = msg => ({ type: ERROR_MSG, data: msg })
@@ -49,12 +49,12 @@ export const WxLogin = (uuid) => {
                 //     break;
                 case 'token':
                     const token = msg.token
-               
+
                     const wxid = msg.wxid//wxid
                     dispatch(getToken(token))//token
-                    
+
                     dispatch(getWxID(wxid))
-                    
+
                     break;
                 case 'UUID':
                     const UUID = msg.UUID
@@ -78,9 +78,9 @@ export const WxLogin = (uuid) => {
         };
     }
 }
-export const register = ({ username, password, email, phone }) => {
-    return dispatch => {
-        fetch('http://e24589943k.wicp.vip/users/register', {
+export const registerCard = ({ wxid, cardType },callback) => {
+    return  dispatch => {
+        fetch('http://localhost:4000/users/registerCard', {
             method: 'POST',
             //credentials: 'include',
             mode: 'cors',
@@ -88,35 +88,36 @@ export const register = ({ username, password, email, phone }) => {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({ username, password, email, phone })
+            body: JSON.stringify({ wxid, cardType })
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
                     dispatch(getregister(data.data))
+                    return callback&&callback()
                 } else {
                     dispatch(errorMsg(data.msg))
                 }
             })
-
-
     }
 }
-export const login = ({ username, password }) => {
+export const login = (password,callback) => {
     return dispatch => {
-        fetch('http://e24589943k.wicp.vip/users/login', {
+        fetch('http://localhost:4000/users/login', {
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({password})
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
-                    dispatch(authSuccess(data.data))
+                    dispatch(authSuccess(data.msg))
+                    return callback&&callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))
+                    return callback&&callback(data.code)
                 }
             })
     }
