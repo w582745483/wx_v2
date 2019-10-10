@@ -17,6 +17,10 @@ class RegisterCard extends Component {
     }
 
     onSubmit() {
+        if(!this.state.cardType||!this.refs.password.value){
+            this.refs.toast.setVal2("账号或卡密类型不能为空!")
+            return
+        }
         const userCard = { wxid: this.refs.password.value, cardType: this.state.cardType }
         this.setState({
             loading: true

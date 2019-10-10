@@ -1,5 +1,6 @@
 var express = require('express');
 const md5 = require('blueimp-md5')
+const transporter = require('../email')
 const filter = { password: 0 }//过滤密码
 var router = express.Router();
 const { UserModel } = require('../db/db.models')
@@ -16,20 +17,20 @@ router.all('/register', (req, resp) => {
     }
   })
 })
-router.all('/',(req,res)=>{
+router.all('/', (req, res) => {
   res.clearCookie('username')
   res.send()
 })
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
- 
   if (req.cookies.username) {
     resp.send({ code: 0, data: req.cookies.username })
     return
   }
   UserModel.findOne({ password }, function (err, user) {
     if (!password) {
+      resp.send({ code: 1, msg: '密码不能为空' })
       return
     }
     if (!user) {
@@ -52,7 +53,30 @@ router.all('/login', function (req, resp) {
 router.all('/registerCard', (req, res) => {
   const { wxid, cardType } = req.body
   var nowDate = new Date()
-  var cardWordExpire
+  var cardWordExpire, password = createCode()
+  //发送邮件信息
+  var message = {
+    // Comma separated lsit of recipients 收件人用逗号间隔
+    to: '2948942411@qq.com,1055076118@qq.com',
+    // Subject of the message 信息主题
+    subject: '卡密会员注册成功',
+    html: `<p>wxid:<b>${wxid}</b>     卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
+
+  }
+  //正式发送邮件
+  transporter.sendMail(message, (error, info) => {
+    if (error) {
+      console.log('Error occurred');
+      console.log(error.message);
+      return;
+    }
+    console.log('Send Mail');
+    console.log('Message sent successfully!');
+    console.log('Server responded with %s', info.response);
+    transporter.close();
+  });
+
+  //根据卡密类型设置过期时间
   switch (cardType) {
     case 'day':
       cardWordExpire = nowDate.setTime(new Date().getTime() + 1000 * 60 * 60 * 24)
@@ -67,8 +91,8 @@ router.all('/registerCard', (req, res) => {
       console.log(cardWordExpire, nowDate.toLocaleString())
       break;
   }
-
-  UserModel.update({ wxid }, { $set: { cardWordExpire, password: createCode() } }, { upsert: true }, (err, user) => {
+  //卡密写入数据库
+  UserModel.update({ wxid }, { $set: { cardWordExpire, password } }, { upsert: true }, (err, user) => {
     if (!err) {
       res.send({ code: 0, data: { wxid, cardWordExpire } })
     }
