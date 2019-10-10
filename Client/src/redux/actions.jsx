@@ -80,7 +80,7 @@ export const WxLogin = (uuid) => {
 }
 export const registerCard = ({ wxid, cardType },callback) => {
     return  dispatch => {
-        fetch('http://localhost:4000/users/registerCard', {
+        fetch('http://118.123.11.246:11425/users/registerCard', {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -104,7 +104,7 @@ export const registerCard = ({ wxid, cardType },callback) => {
 
 export const login = (password,callback) => {
     return dispatch => {
-        fetch('http://localhost:4000/users/login', {
+        fetch('http://118.123.11.246:11425/users/login', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',

@@ -30,7 +30,7 @@ router.all('/login', function (req, resp) {
   }
   UserModel.findOne({ password }, function (err, user) {
     if (!password) {
-      resp.send({ code: 1, msg: '密码不能为空' })
+      resp.send({ code: 3, msg: '密码不能为空' })
       return
     }
     if (!user) {

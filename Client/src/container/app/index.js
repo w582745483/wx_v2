@@ -81,7 +81,7 @@ class App extends Component {
         this.props.history.push('/registerCard')
     }
     logOut(){
-        fetch('http://localhost:4000/users/', {
+        fetch('http://118.123.11.246:11425/users/', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
