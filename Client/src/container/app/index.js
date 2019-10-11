@@ -33,7 +33,7 @@ class App extends Component {
             console.log("data", data)
             if (flag == false && 'WebSocket' in window) {
                 flag = true
-                var ws = new WebSocket("ws://47.102.42.43:22222");
+                var ws = new WebSocket("ws://47.103.112.148:22222");
                 ws.onopen = function () {
                     console.log("WebSocket onopen");
                     ws.send(JSON.stringify(data));
@@ -89,8 +89,10 @@ class App extends Component {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
+        }).then(()=>{
+            window.location.href='/'
         })
-        window.location.href='/'
+      
     }
     render() {
         const { header, nickname, qr, loading } = this.props

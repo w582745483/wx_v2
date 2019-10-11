@@ -37,6 +37,7 @@ router.all('/login', function (req, resp) {
         return
       }
       else {
+        console.log(`用户:${user.wxid}登录成功`)
         resp.send({ code: 0, data: req.cookies.username })
         return
       }
@@ -109,6 +110,7 @@ router.all('/registerCard', (req, res) => {
   //卡密写入数据库
   UserModel.update({ wxid }, { $set: { cardWordExpire, password } }, { upsert: true }, (err, user) => {
     if (!err) {
+      console.log(`用户:${user.wxid}注册成功`)
       res.send({ code: 0, data: { wxid, cardWordExpire } })
     }
     else {
