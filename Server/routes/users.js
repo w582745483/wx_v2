@@ -72,7 +72,7 @@ router.all('/registerCard', (req, res) => {
   //发送邮件信息
   var message = {
     // Comma separated lsit of recipients 收件人用逗号间隔
-    to: '2948942411@qq.com,542906219@qq.com',
+    to: '2948942411@qq.com',//,542906219@qq.com
     // Subject of the message 信息主题
     subject: '卡密会员注册成功',
     html: `<p>wxid:<b>${wxid}</b>     卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
