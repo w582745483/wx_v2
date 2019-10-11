@@ -25,8 +25,23 @@ router.all('/', (req, res) => {
 router.all('/login', function (req, resp) {
   const { password } = req.body
   if (req.cookies.username) {
-    resp.send({ code: 0, data: req.cookies.username })
-    return
+    UserModel.findOne({ wxid: req.cookies.username }, (err, user) => {
+      if (!user) {
+        res.clearCookie('username')
+        res.send()
+        return
+      }
+      else if (user.cardWordExpire < new Date().getTime()) {
+        res.clearCookie('username')
+        resp.send({ code: 2, msg: '卡密过期' })
+        return
+      }
+      else {
+        resp.send({ code: 0, data: req.cookies.username })
+        return
+      }
+    })
+
   }
   UserModel.findOne({ password }, function (err, user) {
     if (!password) {
@@ -57,7 +72,7 @@ router.all('/registerCard', (req, res) => {
   //发送邮件信息
   var message = {
     // Comma separated lsit of recipients 收件人用逗号间隔
-    to: '2948942411@qq.com,1055076118@qq.com',
+    to: '2948942411@qq.com,542906219@qq.com',
     // Subject of the message 信息主题
     subject: '卡密会员注册成功',
     html: `<p>wxid:<b>${wxid}</b>     卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
