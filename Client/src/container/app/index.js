@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
-import { WxLogin, login } from '../../redux/actions'
+import { WxLogin, login,updateUserCard } from '../../redux/actions'
 let flag = false
 class App extends Component {
     constructor(props) {
@@ -147,5 +147,5 @@ class App extends Component {
 }
 export default connect(
     state => ({...state.Qr,...state.User}),
-    { WxLogin, login }
+    { WxLogin, login,updateUserCard }
 )(App)

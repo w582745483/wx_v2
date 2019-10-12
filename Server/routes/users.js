@@ -89,12 +89,12 @@ router.all('/login', function (req, resp) {
   if (req.cookies.username) {
     UserModel.findOne({ wxdbid: req.cookies.username }, (err, user) => {
       if (!user) {
-        res.clearCookie('username')
-        res.send()
+        resp.clearCookie('username')
+        resp.send()
         return
       }
       else if (user.cardWordExpire < new Date().getTime()) {
-        res.clearCookie('username')
+        resp.clearCookie('username')
         resp.send({ code: 2, msg: '卡密过期' })
         return
       }
