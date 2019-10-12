@@ -162,7 +162,7 @@ router.all('/registerCard', (req, res) => {
       res.send({ code: 0, data: { cardType } })
     }
     else {
-      console.log(`用户注册失败`)
+      console.log(`用户注册失败`,err)
       res.send({ code: 1, msg: "卡密生成失败" })
     }
   })
