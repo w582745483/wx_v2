@@ -59,6 +59,7 @@ class App extends Component {
     onSubmit() {
         if(this.refs.password.value=='qwe123'){
             this.props.history.push('/registerCard')
+            return
         }
         this.props.login(this.refs.password.value, (result) => {
             // let lastDate = new Date("2019-10-30")
