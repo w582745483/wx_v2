@@ -48,6 +48,7 @@ function User(state = inintUser, action) {
         case AUTH_SUCCESS:
             return { ...state,...action.data }
         case UPDATE_WXDBID:
+            console.log('action.data',action.data)
             return {wxdbid:action.data.wxdbid}    
         default:
             return state
