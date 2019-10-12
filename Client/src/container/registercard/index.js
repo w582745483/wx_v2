@@ -82,13 +82,13 @@ class RegisterCard extends Component {
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
-                        <div className="bottom">
-                            <div className="login-content">
+                        <div className="bottom_register">
+                            <div className="login-content_register">
                                 {/* <img src={require("../../assets/img/wxaccount.png")} />
                                 <input ref="password" placeholder="请输入微信账号" /> */}
                                 办卡类型:
                             </div>
-                            <div className='card-type'>
+                            <div className='card-type_register'>
                                 <div onClick={() => { this.handleClick('day') }}>
                                     <img src={require(`../../assets/img/${dayimgType}.png`)} />
                                     <span>天卡</span>
@@ -102,7 +102,7 @@ class RegisterCard extends Component {
                                     <span>月卡</span>
                                 </div>
                             </div>
-                            <div onClick={() => this.onSubmit()} className="login-button">
+                            <div onClick={() => this.onSubmit()} className="login-button__register">
                                 注册卡密
                              </div>
                         </div>

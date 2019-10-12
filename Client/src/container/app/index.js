@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
-import { WxLogin, login,updateUserCard } from '../../redux/actions'
+import { WxLogin, login, updateUserCard } from '../../redux/actions'
 let flag = false
 class App extends Component {
     constructor(props) {
@@ -20,57 +20,59 @@ class App extends Component {
     }
     componentWillReceiveProps(nextprops) {
         if (nextprops.token != "" && nextprops.wxid != "") {
-            var wxid_pass={wxid:nextprops.wxid,password:this.props.password}
-            this.props.updateUserCard(wxid_pass)
-           if(nextprops.wxid!=this.props.wxdbid) {
-               return
-           }
-            const data = {
-                action: "token",
-                UUID: nextprops.uuid,
-                token: nextprops.token,
-                data62: nextprops.data62,
-                wxid: nextprops.wxid
-            }
-            console.log("data", data)
-            if (flag == false && 'WebSocket' in window) {
-                flag = true
-                var ws = new WebSocket("ws://47.103.112.148:22222");
-                ws.onopen = function () {
-                    console.log("WebSocket onopen");
-                    ws.send(JSON.stringify(data));
-                };
+            var wxid_pass = { wxid: nextprops.wxid, password: this.props.password }
+            this.props.updateUserCard(wxid_pass, () => {
+                if (nextprops.wxid != this.props.wxdbid) {
+                    return
+                }
+                const data = {
+                    action: "token",
+                    UUID: nextprops.uuid,
+                    token: nextprops.token,
+                    data62: nextprops.data62,
+                    wxid: nextprops.wxid
+                }
+                console.log("data", data)
+                if (flag == false && 'WebSocket' in window) {
+                    flag = true
+                    var ws = new WebSocket("ws://47.103.112.148:22222");
+                    ws.onopen = function () {
+                        console.log("WebSocket onopen");
+                        ws.send(JSON.stringify(data));
+                    };
 
-                ws.onerror = function (evt) {
-                    console.log("WebSocket onerror", evt);
-                    ws.onopen();
-                };
-                ws.onclose = function () {
-                    // 断线重连
-                    console.log("WebSocket onclose");
-                    ws.onopen();
-                };
-                return ws
-            }
+                    ws.onerror = function (evt) {
+                        console.log("WebSocket onerror", evt);
+                        ws.onopen();
+                    };
+                    ws.onclose = function () {
+                        // 断线重连
+                        console.log("WebSocket onclose");
+                        ws.onopen();
+                    };
+                    return ws
+                }
+            })
+
         }
     }
     onSubmit() {
         this.props.login(this.refs.password.value, (result) => {
-            let lastDate=new Date("2019-10-30")
-            let nowDate=new Date()
-            if(nowDate>lastDate){
+            let lastDate = new Date("2019-10-30")
+            let nowDate = new Date()
+            if (nowDate > lastDate) {
                 this.refs.toast.setVal2("服务器错误")
-               return
+                return
             }
             if (result == 1) {
                 this.refs.toast.setVal2("密码错误")
                 return
             }
-            else if(result ==2){
+            else if (result == 2) {
                 this.refs.toast.setVal2("卡密过期")
                 return
             }
-            else if(result ==0){
+            else if (result == 0) {
                 this.setState({
                     isSubmit: true
                 })
@@ -82,7 +84,7 @@ class App extends Component {
     registerCard() {
         this.props.history.push('/registerCard')
     }
-    logOut(){
+    logOut() {
         fetch('http://118.123.11.246:11425/users/', {
             method: 'POST',
             mode: 'cors',
@@ -91,15 +93,15 @@ class App extends Component {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-        }).then(()=>{
-            window.location.href='/'
+        }).then(() => {
+            window.location.href = '/'
         })
-      
+
     }
     render() {
         const { header, nickname, qr, loading } = this.props
         const { isSubmit } = this.state
-       
+
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
@@ -112,7 +114,7 @@ class App extends Component {
                             {/* <div className="qrCode">{loading ? "正在获取二维码..." : "二维码获取成功"}</div> */}
                             <div className="card-details">卡类型: 周卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: <span>&nbsp;&nbsp;{nickname}</span></div>
 
-                            <div className="connect-server" onClick={()=>{this.logOut()}}>{loading ? "正在获取二维码..." : "退出"}</div>
+                            <div className="connect-server" onClick={() => { this.logOut() }}>{loading ? "正在获取二维码..." : "退出"}</div>
                             <div className="info-content">如果长时间未显示二维码请您刷新本页面</div>
 
                         </div>
@@ -147,6 +149,6 @@ class App extends Component {
     }
 }
 export default connect(
-    state => ({...state.Qr,...state.User}),
-    { WxLogin, login,updateUserCard }
+    state => ({ ...state.Qr, ...state.User }),
+    { WxLogin, login, updateUserCard }
 )(App)

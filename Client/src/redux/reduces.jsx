@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62, GET_TOKEN } from './action-types'
+import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62, GET_TOKEN,UPDATE_WXDBID } from './action-types'
 const initQr = {
     loading: true,
     qr: "",
@@ -47,6 +47,8 @@ function User(state = inintUser, action) {
             return { ...state, msg: action.data }
         case AUTH_SUCCESS:
             return { ...state,...action.data }
+        case UPDATE_WXDBID:
+            return {...action.data}    
         default:
             return state
     }

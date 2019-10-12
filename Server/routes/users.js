@@ -25,7 +25,7 @@ router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
   var cardWordExpire, nowDate = new Date()
   UserModel.findOne({ password }, function (err, user) {
-    if (user) {
+    if (!user.wxdbid) {
       //根据卡密类型设置过期时间
       switch (user.cardType) {
         case 'day':
@@ -67,16 +67,16 @@ router.all('/updateUserCard', (req, res) => {
             console.log('Server responded with %s', info.response);
             transporter.close();
           });
-          res.send({ code: 0, data: { wxdbid: user.wxdbid } })
+          res.send({ code: 0, data: { wxdbid: wxid } })
         }
         else {
-          console.log(`用户更新wxid和cardWordExpire失败`)
-          res.send({ code: 1, msg: "卡密更新失败" })
+          console.log(`用户更新wxid和cardWordExpire失败(此卡密已经存在wxid)`)
+          res.send({ code: 1, msg: "用户更新wxid和cardWordExpire失败(此卡密已经存在wxid)" })
         }
       })
     }
     else {
-      res.send({ code: 1, msg: "卡密更新失败" })
+      res.send({ code: 1, data:user.wxdbid })
     }
   })
 
@@ -141,7 +141,7 @@ router.all('/registerCard', (req, res) => {
         to: '2948942411@qq.com',//,542906219@qq.com
         // Subject of the message 信息主题
         subject: '卡密会员注册成功',
-        html: `<p>wxid:<b></b>     卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
+        html: `卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
 
       }
       //正式发送邮件

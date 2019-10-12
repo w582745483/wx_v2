@@ -1,4 +1,4 @@
-import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62 } from './action-types'
+import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID } from './action-types'
 import { ws, heartCheck } from '../components/socket'
 
 
@@ -14,6 +14,10 @@ const getloginSuccess = (loginSuccess) => ({ type: GET_LOGIN, data: { loginSucce
 const getregister = user => ({ type: REGISTER, data: user })
 const errorMsg = msg => ({ type: ERROR_MSG, data: msg })
 const authSuccess = user => ({ type: AUTH_SUCCESS, data: user })
+const updateusercard = wxdbid => ({ type: UPDATE_WXDBID, data: wxdbid })
+
+
+
 export const WxLogin = (uuid) => {
 
     return dispatch => {
@@ -78,8 +82,8 @@ export const WxLogin = (uuid) => {
         };
     }
 }
-export const registerCard = ({cardType },callback) => {
-    return  dispatch => {
+export const registerCard = ({ cardType }, callback) => {
+    return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerCard', {
             method: 'POST',
             credentials: 'include',
@@ -88,21 +92,16 @@ export const registerCard = ({cardType },callback) => {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({cardType })
+            body: JSON.stringify({ cardType })
         }).then(data => data.json())
             .then(data => {
-                if (data.code == 0) {
-                    dispatch(getregister(data.data))
-                    return callback&&callback(data.code)
-                } else {
-                    dispatch(errorMsg(data.msg))
-                    return callback&&callback(data.code)
-                }
+                dispatch(updateusercard(data.data))
+                return callback && callback(data.code)
             })
     }
 }
-export const updateUserCard=({wxid,password},callback)=>{
-    return dispatch=>{
+export const updateUserCard = ({ wxid, password }, callback) => {
+    return dispatch => {
         fetch('http://118.123.11.246:11425/users/updateUserCard', {
             method: 'POST',
             credentials: 'include',
@@ -111,21 +110,21 @@ export const updateUserCard=({wxid,password},callback)=>{
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({wxid,password})
+            body: JSON.stringify({ wxid, password })
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
                     dispatch(getregister(data.data))
-                    return callback&&callback(data.code)
+                    return callback && callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))
-                    return callback&&callback(data.code)
+                    return callback && callback(data.code)
                 }
             })
     }
 }
 
-export const login = (password,callback) => {
+export const login = (password, callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/login', {
             method: 'POST',
@@ -135,15 +134,15 @@ export const login = (password,callback) => {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({password})
+            body: JSON.stringify({ password })
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
                     dispatch(authSuccess(data.data))
-                    return callback&&callback(data.code)
+                    return callback && callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))
-                    return callback&&callback(data.code)
+                    return callback && callback(data.code)
                 }
             })
     }
