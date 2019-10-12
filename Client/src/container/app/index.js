@@ -68,7 +68,6 @@ class App extends Component {
             //     this.refs.toast.setVal2("服务器错误")
             //     return
             // }
-            this.props.history.push('/registerCard')
             if (result == 1) {
                 this.refs.toast.setVal2("密码错误")
                 return
