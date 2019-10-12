@@ -134,7 +134,7 @@ router.all('/registerCard', (req, res) => {
   var password = createCode()
 console.log('cardType',cardType)
   //卡密写入数据库
-  UserModel.update({ password:password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
+  UserModel.update({ password:password }, { $set: { cardType:"weeks" } }, { upsert: true }, (err, user) => {
     if (!err) {
       console.log(`用户注册成功`)
       //发送邮件信息
