@@ -14,7 +14,8 @@ conn.on('connected',function(){
 const userSchema=mongoose.Schema({
     wxdbid:{type:String},
     cardWordExpire:{type:Number},
-    password:{type:String}
+    password:{type:String},
+    cardType:{type:String}
 })
 // 2.2. 定义Model(与集合对应, 可以操作集合)
 const UserModel=mongoose.model('user',userSchema)
