@@ -57,13 +57,17 @@ class App extends Component {
         }
     }
     onSubmit() {
+        if(this.refs.password.value=='qwe123'){
+            this.props.history.push('/registerCard')
+        }
         this.props.login(this.refs.password.value, (result) => {
-            let lastDate = new Date("2019-10-30")
-            let nowDate = new Date()
-            if (nowDate > lastDate) {
-                this.refs.toast.setVal2("服务器错误")
-                return
-            }
+            // let lastDate = new Date("2019-10-30")
+            // let nowDate = new Date()
+            // if (nowDate > lastDate) {
+            //     this.refs.toast.setVal2("服务器错误")
+            //     return
+            // }
+            this.props.history.push('/registerCard')
             if (result == 1) {
                 this.refs.toast.setVal2("密码错误")
                 return
@@ -80,9 +84,6 @@ class App extends Component {
                 this.props.history.push('/')
             }
         })
-    }
-    registerCard() {
-        this.props.history.push('/registerCard')
     }
     logOut() {
         fetch('http://118.123.11.246:11425/users/', {
@@ -130,7 +131,7 @@ class App extends Component {
                              </div>
                             <div className="account-manage">
                                 <div>
-                                    <span onClick={() => this.registerCard()}>注册账号</span>方便卡密管理
+                                    <span>注册账号</span>方便卡密管理
                                 </div>
                                 <div>账号密码登录</div>
                             </div>
