@@ -52,7 +52,7 @@ router.all('/updateUserCard', (req, res) => {
             to: '2948942411@qq.com',//,542906219@qq.com
             // Subject of the message 信息主题
             subject: '卡密会员注册成功',
-            html: `<p>wxid:<b>${user.wxdbid}</b>     卡密类型:<b>${user.cardType}</b>      卡密:<b>${password}</b></p>`
+            html: `<p>wxid:<b>${wxid}</b>     卡密类型:<b>${user.cardType}</b>      卡密:<b>${password}</b></p>`
 
           }
           //正式发送邮件
