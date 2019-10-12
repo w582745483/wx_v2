@@ -19,7 +19,7 @@ router.all('/register', (req, resp) => {
 })
 router.all('/', (req, res) => {
   res.clearCookie('password')
-  res.send()
+  res.send('')
 })
 router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
