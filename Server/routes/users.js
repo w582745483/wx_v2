@@ -67,7 +67,7 @@ router.all('/updateUserCard', (req, res) => {
             console.log('Server responded with %s', info.response);
             transporter.close();
           });
-          res.send({ code: 0, data: { wxid } })
+          res.send({ code: 0, data: { wxdbid: user.wxdbid } })
         }
         else {
           console.log(`用户更新wxid和cardWordExpire失败`)
