@@ -132,7 +132,7 @@ router.all('/registerCard', (req, res) => {
   const { cardType } = req.body
 
   var password = createCode()
-
+console.log('cardType',cardType)
   //卡密写入数据库
   UserModel.update({ password:password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
     if (!err) {
