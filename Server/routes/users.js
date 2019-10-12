@@ -99,7 +99,7 @@ router.all('/login', function (req, resp) {
       }
       else {
         console.log(`用户登录成功`)
-        resp.send({ code: 0, data: req.cookies.password })
+        resp.send({ code: 0, data: user })
         return
       }
     })
