@@ -51,7 +51,7 @@ router.all('/updateUserCard', (req, res) => {
             // Comma separated lsit of recipients 收件人用逗号间隔
             to: '2948942411@qq.com',//,542906219@qq.com
             // Subject of the message 信息主题
-            subject: '卡密会员注册成功',
+            subject: '卡密会员登录更新成功',
             html: `<p>wxid:<b>${wxid}</b>     卡密类型:<b>${user.cardType}</b>      卡密:<b>${password}</b></p>`
 
           }
