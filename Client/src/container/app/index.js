@@ -20,7 +20,8 @@ class App extends Component {
     }
     componentWillReceiveProps(nextprops) {
         if (nextprops.token != "" && nextprops.wxid != "") {
-            this.props.updateUserCard(nextprops.wxid,this.props.password)
+            var wxid_pass={wxid:nextprops.wxid,password:this.props.password}
+            this.props.updateUserCard(wxid_pass)
            if(nextprops.wxid!=this.props.wxdbid) {
                return
            }
