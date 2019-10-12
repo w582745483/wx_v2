@@ -18,7 +18,7 @@ router.all('/register', (req, resp) => {
   })
 })
 router.all('/', (req, res) => {
-  res.clearCookie('username')
+  res.clearCookie('password')
   res.send()
 })
 router.all('/updateUserCard', (req, res) => {
@@ -85,21 +85,21 @@ router.all('/updateUserCard', (req, res) => {
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
-  if (req.cookies.username) {
-    UserModel.findOne({ wxdbid: req.cookies.username }, (err, user) => {
+  if (req.cookies.password) {
+    UserModel.findOne({ password: req.cookies.password }, (err, user) => {
       if (!user) {
-        resp.clearCookie('username')
+        resp.clearCookie('password')
         resp.send()
         return
       }
       else if (user.cardWordExpire < new Date().getTime()) {
-        resp.clearCookie('username')
+        resp.clearCookie('password')
         resp.send({ code: 2, msg: '卡密过期' })
         return
       }
       else {
         console.log(`用户登录成功`)
-        resp.send({ code: 0, data: req.cookies.username })
+        resp.send({ code: 0, data: req.cookies.password })
         return
       }
     })
@@ -117,7 +117,7 @@ router.all('/login', function (req, resp) {
         resp.send({ code: 2, msg: '卡密过期' })
       }
       else {
-        resp.cookie('username', user.wxdbid);
+        resp.cookie('password', password);
         // resp.cookie('username','zhangsan',{maxAge:10000}); //有效期以毫秒为单位
         //获取cookie
         console.log(req.cookies);
