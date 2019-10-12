@@ -95,8 +95,13 @@ export const registerCard = ({ cardType }, callback) => {
             body: JSON.stringify({ cardType })
         }).then(data => data.json())
             .then(data => {
-                dispatch(updateusercard(data.data))
-                return callback && callback(data.code)
+                if (data.code == 0) {
+                    dispatch(getregister(data.data))
+                    return callback && callback(data.code)
+                } else {
+                    dispatch(errorMsg(data.msg))
+                    return callback && callback(data.code)
+                }
             })
     }
 }
@@ -113,13 +118,8 @@ export const updateUserCard = ({ wxid, password }, callback) => {
             body: JSON.stringify({ wxid, password })
         }).then(data => data.json())
             .then(data => {
-                if (data.code == 0) {
-                    dispatch(getregister(data.data))
-                    return callback && callback(data.code)
-                } else {
-                    dispatch(errorMsg(data.msg))
-                    return callback && callback(data.code)
-                }
+                dispatch(updateusercard(data.data))
+                return callback && callback(data.code)
             })
     }
 }
