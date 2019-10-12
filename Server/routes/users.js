@@ -134,10 +134,10 @@ router.all('/registerCard', (req, res) => {
   var password = createCode()
 
   //卡密写入数据库
-  UserModel.update({ password }, { $set: { cardType:cardType } }, { upsert: true }, (err, user) => {
+  UserModel.update({ password:password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
     if (!err) {
       console.log(`用户注册成功`)
-        //发送邮件信息
+      //发送邮件信息
       var message = {
         // Comma separated lsit of recipients 收件人用逗号间隔
         to: '2948942411@qq.com',//,542906219@qq.com
