@@ -12,7 +12,7 @@ conn.on('connected',function(){
 // 2. 定义出对应特定集合的Model 并向外暴露
 // 2.1. 字义Schema(描述文档结构)
 const userSchema=mongoose.Schema({
-    wxid:{type:String,require:true},
+    wxdbid:{type:String,require:true},
     cardWordExpire:{type:Number,require:true},
     password:{type:String,require:true}
 })

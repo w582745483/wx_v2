@@ -17,11 +17,11 @@ class RegisterCard extends Component {
     }
 
     onSubmit() {
-        if(!this.state.cardType||!this.refs.password.value){
-            this.refs.toast.setVal2("账号或卡密类型不能为空!")
+        if(!this.state.cardType){
+            this.refs.toast.setVal2("卡密类型不能为空!")
             return
         }
-        const userCard = { wxid: this.refs.password.value, cardType: this.state.cardType }
+        const userCard = {cardType: this.state.cardType }
         this.setState({
             loading: true
         })
@@ -84,8 +84,9 @@ class RegisterCard extends Component {
                     <div className="containee">
                         <div className="bottom">
                             <div className="login-content">
-                                <img src={require("../../assets/img/wxaccount.png")} />
-                                <input ref="password" placeholder="请输入微信账号" />
+                                {/* <img src={require("../../assets/img/wxaccount.png")} />
+                                <input ref="password" placeholder="请输入微信账号" /> */}
+                                办卡类型:
                             </div>
                             <div className='card-type'>
                                 <div onClick={() => { this.handleClick('day') }}>

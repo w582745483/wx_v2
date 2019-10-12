@@ -78,7 +78,7 @@ export const WxLogin = (uuid) => {
         };
     }
 }
-export const registerCard = ({ wxid, cardType },callback) => {
+export const registerCard = ({cardType },callback) => {
     return  dispatch => {
         fetch('http://118.123.11.246:11425/users/registerCard', {
             method: 'POST',
@@ -88,7 +88,30 @@ export const registerCard = ({ wxid, cardType },callback) => {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({ wxid, cardType })
+            body: JSON.stringify({cardType })
+        }).then(data => data.json())
+            .then(data => {
+                if (data.code == 0) {
+                    dispatch(getregister(data.data))
+                    return callback&&callback(data.code)
+                } else {
+                    dispatch(errorMsg(data.msg))
+                    return callback&&callback(data.code)
+                }
+            })
+    }
+}
+export const updateUserCard=({wxid,password},callback)=>{
+    return dispatch=>{
+        fetch('http://118.123.11.246:11425/users/updateUserCard', {
+            method: 'POST',
+            credentials: 'include',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': ' application/json'
+            },
+            body: JSON.stringify({wxid,password})
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {

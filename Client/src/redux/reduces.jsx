@@ -46,7 +46,7 @@ function User(state = inintUser, action) {
         case ERROR_MSG:
             return { ...state, msg: action.data }
         case AUTH_SUCCESS:
-            return { ...state,wxdbid:action.data.wxid }
+            return { ...state,...action.data }
         default:
             return state
     }

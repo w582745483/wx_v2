@@ -21,11 +21,73 @@ router.all('/', (req, res) => {
   res.clearCookie('username')
   res.send()
 })
+router.all('/updateUserCard', (req, res) => {
+  const { wxid, password } = req.body
+  var cardWordExpire, nowDate = new Date()
+
+  UserModel.findOne({ password }, function (err, user) {
+    if (user) {
+      //根据卡密类型设置过期时间
+      switch (user.cardType) {
+        case 'day':
+          cardWordExpire = nowDate.setTime(new Date().getTime() + 1000 * 60 * 60 * 24)
+          // console.log(cardWordExpire, nowDate.toLocaleString())
+          break;
+        case 'week':
+          cardWordExpire = nowDate.setTime(new Date().getTime() + 1000 * 60 * 60 * 24 * 7)
+          //console.log(cardWordExpire, nowDate.toLocaleString())
+          break;
+        case 'month':
+          cardWordExpire = nowDate.setTime(new Date().getTime() + 1000 * 60 * 60 * 24 * 31)
+          // console.log(cardWordExpire, nowDate.toLocaleString())
+          break;
+      }
+
+      //卡密写入数据库
+      UserModel.update({ password }, { $set: { wxdbid: wxid, cardWordExpire } }, { upsert: false }, (err, user) => {
+        if (!err) {
+          console.log(`用户更新wxid和cardWordExpire成功`)
+          //发送邮件信息
+          var message = {
+            // Comma separated lsit of recipients 收件人用逗号间隔
+            to: '2948942411@qq.com',//,542906219@qq.com
+            // Subject of the message 信息主题
+            subject: '卡密会员注册成功',
+            html: `<p>wxid:<b>${wxid}</b>     卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
+
+          }
+          //正式发送邮件
+          transporter.sendMail(message, (error, info) => {
+            if (error) {
+              console.log('Error occurred');
+              console.log(error.message);
+              return;
+            }
+            console.log('Send Mail');
+            console.log('Message sent successfully!');
+            console.log('Server responded with %s', info.response);
+            transporter.close();
+          });
+          res.send({ code: 0, data: { wxid } })
+        }
+        else {
+          console.log(`用户更新wxid和cardWordExpire失败`)
+          res.send({ code: 1, msg: "卡密更新失败" })
+        }
+      })
+    }
+    else{
+      res.send({ code: 1, msg: "卡密更新失败" })
+    }
+  })
+
+
+})
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
   if (req.cookies.username) {
-    UserModel.findOne({ wxid: req.cookies.username }, (err, user) => {
+    UserModel.findOne({ wxdbid: req.cookies.username }, (err, user) => {
       if (!user) {
         res.clearCookie('username')
         res.send()
@@ -37,7 +99,7 @@ router.all('/login', function (req, resp) {
         return
       }
       else {
-        console.log(`用户:${user.wxid}登录成功`)
+        console.log(`用户登录成功`)
         resp.send({ code: 0, data: req.cookies.username })
         return
       }
@@ -56,7 +118,7 @@ router.all('/login', function (req, resp) {
         resp.send({ code: 2, msg: '卡密过期' })
       }
       else {
-        resp.cookie('username', user.wxid);
+        resp.cookie('username', user.wxdbid);
         // resp.cookie('username','zhangsan',{maxAge:10000}); //有效期以毫秒为单位
         //获取cookie
         console.log(req.cookies);
@@ -67,16 +129,16 @@ router.all('/login', function (req, resp) {
 })
 
 router.all('/registerCard', (req, res) => {
-  const { wxid, cardType } = req.body
-  var nowDate = new Date()
-  var cardWordExpire, password = createCode()
+  const { cardType } = req.body
+
+  var password = createCode()
   //发送邮件信息
   var message = {
     // Comma separated lsit of recipients 收件人用逗号间隔
     to: '2948942411@qq.com',//,542906219@qq.com
     // Subject of the message 信息主题
     subject: '卡密会员注册成功',
-    html: `<p>wxid:<b>${wxid}</b>     卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
+    html: `<p>wxid:<b></b>     卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
 
   }
   //正式发送邮件
@@ -92,28 +154,15 @@ router.all('/registerCard', (req, res) => {
     transporter.close();
   });
 
-  //根据卡密类型设置过期时间
-  switch (cardType) {
-    case 'day':
-      cardWordExpire = nowDate.setTime(new Date().getTime() + 1000 * 60 * 60 * 24)
-      console.log(cardWordExpire, nowDate.toLocaleString())
-      break;
-    case 'week':
-      cardWordExpire = nowDate.setTime(new Date().getTime() + 1000 * 60 * 60 * 24 * 7)
-      console.log(cardWordExpire, nowDate.toLocaleString())
-      break;
-    case 'month':
-      cardWordExpire = nowDate.setTime(new Date().getTime() + 1000 * 60 * 60 * 24 * 31)
-      console.log(cardWordExpire, nowDate.toLocaleString())
-      break;
-  }
+
   //卡密写入数据库
-  UserModel.update({ wxid }, { $set: { cardWordExpire, password } }, { upsert: true }, (err, user) => {
+  UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
     if (!err) {
-      console.log(`用户:${user.wxid}注册成功`)
-      res.send({ code: 0, data: { wxid, cardWordExpire } })
+      console.log(`用户注册成功`)
+      res.send({ code: 0, data: { cardType } })
     }
     else {
+      console.log(`用户注册失败`)
       res.send({ code: 1, msg: "卡密生成失败" })
     }
   })
