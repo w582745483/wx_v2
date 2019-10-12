@@ -24,7 +24,7 @@ router.all('/', (req, res) => {
 router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
   var cardWordExpire, nowDate = new Date()
-
+console.log("password",password)
   UserModel.findOne({ password }, function (err, user) {
     if (user) {
       //根据卡密类型设置过期时间
