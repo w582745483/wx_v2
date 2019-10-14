@@ -18,7 +18,7 @@ router.all('/register', (req, resp) => {
   })
 })
 router.all('/', (req, res) => {
-  res.send({token:''})
+  res.send({token:null})
 })
 router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
@@ -95,7 +95,7 @@ router.all('/login', function (req, resp) {
         return
       }
       else if (user.cardWordExpire < new Date().getTime()) {
-        resp.send({ code: 2, msg: '卡密过期',token:'' })
+        resp.send({ code: 2, msg: '卡密过期',token:null })
         return
       }
       else {

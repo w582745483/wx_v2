@@ -140,7 +140,7 @@ export const login = (password, callback) => {
             .then(data => {
                 if (data.code == 0) {
                     dispatch(authSuccess(data.data))
-                    localStorage.setItem('password',data.data.password)
+                    localStorage.setItem('password',data.token)
                     return callback && callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))
