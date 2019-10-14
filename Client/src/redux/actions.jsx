@@ -132,13 +132,15 @@ export const login = (password, callback) => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': ' application/json'
+                'Accept': ' application/json',
+                'Token':localStorage.getItem('password')
             },
             body: JSON.stringify({ password })
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
                     dispatch(authSuccess(data.data))
+                    localStorage.setItem('password',data.data.password)
                     return callback && callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))

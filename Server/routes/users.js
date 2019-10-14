@@ -120,7 +120,7 @@ router.all('/login', function (req, resp) {
           resp.send({ code: 2, msg: '卡密过期' })
         }
         else {
-          resp.cookie('password', password,{httpOnly:false});
+          resp.cookie('password', password);
           // resp.cookie('username','zhangsan',{maxAge:10000}); //有效期以毫秒为单位
           //获取cookie
           resp.send({ code: 0, data: user })
