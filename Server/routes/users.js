@@ -90,7 +90,6 @@ router.all('/login', function (req, resp) {
     console.log('走的token校验')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
-        resp.clearCookie('password')
         resp.send({ code: 3, msg: '不存在用户' })
         return
       }
