@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 const md5 = require('blueimp-md5')
 const transporter = require('../email')
 const filter = { password: 0 }//过滤密码
@@ -84,10 +84,9 @@ router.all('/updateUserCard', (req, res) => {
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
-  console.log('header',req.headers.token)
-  console.log('req.body', req.body)
-  console.log('(req.cookies',req.cookies)
-  if (req.headers.token) {
+  //console.log('header',req.headers)
+  //console.log('req.body', req.body)
+  if (req.headers.token!=='null'&&req.headers.token!==''&&req.headers.token!=='undefined') {
     console.log('if')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
