@@ -84,7 +84,7 @@ router.all('/updateUserCard', (req, res) => {
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
-  console.log('header',req.headers)
+  console.log('header',req.headers.token)
   console.log('req.body', req.body)
   console.log('(req.cookies',req.cookies)
   if (req.headers.token!=='null') {
