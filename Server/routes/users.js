@@ -18,8 +18,7 @@ router.all('/register', (req, resp) => {
   })
 })
 router.all('/', (req, res) => {
-  res.clearCookie('password')
-  res.send()
+  res.send({token:''})
 })
 router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
@@ -89,7 +88,6 @@ router.all('/login', function (req, resp) {
   console.log('req.body', req.body)
   console.log('(req.cookies',req.cookies)
   if (req.headers.token!=='null') {
-   console.log('if')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
         resp.clearCookie('password')
@@ -97,8 +95,7 @@ router.all('/login', function (req, resp) {
         return
       }
       else if (user.cardWordExpire < new Date().getTime()) {
-        resp.clearCookie('password')
-        resp.send({ code: 2, msg: '卡密过期' })
+        resp.send({ code: 2, msg: '卡密过期',token:'' })
         return
       }
       else {
@@ -109,7 +106,6 @@ router.all('/login', function (req, resp) {
     })
 
   } else {
-    console.log('else')
     UserModel.findOne({ password }, function (err, user) {
       if (!password) {
         resp.send({ code: 3, msg: '密码不能为空' })
@@ -125,7 +121,7 @@ router.all('/login', function (req, resp) {
           resp.cookie('password', password);
           // resp.cookie('username','zhangsan',{maxAge:10000}); //有效期以毫秒为单位
           //获取cookie
-          resp.send({ code: 0, data: user })
+          resp.send({ code: 0, data: user,token:user.wxdbid })
         }
       }
     })
