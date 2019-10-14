@@ -76,7 +76,7 @@ router.all('/updateUserCard', (req, res) => {
       })
     }
     else {
-      res.send({ code: 1, data:user.wxdbid })
+      res.send({ code: 1, data: user.wxdbid })
     }
   })
 
@@ -85,6 +85,7 @@ router.all('/updateUserCard', (req, res) => {
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
+  console.log('req.body',req.body)
   if (req.cookies.password) {
     UserModel.findOne({ password: req.cookies.password }, (err, user) => {
       if (!user) {
@@ -105,7 +106,7 @@ router.all('/login', function (req, resp) {
     })
 
   }
-  password&&UserModel.findOne({ password }, function (err, user) {
+  UserModel.findOne({ password }, function (err, user) {
     if (!password) {
       resp.send({ code: 3, msg: '密码不能为空' })
       return

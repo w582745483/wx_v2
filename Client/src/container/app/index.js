@@ -81,7 +81,7 @@ class App extends Component {
                     isSubmit: true
                 })
                 this.props.WxLogin(uuid())
-                this.props.history.push('/')
+               // this.props.history.push('/')
             }
         })
     }
