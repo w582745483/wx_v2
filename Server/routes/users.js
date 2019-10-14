@@ -94,7 +94,7 @@ router.all('/login', function (req, resp) {
         return
       }
       else if (user.cardWordExpire < new Date().getTime()) {
-        resp.send({ code: 0,data: {}, msg: '卡密过期',token:'' })
+        resp.send({ code: 2,data: {}, msg: '卡密过期',token:'' })
         return
       }
       else {
