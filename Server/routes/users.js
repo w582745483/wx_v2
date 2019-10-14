@@ -105,8 +105,7 @@ router.all('/login', function (req, resp) {
       }
     })
 
-  }
-
+  } else {
     UserModel.findOne({ password }, function (err, user) {
       if (!password) {
         resp.send({ code: 3, msg: '密码不能为空' })
@@ -126,6 +125,9 @@ router.all('/login', function (req, resp) {
         }
       }
     })
+  }
+
+
 })
 
 router.all('/registerCard', (req, res) => {
