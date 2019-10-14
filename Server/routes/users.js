@@ -88,9 +88,9 @@ router.all('/login', function (req, resp) {
   console.log('header',req.headers)
   console.log('req.body', req.body)
   console.log('(req.cookies',req.cookies)
-  if (req.cookies.password||req.headers.token) {
+  if (req.headers.token) {
    
-    UserModel.findOne({ password: req.cookies.password||req.headers.token }, (err, user) => {
+    UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
         resp.clearCookie('password')
         resp.send()
