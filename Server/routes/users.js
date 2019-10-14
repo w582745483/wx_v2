@@ -88,7 +88,7 @@ router.all('/login', function (req, resp) {
   console.log('header',req.headers)
   console.log('req.body', req.body)
   console.log('(req.cookies',req.cookies)
-  if (req.headers.token) {
+  if (req.headers.token!==null) {
    console.log('if')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
