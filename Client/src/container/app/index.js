@@ -96,6 +96,7 @@ class App extends Component {
             },
         }).then(() => {
             window.location.href = '/'
+            localStorage.setItem('password','')
         })
 
     }

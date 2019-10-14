@@ -18,7 +18,7 @@ router.all('/register', (req, resp) => {
   })
 })
 router.all('/', (req, res) => {
-  res.send({token:''})
+  res.send({code: 0,token:''})
 })
 router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
@@ -87,7 +87,8 @@ router.all('/login', function (req, resp) {
   console.log('header',req.headers.token)
   console.log('req.body', req.body)
   console.log('(req.cookies',req.cookies)
-  if (req.headers.token!=='null') {
+  if (req.headers.token) {
+    console.log('if')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
         resp.clearCookie('password')
