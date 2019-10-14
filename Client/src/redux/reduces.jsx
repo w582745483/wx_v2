@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62, GET_TOKEN,UPDATE_WXDBID } from './action-types'
+import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62, GET_TOKEN,UPDATE_WXDBID,CARDINFO } from './action-types'
 const initQr = {
     loading: true,
     qr: "",
@@ -13,6 +13,10 @@ const initQr = {
 }
 const inintUser = {
     wxdbid:'',
+}
+const initCardInfo={
+    totalNum:'',
+    bindNum:''
 }
 
 function Qr(state = initQr, action) {
@@ -54,6 +58,12 @@ function User(state = inintUser, action) {
     }
 }
 
+function CardInfo(state=initCardInfo,action){
+    switch (action.type){
+        case CARDINFO:
+            return {...state,...action.data}
+    }
+}
 export default combineReducers({
     Qr,
     User

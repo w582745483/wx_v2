@@ -1,0 +1,27 @@
+@import '../../styles/index.less';
+
+.log-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: auto;
+    background-image: url("../../assets/img/background.jpg");
+    background-size: cover;
+    padding: 0 0 0 4rem;
+    &:extend(.ls-flex);
+    &:extend(.ls-justify-center);
+    &:extend(.ls-align-center);
+    &:extend(.ls-column);
+    &:extend(.ls-align-start);
+    div{
+        font-size: 1.5rem;
+        font-family: 'Courier New', Courier, monospace;
+        color: #FFFFFF;
+        span{
+            margin-left: 1rem;
+            color: red;
+        }
+    }
+
+}

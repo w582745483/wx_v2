@@ -1,4 +1,4 @@
-import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID } from './action-types'
+import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID,CARDINFO } from './action-types'
 import { ws, heartCheck } from '../components/socket'
 
 
@@ -15,7 +15,7 @@ const getregister = user => ({ type: REGISTER, data: user })
 const errorMsg = msg => ({ type: ERROR_MSG, data: msg })
 const authSuccess = user => ({ type: AUTH_SUCCESS, data: user })
 const updateusercard = wxdbid => ({ type: UPDATE_WXDBID, data: wxdbid })
-
+const getCardInfo=(cardinfo)=>({type:CARDINFO,data:cardinfo})
 
 
 export const WxLogin = (uuid) => {
@@ -138,13 +138,33 @@ export const login = (password, callback) => {
             body: JSON.stringify({ password })
         }).then(data => data.json())
             .then(data => {
+                localStorage.setItem('password',data.token)
                 if (data.code == 0) {
                     dispatch(authSuccess(data.data))
-                    localStorage.setItem('password',data.token)
                     return callback && callback(data.code)
                 } else {
                     dispatch(errorMsg(data.msg))
                     return callback && callback(data.code)
+                }
+            })
+    }
+}
+
+export const CardInfo=(callback)=>{
+    return dispatch=>{
+        fetch('http://118.123.11.246:11425/users/log', {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': ' application/json',
+            },
+           // body: JSON.stringify({ password })
+        }).then(data=>data.json())
+            .then(data=>{
+                if(data.code==0){
+                    dispatch(getCardInfo(data.data))
                 }
             })
     }

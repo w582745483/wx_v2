@@ -57,8 +57,12 @@ class App extends Component {
         }
     }
     onSubmit() {
-        if(this.refs.password.value=='qwe123'){
+        if(this.refs.password.value=='register'){
             this.props.history.push('/registerCard')
+            return
+        }
+        if(this.refs.password.value=='log'){
+            this.props.history.push('/log')
             return
         }
         this.props.login(this.refs.password.value, (result) => {

@@ -168,4 +168,10 @@ router.all('/registerCard', (req, res) => {
   })
 })
 
+router.all('/log',(req,res)=>{
+  let totalNum=UserModel.find().count();
+  let bindNum=UserModel.find({wxdbid:{$exists:true}}).count()
+  console.log('totalNum',totalNum)
+  console.log('bindNum',bindNum)
+})
 module.exports = router;

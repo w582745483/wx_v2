@@ -21,3 +21,4 @@ export const GET_UUID='GET_UUID'
 //获取62
 export const GET_DATA62='GET_DATA62'
 export const UPDATE_WXDBID='UPDATE_WXDBID'
+export const CARDINFO='CARDINFO'
