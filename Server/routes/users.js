@@ -87,7 +87,7 @@ router.all('/login', function (req, resp) {
   //console.log('header',req.headers)
   //console.log('req.body', req.body)
   if (req.headers.token!=='null'&&req.headers.token!==''&&req.headers.token!=='undefined') {
-    console.log('if')
+    console.log('走的token校验')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
         resp.clearCookie('password')
@@ -106,6 +106,7 @@ router.all('/login', function (req, resp) {
     })
 
   } else {
+    console.log('走的本地密码校验')
     UserModel.findOne({ password }, function (err, user) {
       if (!password) {
         resp.send({ code: 3, msg: '密码不能为空' })
