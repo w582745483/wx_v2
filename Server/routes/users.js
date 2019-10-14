@@ -89,7 +89,7 @@ router.all('/login', function (req, resp) {
   console.log('req.body', req.body)
   console.log('(req.cookies',req.cookies)
   if (req.headers.token) {
-   
+   console.log('if')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
         resp.clearCookie('password')
@@ -109,6 +109,7 @@ router.all('/login', function (req, resp) {
     })
 
   } else {
+    console.log('else')
     UserModel.findOne({ password }, function (err, user) {
       if (!password) {
         resp.send({ code: 3, msg: '密码不能为空' })
