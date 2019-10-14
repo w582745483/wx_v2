@@ -87,7 +87,7 @@ router.all('/login', function (req, resp) {
   //console.log('header',req.headers)
   //console.log('req.body', req.body)
   if (req.headers.token!=='null'&&req.headers.token!==''&&req.headers.token!=='undefined') {
-    console.log('if')
+    console.log('走的token校验')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
         resp.clearCookie('password')
@@ -95,7 +95,7 @@ router.all('/login', function (req, resp) {
         return
       }
       else if (user.cardWordExpire < new Date().getTime()) {
-        resp.send({ code: 2,data:{}, msg: '卡密过期',token:'null' })
+        resp.send({ code: 0,data: {}, msg: '卡密过期',token:'' })
         return
       }
       else {
@@ -106,6 +106,7 @@ router.all('/login', function (req, resp) {
     })
 
   } else {
+    console.log('走的本地密码校验')
     UserModel.findOne({ password }, function (err, user) {
       if (!password) {
         resp.send({ code: 3, msg: '密码不能为空' })
@@ -118,7 +119,7 @@ router.all('/login', function (req, resp) {
           resp.send({ code: 2, msg: '卡密过期' })
         }
         else {
-         // resp.cookie('password', password);
+          resp.cookie('password', password);
           // resp.cookie('username','zhangsan',{maxAge:10000}); //有效期以毫秒为单位
           //获取cookie
           resp.send({ code: 0, data: user,token:password })
