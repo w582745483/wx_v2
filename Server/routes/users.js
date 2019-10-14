@@ -86,7 +86,9 @@ router.all('/updateUserCard', (req, res) => {
 router.all('/login', function (req, resp) {
   const { password } = req.body
   console.log('req.body', req.body)
+  console.log('(req.cookies',req.cookies)
   if (req.cookies.password) {
+   
     UserModel.findOne({ password: req.cookies.password }, (err, user) => {
       if (!user) {
         resp.clearCookie('password')
