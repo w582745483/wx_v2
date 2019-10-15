@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { registerCard } from '../../redux/actions'
+import { CardInfo } from '../../redux/actions'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
+
 class Log extends Component {
     constructor(props) {
         super(props)
