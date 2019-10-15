@@ -170,9 +170,7 @@ router.all('/registerCard', (req, res) => {
 
 router.all('/log', async (req, res) => {
   let totalNum = await UserModel.count({});
-
   let bindNum = await UserModel.count({ wxdbid: { $exists: true } })
-  console.log(111111, totalNum, bindNum)
-
+  res.send({ code: 0, data: { totalNum, bindNum } })
 })
 module.exports = router;
