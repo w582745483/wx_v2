@@ -12,34 +12,41 @@ class RegisterCard extends Component {
             weekimgType: 'no-choose',
             monthimgType: 'no-choose',
             loading: false,
+            clickButton: '注册卡密'
 
         }
     }
 
-    onSubmit() {
-        if(!this.state.cardType){
-            this.refs.toast.setVal2("卡密类型不能为空!")
-            return
-        }
-        const userCard = {cardType: this.state.cardType }
-        this.setState({
-            loading: true
-        })
-        this.props.registerCard(userCard, (result) => {
-            if (result == 0) {
-                this.setState({
-                    loading: false
-                })
-                this.refs.toast.setVal2("注册成功")
-                setTimeout(() => {
-                    this.props.history.push('/')
-                }, 1000)
+    onSubmit(text) {
+        if (text == "注册卡密") {
+            if (!this.state.cardType) {
+                this.refs.toast.setVal2("卡密类型不能为空!")
+                return
             }
-            else{
-                this.refs.toast.setVal2("注册失败,请重试!")
-            }
+            const userCard = { cardType: this.state.cardType }
+            this.setState({
+                loading: true
+            })
+            this.props.registerCard(userCard, (result) => {
+                if (result == 0) {
+                    this.setState({
+                        loading: false,
+                        clickButton: '立即登录'
+                    })
+                    this.refs.toast.setVal2("注册成功")
+                    // setTimeout(() => {
+                    //     this.props.history.push('/')
+                    // }, 1000)
+                }
+                else {
+                    this.refs.toast.setVal2("注册失败,请重试!")
+                }
 
-        })
+            })
+        } else if (text == "立即登录") {
+            this.props.history.push('/')
+        }
+
 
 
     }
@@ -75,7 +82,8 @@ class RegisterCard extends Component {
 
     }
     render() {
-        const { dayimgType, weekimgType, monthimgType, loading } = this.state
+        const { dayimgType, weekimgType, monthimgType, loading, clickButton } = this.state
+        const {password}=this.props
 
         return (
             <React.Fragment>
@@ -87,6 +95,9 @@ class RegisterCard extends Component {
                                 {/* <img src={require("../../assets/img/wxaccount.png")} />
                                 <input ref="password" placeholder="请输入微信账号" /> */}
                                 办卡类型:
+                            </div>
+                            <div className='password'>
+                                <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input value={password} />
                             </div>
                             <div className='card-type_register'>
                                 <div onClick={() => { this.handleClick('day') }}>
@@ -102,9 +113,9 @@ class RegisterCard extends Component {
                                     <span>月卡</span>
                                 </div>
                             </div>
-                            <div onClick={() => this.onSubmit()} className="login-button__register">
-                                注册卡密
-                             </div>
+                            <div onClick={() => this.onSubmit(clickButton)} className="login-button__register">
+                                {clickButton}
+                            </div>
                         </div>
 
                     </div>

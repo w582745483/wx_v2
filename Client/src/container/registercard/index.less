@@ -107,6 +107,21 @@ only screen and (max-device-width:550px) {
                 }
             }
 
+            .password {
+                &:extend(.ls-flex);
+                &:extend(.ls-align-center);
+
+                padding-bottom: 0.3rem;
+                color: #FFFFFF;
+
+                input {
+                    text-align: center;
+                    background: transparent;
+                    border-bottom: 1px solid white;
+                    color: white;
+                }
+            }
+
             .card-type_register {
                 color: #FFFFFF;
                 margin-top: 1rem;
@@ -138,6 +153,7 @@ only screen and (max-device-width:550px) {
                 margin-top: 40px;
                 width: 80%;
             }
+
 
         }
 
