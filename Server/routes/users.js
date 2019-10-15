@@ -159,7 +159,7 @@ router.all('/registerCard', (req, res) => {
         console.log('Server responded with %s', info.response);
         transporter.close();
       });
-      res.send({ code: 0, data: { cardType } })
+      res.send({ code: 0, data: { cardType, password } })
     }
     else {
       console.log(`用户注册失败`, err)
