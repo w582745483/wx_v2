@@ -168,15 +168,11 @@ router.all('/registerCard', (req, res) => {
   })
 })
 
-router.all('/log', async(req, res) => {
-  let totalNum=await UserModel.count({}, (err, count) => {
-    //console.log('卡密总数量:', count)
-  });
+router.all('/log', async (req, res) => {
+  let totalNum = await UserModel.count({});
 
-  let bindNum=await UserModel.count({ wxdbid: { $exists: true } }, (err, count) => {
-    //console.log('绑定卡密数量:', count)
-  })
-  console.log(111111,totalNum,bindNum)
+  let bindNum = await UserModel.count({ wxdbid: { $exists: true } })
+  console.log(111111, totalNum, bindNum)
 
 })
 module.exports = router;
