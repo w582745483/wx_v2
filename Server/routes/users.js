@@ -18,7 +18,7 @@ router.all('/register', (req, resp) => {
   })
 })
 router.all('/', (req, res) => {
-  res.send({code: 0,token:''})
+  res.send({ code: 0, token: '' })
 })
 router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
@@ -86,7 +86,7 @@ router.all('/login', function (req, resp) {
   const { password } = req.body
   //console.log('header',req.headers)
   //console.log('req.body', req.body)
-  if (req.headers.token!=='null'&&req.headers.token!==''&&req.headers.token!=='undefined') {
+  if (req.headers.token !== 'null' && req.headers.token !== '' && req.headers.token !== 'undefined') {
     console.log('走的token校验')
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
@@ -94,12 +94,12 @@ router.all('/login', function (req, resp) {
         return
       }
       else if (user.cardWordExpire < new Date().getTime()) {
-        resp.send({ code: 2,data: {}, msg: '卡密过期',token:'' })
+        resp.send({ code: 2, data: {}, msg: '卡密过期', token: '' })
         return
       }
       else {
         console.log(`用户登录成功`)
-        resp.send({ code: 0, data: user,token:req.headers.token })
+        resp.send({ code: 0, data: user, token: req.headers.token })
         return
       }
     })
@@ -121,7 +121,7 @@ router.all('/login', function (req, resp) {
           resp.cookie('password', password);
           // resp.cookie('username','zhangsan',{maxAge:10000}); //有效期以毫秒为单位
           //获取cookie
-          resp.send({ code: 0, data: user,token:password })
+          resp.send({ code: 0, data: user, token: password })
         }
       }
     })
@@ -168,12 +168,13 @@ router.all('/registerCard', (req, res) => {
   })
 })
 
-router.all('/log',(req,res)=>{
-  UserModel.count({},(err,count)=>{
-console.log('totalNum',count)
+router.all('/log', (req, res) => {
+  UserModel.count({}, (err, count) => {
+    console.log('totalNum', count)
   });
-  let bindNum=UserModel.find({wxdbid:{$exists:true}}).count()
-  
-  //console.log('bindNum11111111111111111111111111111111111111111111',bindNum)
+   UserModel.count({ wxdbid: { $exists: true } },(err,count)=>{
+    console.log('bindNum', count)
+   })
+
 })
 module.exports = router;
