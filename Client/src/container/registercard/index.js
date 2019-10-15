@@ -78,6 +78,10 @@ class RegisterCard extends Component {
                 break;
         }
     }
+
+    handleFocus(){
+        this.refs.input.select()
+    }
     componentWillReceiveProps(nextProps) {
 
     }
@@ -97,7 +101,7 @@ class RegisterCard extends Component {
                                 办卡类型:
                             </div>
                            { clickButton=='立即登录'&&<div className='password'>
-                                <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input value={password} />
+                                <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input defaultValue={password} ref='input' onFocus={()=>this.handleFocus()} />
                             </div>}
                             <div className='card-type_register'>
                                 <div onClick={() => { this.handleClick('day') }}>

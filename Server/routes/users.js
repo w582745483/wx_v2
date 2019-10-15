@@ -134,38 +134,46 @@ router.all('/registerCard', (req, res) => {
   const { cardType } = req.body
 
   var password = createCode()
-  //卡密写入数据库
-  UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
-    if (!err) {
-      console.log(`用户注册成功`)
-      //发送邮件信息
-      var message = {
-        // Comma separated lsit of recipients 收件人用逗号间隔
-        to: '2948942411@qq.com',//,542906219@qq.com
-        // Subject of the message 信息主题
-        subject: '卡密会员注册成功',
-        html: `卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
+  UserModel.findOne({ password }, (err, user) => {
+    if (user) {
+      password = createCode()
+    }
 
-      }
-      //正式发送邮件
-      transporter.sendMail(message, (error, info) => {
-        if (error) {
-          console.log('Error occurred');
-          console.log(error.message);
-          return;
+    //卡密写入数据库
+    UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
+      if (!err) {
+        console.log(`用户注册成功`)
+        //发送邮件信息
+        var message = {
+          // Comma separated lsit of recipients 收件人用逗号间隔
+          to: '2948942411@qq.com',//,542906219@qq.com
+          // Subject of the message 信息主题
+          subject: '卡密会员注册成功',
+          html: `卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
+
         }
-        console.log('Send Mail');
-        console.log('Message sent successfully!');
-        console.log('Server responded with %s', info.response);
-        transporter.close();
-      });
-      res.send({ code: 0, data: { cardType, password } })
-    }
-    else {
-      console.log(`用户注册失败`, err)
-      res.send({ code: 1, msg: "卡密生成失败" })
-    }
+        //正式发送邮件
+        transporter.sendMail(message, (error, info) => {
+          if (error) {
+            console.log('Error occurred');
+            console.log(error.message);
+            return;
+          }
+          console.log('Send Mail');
+          console.log('Message sent successfully!');
+          console.log('Server responded with %s', info.response);
+          transporter.close();
+        });
+        res.send({ code: 0, data: { cardType, password } })
+      }
+      else {
+        console.log(`用户注册失败`, err)
+        res.send({ code: 1, msg: "卡密生成失败" })
+      }
+    })
+
   })
+
 })
 
 router.all('/log', async (req, res) => {
