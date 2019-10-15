@@ -159,6 +159,7 @@ export const CardInfo=(callback)=>{
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json',
+                'Token':''
             },
            // body: JSON.stringify({ password })
         }).then(data=>data.json())
