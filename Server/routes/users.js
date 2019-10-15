@@ -168,7 +168,7 @@ router.all('/registerCard', (req, res) => {
   })
 })
 
-router.all('/log', (req, res) => {
+router.all('/log', async(req, res) => {
   let count=await UserModel.count({}, (err, count) => {
     //console.log('卡密总数量:', count)
   });
