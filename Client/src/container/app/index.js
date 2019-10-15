@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
-import { WxLogin, login, updateUserCard } from '../../redux/actions'
+import { WxLogin, login, updateUserCard,CardInfo } from '../../redux/actions'
 let flag = false
 class App extends Component {
     constructor(props) {
@@ -63,6 +63,7 @@ class App extends Component {
         }
         if(this.refs.password.value=='log'){
             this.props.history.push('/log')
+            this.props.CardInfo()
             return
         }
         this.props.login(this.refs.password.value, (result) => {
@@ -156,5 +157,5 @@ class App extends Component {
 }
 export default connect(
     state => ({ ...state.Qr, ...state.User }),
-    { WxLogin, login, updateUserCard }
+    { WxLogin, login, updateUserCard ,CardInfo }
 )(App)

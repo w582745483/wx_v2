@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62, GET_TOKEN,UPDATE_WXDBID,CARDINFO } from './action-types'
+import { GET_QR, GET_HEADER, GET_WXID, GET_NICK_NAME, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_UUID, GET_DATA62, GET_TOKEN, UPDATE_WXDBID, CARDINFO } from './action-types'
 const initQr = {
     loading: true,
     qr: "",
@@ -12,11 +12,11 @@ const initQr = {
     loginSuccess: false
 }
 const inintUser = {
-    wxdbid:'',
+    wxdbid: '',
 }
-const initCardInfo={
-    totalNum:'',
-    bindNum:''
+const initCardInfo = {
+    totalNum: '',
+    bindNum: ''
 }
 
 function Qr(state = initQr, action) {
@@ -50,21 +50,24 @@ function User(state = inintUser, action) {
         case ERROR_MSG:
             return { ...state, msg: action.data }
         case AUTH_SUCCESS:
-            return { ...state,...action.data }
-        case UPDATE_WXDBID:      
-            return {...action.data}    
+            return { ...state, ...action.data }
+        case UPDATE_WXDBID:
+            return { ...action.data }
         default:
             return state
     }
 }
 
-function CardInfo(state=initCardInfo,action){
-    switch (action.type){
+function CardInfo(state = initCardInfo, action) {
+    switch (action.type) {
         case CARDINFO:
-            return {...state,...action.data}
+            return { ...state, ...action.data }
+        default:
+            return state
     }
 }
 export default combineReducers({
     Qr,
-    User
+    User,
+    CardInfo
 })
