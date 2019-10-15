@@ -75,7 +75,7 @@ router.all('/updateUserCard', (req, res) => {
       })
     }
     else {
-      res.send({ code: 1, data: user.wxdbid })
+      res.send({ code: 1, data: {wxdbid:user.wxdbid} })
     }
   })
 
