@@ -96,9 +96,9 @@ class RegisterCard extends Component {
                                 <input ref="password" placeholder="请输入微信账号" /> */}
                                 办卡类型:
                             </div>
-                            <div className='password'>
+                           { clickButton=='立即登录'&&<div className='password'>
                                 <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input value={password} />
-                            </div>
+                            </div>}
                             <div className='card-type_register'>
                                 <div onClick={() => { this.handleClick('day') }}>
                                     <img src={require(`../../assets/img/${dayimgType}.png`)} />
