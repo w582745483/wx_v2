@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
-import { WxLogin, login, updateUserCard,CardInfo } from '../../redux/actions'
+import { WxLogin, login, updateUserCard, CardInfo } from '../../redux/actions'
 let flag = false
 class App extends Component {
     constructor(props) {
@@ -15,53 +15,55 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        //开启websicket
         this.onSubmit()
     }
-    componentWillReceiveProps(nextprops) {
-        if (nextprops.token != "" && nextprops.wxid != "") {
+    componentWillReceiveProps(nextprops, ) {
+        if (nextprops.token != '' && nextprops.wxid != '' && nextprops.data62 != '') {
             var wxid_pass = { wxid: nextprops.wxid, password: this.props.password }
-            this.props.updateUserCard(wxid_pass, () => {
-                if (nextprops.wxid != this.props.wxdbid) {
-                    return
-                }
-                const data = {
-                    action: "token",
-                    UUID: nextprops.uuid,
-                    token: nextprops.token,
-                    data62: nextprops.data62,
-                    wxid: nextprops.wxid
-                }
-                console.log("data", data)
-                if (flag == false && 'WebSocket' in window) {
-                    flag = true
-                    var ws = new WebSocket("ws://47.103.112.148:22222");
-                    ws.onopen = function () {
-                        console.log("WebSocket onopen");
-                        ws.send(JSON.stringify(data));
-                    };
+            if (!flag) {
+                flag = true
+                this.props.updateUserCard(wxid_pass, () => {
+                    if (nextprops.wxid != this.props.wxdbid) {
+                        return
+                    }
+                    const data = {
+                        action: "token",
+                        UUID: nextprops.uuid,
+                        token: nextprops.token,
+                        data62: nextprops.data62,
+                        wxid: nextprops.wxid
+                    }
+                    console.log("data", data)
+                    if ('WebSocket' in window) {
+                        var ws = new WebSocket("ws://47.103.112.148:22222");
+                        ws.onopen = function () {
+                            console.log("WebSocket onopen");
+                            ws.send(JSON.stringify(data));
+                        };
 
-                    ws.onerror = function (evt) {
-                        console.log("WebSocket onerror", evt);
-                        ws.onopen();
-                    };
-                    ws.onclose = function () {
-                        // 断线重连
-                        console.log("WebSocket onclose");
-                        ws.onopen();
-                    };
-                    return ws
-                }
-            })
+                        ws.onerror = function (evt) {
+                            console.log("WebSocket onerror", evt);
+                            ws.onopen();
+                        };
+                        ws.onclose = function () {
+                            // 断线重连
+                            console.log("WebSocket 断线重连");
+                            ws.onopen();
+                        };
+                        return ws
+                    }
+                })
+            }
+
 
         }
     }
     onSubmit() {
-        if(this.refs.password.value=='register'){
+        if (this.refs.password.value == 'register') {
             this.props.history.push('/registerCard')
             return
         }
-        if(this.refs.password.value=='log'){
+        if (this.refs.password.value == 'log') {
             this.props.history.push('/log')
             this.props.CardInfo()
             return
@@ -86,7 +88,7 @@ class App extends Component {
                     isSubmit: true
                 })
                 this.props.WxLogin(uuid())
-               // this.props.history.push('/')
+                // this.props.history.push('/')
             }
         })
     }
@@ -101,7 +103,7 @@ class App extends Component {
             },
         }).then(() => {
             window.location.href = '/'
-            localStorage.setItem('password','')
+            localStorage.setItem('password', '')
         })
 
     }
@@ -157,5 +159,5 @@ class App extends Component {
 }
 export default connect(
     state => ({ ...state.Qr, ...state.User }),
-    { WxLogin, login, updateUserCard ,CardInfo }
+    { WxLogin, login, updateUserCard, CardInfo }
 )(App)

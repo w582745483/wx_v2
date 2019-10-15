@@ -24,7 +24,7 @@ router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
   var cardWordExpire, nowDate = new Date()
   UserModel.findOne({ password }, function (err, user) {
-    if (!user.wxdbid) {
+    if (user.wxdbid != 'undefined') {
       //根据卡密类型设置过期时间
       switch (user.cardType) {
         case 'day':
@@ -172,9 +172,9 @@ router.all('/log', (req, res) => {
   UserModel.count({}, (err, count) => {
     console.log('totalNum', count)
   });
-   UserModel.count({ wxdbid: { $exists: true } },(err,count)=>{
+  UserModel.count({ wxdbid: { $exists: true } }, (err, count) => {
     console.log('bindNum', count)
-   })
+  })
 
 })
 module.exports = router;
