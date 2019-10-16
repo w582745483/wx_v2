@@ -17,14 +17,15 @@ const userSchema=mongoose.Schema({
     password:{type:String},
     cardType:{type:String}
 })
+// 2.2. 定义Model(与集合对应, 可以操作集合)
+const UserModel=mongoose.model('user',userSchema)
+
 const adminSchema=mongoose.Schema({
     account:{type:String},
     amount:{type:String}
 })
-// 2.2. 定义Model(与集合对应, 可以操作集合)
-const UserModel=mongoose.model('user',userSchema,'user')
 
-const AdminModel=mongoose.model('administrator',adminSchema,'administrator')
+const AdminModel=mongoose.model('administrator',adminSchema)
 // 2.3. 向外暴露Model
 exports.UserModel=UserModel
 
