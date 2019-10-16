@@ -22,9 +22,9 @@ const adminSchema=mongoose.Schema({
     amount:{type:String}
 })
 // 2.2. 定义Model(与集合对应, 可以操作集合)
-const UserModel=mongoose.model('user',userSchema)
+const UserModel=mongoose.model('user',userSchema,'user')
 
-const AdminModel=mongoose.model('administrator',adminSchema)
+const AdminModel=mongoose.model('administrator',adminSchema,'administrator')
 // 2.3. 向外暴露Model
 exports.UserModel=UserModel
 
