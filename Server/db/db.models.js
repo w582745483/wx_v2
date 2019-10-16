@@ -24,7 +24,7 @@ const adminSchema=mongoose.Schema({
 // 2.2. 定义Model(与集合对应, 可以操作集合)
 const UserModel=mongoose.model('user',userSchema)
 
-const AdminModel=mongoose.model('admin',adminSchema)
+const AdminModel=mongoose.model('administrator',adminSchema)
 // 2.3. 向外暴露Model
 exports.UserModel=UserModel
 

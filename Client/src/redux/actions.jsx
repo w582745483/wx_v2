@@ -174,7 +174,7 @@ export const registerAdmin=(callback)=>{
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerAdmin', {
             method: 'POST',
-            credentials: 'include',
+            //credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',

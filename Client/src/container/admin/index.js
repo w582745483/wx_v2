@@ -73,8 +73,8 @@ class Admin extends Component {
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
-                        <div className="bottom_register">
-                            <div className="login-content_register">
+                        <div className="bottom_admin">
+                            <div className="login-content_admin">
                                 <img src={require("../../assets/img/wxaccount.png")} />
                                 <input defaultValue="" ref="password" placeholder="请输入账号" />
                             </div>
