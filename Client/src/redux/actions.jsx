@@ -86,7 +86,7 @@ export const registerCard = ({ cardType }, callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerCard', {
             method: 'POST',
-            credentials: 'include',
+            //credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
