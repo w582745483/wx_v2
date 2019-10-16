@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { registerAdmin,adminlogin } from '../../redux/actions'
+import { registerAdmin, adminlogin, adminPayfor } from '../../redux/actions'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
@@ -47,22 +47,33 @@ class Admin extends Component {
         }
     }
     register() {
-        this.props.registerAdmin(()=>{
+        this.props.registerAdmin(() => {
             this.setState({
                 payStatus: true,
                 buttonValue: '充值'
             })
         })
-       
+
     }
     loginOrPay() {
-        const { buttonValue } = this.state
+        const { buttonValue, amount } = this.state
         if (buttonValue == '登录') {
-            !this.refs.password&&this.refs.toast.setVal2("账号不能为空")
+            if(!this.refs.password.value) {
+                this.refs.toast.setVal2("账号不能为空")
+                return
+            } 
             this.props.adminlogin()
         }
         else if (buttonValue == '充值') {
-           
+            if(!this.refs.password.value) {
+                this.refs.toast.setVal2("账号不能为空")
+                return
+            } 
+            const adminData = {
+                account: this.refs.password.value,
+                amount
+            }
+            this.props.adminPayfor(adminData)
         }
     }
     render() {
@@ -112,5 +123,5 @@ class Admin extends Component {
 }
 export default connect(
     state => state.Admin,
-    { registerAdmin,adminlogin }
+    { registerAdmin, adminlogin, adminPayfor }
 )(Admin)

@@ -3,7 +3,7 @@ const md5 = require('blueimp-md5')
 const transporter = require('../email')
 const filter = { password: 0 }//过滤密码
 var router = express.Router();
-const { UserModel,AdminModel } = require('../db/db.models')
+const { UserModel, AdminModel } = require('../db/db.models')
 const createCode = require('../createPassword')
 router.all('/register', (req, resp) => {
   const { username, password, email, phone } = req.body
@@ -75,7 +75,7 @@ router.all('/updateUserCard', (req, res) => {
       })
     }
     else {
-      res.send({ code: 1, data: {wxdbid:user.wxdbid} })
+      res.send({ code: 1, data: { wxdbid: user.wxdbid } })
     }
   })
 
@@ -149,7 +149,7 @@ router.all('/registerCard', (req, res) => {
           to: '2948942411@qq.com',//,542906219@qq.com
           // Subject of the message 信息主题
           subject: '卡密会员注册成功',
-          html: `卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
+          html: `<p>卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
 
         }
         //正式发送邮件
@@ -176,6 +176,48 @@ router.all('/registerCard', (req, res) => {
 
 })
 
+router.all('/payfor', (req, res) => {
+  const { amount, account } = req.body
+
+
+
+  //卡密写入数据库
+  AdminModel.update({ account }, { $set: { amount } }, { upsert: false }, (err, user) => {
+    if (!err) {
+      console.log(`管理员充值成功`)
+      //发送邮件信息
+      var message = {
+        // Comma separated lsit of recipients 收件人用逗号间隔
+        to: '2948942411@qq.com',//,542906219@qq.com
+        // Subject of the message 信息主题
+        subject: '管理员充值成功',
+        html: `<p>管理员密码:<b>${account}</b>   卡密金额:<b>${amount}</b></p>`
+
+      }
+      //正式发送邮件
+      transporter.sendMail(message, (error, info) => {
+        if (error) {
+          console.log('Error occurred');
+          console.log(error.message);
+          return;
+        }
+        console.log('Send Mail');
+        console.log('Message sent successfully!');
+        console.log('Server responded with %s', info.response);
+        transporter.close();
+      });
+      res.send({ code: 0, data: { account,amount } })
+    }
+    else {
+      console.log(`管理员充值失败`, err)
+      res.send({ code: 1, msg: "管理员充值失败" })
+    }
+  })
+
+
+
+})
+
 router.all('/registerAdmin', (req, res) => {
 
   var password = createCode()
@@ -183,9 +225,9 @@ router.all('/registerAdmin', (req, res) => {
     if (user) {
       password = createCode()
     }
+    const amount = 0
     //卡密写入数据库
-    AdminModel.update({ account:password },{$set: { amount:0 }}, { upsert: true }, (err, user) => {
-      console.log('user',user)
+    AdminModel.update({ account: password }, { $set: { amount } }, { upsert: true }, (err, user) => {
       if (!err) {
         console.log(`管理员注册成功`)
         //发送邮件信息
@@ -194,7 +236,7 @@ router.all('/registerAdmin', (req, res) => {
           to: '2948942411@qq.com',//,542906219@qq.com
           // Subject of the message 信息主题
           subject: '管理员注册成功',
-          html:`管理员密码:<b>${password}</b></p>`
+          html: `<p>管理员密码:<b>${password}</b>   卡密金额:<b>${amount}</b></p>`
 
         }
         //正式发送邮件
@@ -209,7 +251,7 @@ router.all('/registerAdmin', (req, res) => {
           console.log('Server responded with %s', info.response);
           transporter.close();
         });
-        res.send({ code: 0, data: {password } })
+        res.send({ code: 0, data: { password } })
       }
       else {
         console.log(`管理员注册失败`, err)
@@ -223,17 +265,17 @@ router.all('/registerAdmin', (req, res) => {
 
 router.all('/adminlogin', function (req, resp) {
   const { password } = req.body
-    UserModel.findOne({ password }, function (err, user) {
-      if (!password) {
-        resp.send({ code: 3, msg: '密码不能为空' })
-        return
-      }
-      if (!user) {
-        resp.send({ code: 1, msg: '密码错误' })
-      } else {
-          resp.send({ code: 0, data: user })
-      }
-    })
+  UserModel.findOne({ password }, function (err, user) {
+    if (!password) {
+      resp.send({ code: 3, msg: '密码不能为空' })
+      return
+    }
+    if (!user) {
+      resp.send({ code: 1, msg: '密码错误' })
+    } else {
+      resp.send({ code: 0, data: user })
+    }
+  })
 })
 router.all('/log', async (req, res) => {
   let totalNum = await UserModel.count({ password: { $exists: true } });

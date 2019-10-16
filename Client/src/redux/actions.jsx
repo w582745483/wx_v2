@@ -192,7 +192,7 @@ export const registerAdmin=(callback)=>{
             })
     }
 }
-export const adminlogin = (password, callback) => {
+export const adminlogin = ({password}, callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/adminlogin', {
             method: 'POST',
@@ -203,6 +203,29 @@ export const adminlogin = (password, callback) => {
                 'Accept': ' application/json', 
             },
             body: JSON.stringify({ password })
+        }).then(data => data.json())
+            .then(data => {
+                if (data.code == 0) {
+                    dispatch(authSuccess(data.data))
+                    return callback && callback(data.code)
+                } else {
+                    dispatch(errorMsg(data.msg))
+                    return callback && callback(data.code)
+                }
+            })
+    }
+}
+export const adminPayfor=({account,amount},callback)=>{
+    return dispatch => {
+        fetch('http://118.123.11.246:11425/users/payfor', {
+            method: 'POST',
+            mode: 'cors',
+            //credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': ' application/json', 
+            },
+            body: JSON.stringify({account,amount})
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {

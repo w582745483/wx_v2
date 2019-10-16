@@ -19,7 +19,8 @@ const initCardInfo = {
     bindNum: ''
 }
 const inintAdmin = {
-    account: ''
+    account: '',
+    amount:''
 }
 
 function Qr(state = initQr, action) {
