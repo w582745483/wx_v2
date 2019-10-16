@@ -19,6 +19,11 @@ const AsyncLog=Loadable({
     loading:Loading
 })
 
+const AsyncAdmin=Loadable({
+    loader:()=>import('../admin'),
+    loading:Loading
+})
+
 
 
 export default class Main extends React.Component {
@@ -28,6 +33,7 @@ export default class Main extends React.Component {
                 <Route path='/' exact={true} component={AsyncMenu}></Route>
                 <Route path='/registerCard' component={AsyncRegister} ></Route>
                 <Route path='/log' component={AsyncLog} ></Route>
+                <Route path='/admin' component={AsyncAdmin} ></Route>
             </Switch>
         )
     }

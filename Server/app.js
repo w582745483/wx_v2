@@ -11,7 +11,7 @@ var app = express();
 
 // 处理跨域
 app.all('*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://ruige.wicp.vip')
+  res.header('Access-Control-Allow-Origin', '*')//http://ruige.wicp.vip
   res.header(
       'Access-Control-Allow-Headers',
       'Content-Type,Content-Length, Authorization, Accept,X-Requested-With,Token'

@@ -1,4 +1,4 @@
-import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID,CARDINFO } from './action-types'
+import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID,CARDINFO ,REGISTERADMIN} from './action-types'
 import { ws, heartCheck } from '../components/socket'
 
 
@@ -16,7 +16,7 @@ const errorMsg = msg => ({ type: ERROR_MSG, data: msg })
 const authSuccess = user => ({ type: AUTH_SUCCESS, data: user })
 const updateusercard = wxdbid => ({ type: UPDATE_WXDBID, data: wxdbid })
 const getCardInfo=(cardinfo)=>({type:CARDINFO,data:cardinfo})
-
+const getregisterAdmin=(account)=>({type:REGISTERADMIN,data:account})
 
 export const WxLogin = (uuid) => {
 
@@ -166,6 +166,51 @@ export const CardInfo=(callback)=>{
             .then(data=>{
                 if(data.code==0){
                     dispatch(getCardInfo(data.data))
+                }
+            })
+    }
+}
+export const registerAdmin=(callback)=>{
+    return dispatch => {
+        fetch('http://118.123.11.246:11425/users/registerAdmin', {
+            method: 'POST',
+            credentials: 'include',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': ' application/json'
+            },
+        }).then(data => data.json())
+            .then(data => {
+                if (data.code == 0) {
+                    dispatch(getregisterAdmin(data.data))
+                    return callback && callback(data.code)
+                } else {
+                    dispatch(errorMsg(data.msg))
+                    return callback && callback(data.code)
+                }
+            })
+    }
+}
+export const adminlogin = (password, callback) => {
+    return dispatch => {
+        fetch('http://118.123.11.246:11425/users/adminlogin', {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': ' application/json', 
+            },
+            body: JSON.stringify({ password })
+        }).then(data => data.json())
+            .then(data => {
+                if (data.code == 0) {
+                    dispatch(authSuccess(data.data))
+                    return callback && callback(data.code)
+                } else {
+                    dispatch(errorMsg(data.msg))
+                    return callback && callback(data.code)
                 }
             })
     }

@@ -107,6 +107,9 @@ class App extends Component {
         })
 
     }
+    agentLogin(){
+        this.props.history.push('/admin')
+    }
     render() {
         const { header, nickname, qr, loading } = this.props
         const { isSubmit } = this.state
@@ -141,7 +144,7 @@ class App extends Component {
                                 <div>
                                     <span>注册账号</span>方便卡密管理
                                 </div>
-                                <div>账号密码登录</div>
+                                <div onClick={()=>this.agentLogin()}>代理登录</div>
                             </div>
                             <div className="system-info">
                                 本系统会根据您的卡密类型自动进入相应功能

@@ -1,0 +1,169 @@
+@import '../../styles/index.less';
+
+@media only screen and (max-width:1920px),
+only screen and (max-device-width:1920px) {
+
+    .containee {
+        width: 20rem;
+        height: 40rem;
+    }
+}
+
+@media only screen and (min-height:700px),
+only screen and (min-device-height:700px) {
+
+    .containee {
+        .top {
+            margin-top: 11rem;
+        }
+    }
+}
+
+@media only screen and (min-height:1000px),
+only screen and (min-device-height:1000px) {
+
+    .containee {
+        .top {
+            margin-top: 6rem;
+        }
+    }
+}
+
+@media only screen and (max-height:700px),
+only screen and (max-device-height:700px) {
+
+    .containee {
+        .top {
+            margin-top: 6rem;
+        }
+    }
+}
+
+@media only screen and (max-width:550px),
+only screen and (max-device-width:550px) {
+
+    .containee {
+        width: 100%;
+        height: 100%;
+
+    }
+}
+
+.app-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: auto;
+    background-image: url("../../assets/img/background.jpg");
+    background-size: cover;
+    &:extend(.ls-flex);
+    &:extend(.ls-justify-center);
+    &:extend(.ls-align-center);
+    &:extend(.ls-column);
+
+    .containee {
+        &:extend(.ls-flex);
+        &:extend(.ls-justify-center);
+        background: rgba(36, 93, 146, 0.457);
+
+        border-radius: 0.15rem;
+        box-sizing: border-box;
+        position: relative;
+
+        .bottom_register {
+            top: 40%;
+            position: absolute;
+            padding-top: 2rem;
+            width: 100%;
+
+            &:extend(.ls-flex);
+            &:extend(.ls-column);
+            &:extend(.ls-align-center);
+            &:extend(.ls-justify-center);
+
+            .login-content_register {
+                &:extend(.ls-flex);
+                &:extend(.ls-align-center);
+
+
+                padding-bottom: 0.3rem;
+                color: #FFFFFF;
+
+                img {
+                    width: 2rem;
+                    height: 2rem;
+                    overflow: visible;
+                }
+
+                input {
+
+                    background: transparent;
+                    margin-left: 1.5rem;
+                    border-bottom: 1px solid white;
+                }
+
+                input::placeholder {
+                    color: gray;
+
+                }
+            }
+
+
+            .button {
+                &:extend(.ls-flex);
+                &:extend(.ls-justify-space-between);
+                width: 80%;
+
+                .pay-for {
+                    height: 2.5rem;
+                    font-size: 16px;
+                    color: #000000;
+                    text-align: center;
+                    background-image: linear-gradient(90deg, #FFDB55 0%, #FFC300 100%);
+                    border-radius: 22px;
+                    line-height: 2.5rem;
+                    margin-top: 40px;
+                    width: 7rem;
+
+                }
+
+                .login-button__register {
+                    height: 2.5rem;
+                    font-size: 16px;
+                    color: #000000;
+                    text-align: center;
+                    background-image: linear-gradient(90deg, #FFDB55 0%, #FFC300 100%);
+                    border-radius: 22px;
+                    line-height: 2.5rem;
+                    margin-top: 40px;
+                    width: 7rem;
+
+                }
+            }
+
+            .card-type_admin {
+                color: #ff3a31;
+                margin-top: 1rem;
+                width: 60%;
+                div {
+                    &:extend(.ls-flex);
+                    &:extend(.ls-align-center);
+
+                    img {
+                        width: 1.8rem;
+                    }
+
+                    span {
+                        margin-left: 1.5rem;
+                        vertical-align: -webkit-baseline-middle;
+                    }
+                }
+            }
+
+
+        }
+
+    }
+
+}
