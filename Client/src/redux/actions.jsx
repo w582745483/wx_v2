@@ -197,7 +197,7 @@ export const adminlogin = ({password}, callback) => {
         fetch('http://118.123.11.246:11425/users/adminlogin', {
             method: 'POST',
             mode: 'cors',
-            credentials: 'include',
+           // credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 

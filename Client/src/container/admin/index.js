@@ -11,10 +11,10 @@ class Admin extends Component {
             loading: false,
             dayimgType: 'no-choose',
             weekimgType: 'no-choose',
-            monthimgType: 'no-choose',
-            buttonValue: '登录',
+            monthimgType: 'no-choose',          
             amount: '',
-            payStatus: false
+            islogin:false,
+            loadingMessage:''
         }
     }
 
@@ -47,38 +47,62 @@ class Admin extends Component {
         }
     }
     register() {
-        this.props.registerAdmin(() => {
+        this.setState({
+            loading: true,
+            loadingMessage:'正在注册'
+        })
+        this.props.registerAdmin((code) => {
             this.setState({
-                payStatus: true,
-                buttonValue: '充值'
+                loading: false,
             })
+            if (code == 0) {
+                this.refs.toast.setVal2("注册成功")
+            }
+            else {
+                this.refs.toast.setVal2("注册失败")
+            }
         })
 
     }
-    loginOrPay() {
-        const { buttonValue, amount } = this.state
-        if (buttonValue == '登录') {
-            if(!this.refs.password.value) {
-                this.refs.toast.setVal2("账号不能为空")
-                return
-            } 
-            this.props.adminlogin()
+    Payfor() {
+        const { amount } = this.state
+        if (!this.refs.password.value&&!amount) {
+            this.refs.toast.setVal2("账号和金额不能为空")
+            return
         }
-        else if (buttonValue == '充值') {
-            if(!this.refs.password.value) {
-                this.refs.toast.setVal2("账号不能为空")
-                return
-            } 
-            const adminData = {
-                account: this.refs.password.value,
-                amount
+        const adminData = {
+            account: this.refs.password.value,
+            amount
+        }
+        this.props.adminPayfor(adminData, (code) => {
+            if (code == 0) {
+                this.refs.toast.setVal2("充值成功")
             }
-            this.props.adminPayfor(adminData)
+            else {
+                this.refs.toast.setVal2("充值失败")
+            }
+        })
+    }
+    login(){
+       
+        if (!this.refs.password.value) {
+            this.refs.toast.setVal2("账号不能为空")
+            return
         }
+        this.setState({
+            loading: true,
+            loadingMessage:'正在登录'
+        })
+        this.props.adminlogin({password:this.refs.password.value},(code)=>{
+            this.setState({
+                loading: false,
+                islogin:true
+            })
+        })
     }
     render() {
 
-        const { loading, dayimgType, weekimgType, monthimgType, buttonValue, payStatus } = this.state
+        const { loading, dayimgType, weekimgType, monthimgType, loadingMessage ,islogin} = this.state
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
@@ -87,14 +111,16 @@ class Admin extends Component {
                         <div className="bottom_admin">
                             <div className="login-content_admin">
                                 <img src={require("../../assets/img/wxaccount.png")} />
-                                <input defaultValue="" ref="password" placeholder="请输入账号" />
+                                <input defaultValue={this.props.password} ref="password" placeholder="请输入账号" />
                             </div>
                             <div className="button">
-                                <div className="login-button__register" onClick={() => this.register()}>注册代理</div>
-                                <div className="pay-for" onClick={() => { this.loginOrPay() }}>{buttonValue}</div>
+                                {!islogin&&<div className="login-button__register" onClick={() => this.register()}>注册代理</div>}
+                                <div className="login" onClick={() => { this.login() }}>登录</div>
+                              {  islogin&&<div className="pay-for" onClick={() => { this.Payfor() }}>充值</div>}
+                         
                             </div>
                             {
-                                payStatus && <div className='card-type_admin'>
+                                islogin&& <div className='card-type_admin'>
                                     <div onClick={() => { this.handleClick(50) }}>
                                         <img src={require(`../../assets/img/${dayimgType}.png`)} />
                                         <span>￥50元</span>
@@ -114,7 +140,7 @@ class Admin extends Component {
 
                     </div>
                 </div>
-                {loading && <Loading message="正在注册" />}
+                {loading && <Loading message={loadingMessage} />}
                 <Toast ref="toast" />
             </React.Fragment>
         )
