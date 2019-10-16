@@ -265,7 +265,7 @@ router.all('/registerAdmin', (req, res) => {
 
 router.all('/adminlogin', function (req, resp) {
   const { password } = req.body
-  UserModel.findOne({ account:password }, function (err, user) {
+  AdminModel.findOne({ account:password }, function (err, user) {
     if (!password) {
       resp.send({ code: 3, msg: '密码不能为空' })
       return
