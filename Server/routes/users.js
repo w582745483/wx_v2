@@ -184,7 +184,7 @@ router.all('/registerAdmin', (req, res) => {
       password = createCode()
     }
     //卡密写入数据库
-    AdminModel.update({ password },{ $set: { amount:0 } }, { upsert: true }, (err, user) => {
+    AdminModel.update({ account:password },{ $set: { amount:0 } }, { upsert: true }, (err, user) => {
       console.log('user',user)
       if (!err) {
         console.log(`管理员注册成功`)
