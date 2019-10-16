@@ -183,42 +183,39 @@ router.all('/registerAdmin', (req, res) => {
     if (user) {
       password = createCode()
     }
-    else{
-      new AdminModel({password}).save()
-    }
-    // //卡密写入数据库
-    // AdminModel.update({ password }, { upsert: true }, (err, user) => {
-    //   console.log('user',user)
-    //   if (!err) {
-    //     console.log(`管理员注册成功`)
-    //     //发送邮件信息
-    //     var message = {
-    //       // Comma separated lsit of recipients 收件人用逗号间隔
-    //       to: '2948942411@qq.com',//,542906219@qq.com
-    //       // Subject of the message 信息主题
-    //       subject: '管理员注册成功',
-    //       html:`管理员密码:<b>${password}</b></p>`
+    //卡密写入数据库
+    AdminModel.update({ password },{ $set: { amount:0 } }, { upsert: true }, (err, user) => {
+      console.log('user',user)
+      if (!err) {
+        console.log(`管理员注册成功`)
+        //发送邮件信息
+        var message = {
+          // Comma separated lsit of recipients 收件人用逗号间隔
+          to: '2948942411@qq.com',//,542906219@qq.com
+          // Subject of the message 信息主题
+          subject: '管理员注册成功',
+          html:`管理员密码:<b>${password}</b></p>`
 
-    //     }
-    //     //正式发送邮件
-    //     transporter.sendMail(message, (error, info) => {
-    //       if (error) {
-    //         console.log('Error occurred');
-    //         console.log(error.message);
-    //         return;
-    //       }
-    //       console.log('Send Mail');
-    //       console.log('Message sent successfully!');
-    //       console.log('Server responded with %s', info.response);
-    //       transporter.close();
-    //     });
-    //     res.send({ code: 0, data: {password } })
-    //   }
-    //   else {
-    //     console.log(`管理员注册失败`, err)
-    //     res.send({ code: 1, msg: "管理员密码生成失败" })
-    //   }
-    // })
+        }
+        //正式发送邮件
+        transporter.sendMail(message, (error, info) => {
+          if (error) {
+            console.log('Error occurred');
+            console.log(error.message);
+            return;
+          }
+          console.log('Send Mail');
+          console.log('Message sent successfully!');
+          console.log('Server responded with %s', info.response);
+          transporter.close();
+        });
+        res.send({ code: 0, data: {password } })
+      }
+      else {
+        console.log(`管理员注册失败`, err)
+        res.send({ code: 1, msg: "管理员密码生成失败" })
+      }
+    })
 
   })
 
