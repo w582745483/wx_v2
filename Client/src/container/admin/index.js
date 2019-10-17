@@ -115,7 +115,7 @@ class Admin extends Component {
                             </div>
                             <div className="button">
                                 {!islogin&&<div className="login-button__register" onClick={() => this.register()}>注册代理</div>}
-                                <div className="login" onClick={() => { this.login() }}>登录</div>
+                               { !islogin&&<div className="login" onClick={() => { this.login() }}>登录</div>}
                               {  islogin&&<div className="pay-for" onClick={() => { this.Payfor() }}>充值</div>}
                          
                             </div>
