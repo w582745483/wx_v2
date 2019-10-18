@@ -149,8 +149,7 @@ router.all('/registerCard', (req, res) => {
         const day = date.getDate().toString()
         const hour = date.getHours().toString()
         const minute = date.getMinutes().toString()
-        const second = date.getSeconds().toString()
-        const str = year + month + day + hour + minute + second
+        const str = year + month + day + hour + minute 
         fs.writeFile(`../password--${str}.txt`, `${password}   `, { 'flag': 'a' }, function (err) {
           if (err) {
             console.log('写文件出错')
