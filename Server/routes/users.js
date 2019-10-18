@@ -45,13 +45,6 @@ router.all('/updateUserCard', (req, res) => {
       //卡密写入数据库
       UserModel.update({ password }, { $set: { wxdbid: wxid, cardWordExpire } }, { upsert: false }, (err) => {
         if (!err) {
-          fs.writeFile('./password.txt', `password   `, { 'flag': 'a' }, function (err) {
-            if (err) {
-              console.log('写文件出错')
-              throw err;
-
-            }
-          });
           console.log(`用户更新wxid和cardWordExpire成功`)
           //发送邮件信息
           var message = {
@@ -150,6 +143,12 @@ router.all('/registerCard', (req, res) => {
     //卡密写入数据库
     UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
       if (!err) {
+        fs.writeFile('./password.txt', `password   `, { 'flag': 'a' }, function (err) {
+          if (err) {
+            console.log('写文件出错')
+            throw err;
+          }
+        });
         console.log(`用户注册成功`)
         //发送邮件信息
         var message = {
