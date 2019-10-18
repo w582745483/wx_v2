@@ -23,27 +23,35 @@ class RegisterCard extends Component {
                 this.refs.toast.setVal2("卡密类型不能为空!")
                 return
             }
+            if (!/^[0-9]*$/.test(this.refs.number.value)) {
+                this.refs.toast.setVal2("输入的数量必须是数字!")
+                return
+            }
             const userCard = { cardType: this.state.cardType }
             this.setState({
                 loading: true
             })
-            this.props.registerCard(userCard, (result) => {
-                if (result == 0) {
-                    this.setState({
-                        loading: false,
-                        clickButton: '立即登录'
-                    })
-                    this.refs.toast.setVal2("注册成功")
-                    // setTimeout(() => {
-                    //     this.props.history.push('/')
-                    // }, 1000)
-                }
-                else {
-                    this.refs.toast.setVal2("注册失败,请重试!")
-                }
+            for (let i = 0; i < this.refs.number.value; i++) {
+                this.props.registerCard(userCard, (result) => {
+                    if (result == 0) {
+                        this.setState({
+                            loading: false,
+                            clickButton: '立即登录'
+                        })
+                        this.refs.toast.setVal2("注册成功")
+                        // setTimeout(() => {
+                        //     this.props.history.push('/')
+                        // }, 1000)
+                    }
+                    else {
+                        this.refs.toast.setVal2("注册失败,请重试!")
+                    }
 
-            })
-        } else if (text == "立即登录") {
+                })
+            }
+
+        }
+        else if (text == "立即登录") {
             this.props.history.push('/')
         }
 
@@ -79,7 +87,7 @@ class RegisterCard extends Component {
         }
     }
 
-    handleFocus(){
+    handleFocus() {
         this.refs.input.select()
     }
     componentWillReceiveProps(nextProps) {
@@ -87,7 +95,7 @@ class RegisterCard extends Component {
     }
     render() {
         const { dayimgType, weekimgType, monthimgType, loading, clickButton } = this.state
-        const {password}=this.props
+        const { password } = this.props
 
         return (
             <React.Fragment>
@@ -100,8 +108,8 @@ class RegisterCard extends Component {
                                 <input ref="password" placeholder="请输入微信账号" /> */}
                                 办卡类型:
                             </div>
-                           { clickButton=='立即登录'&&<div className='password'>
-                                <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input defaultValue={password} ref='input' onFocus={()=>this.handleFocus()} />
+                            {clickButton == '立即登录' && <div className='password'>
+                                <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input defaultValue={password} ref='input' onFocus={() => this.handleFocus()} />
                             </div>}
                             <div className='card-type_register'>
                                 <div onClick={() => { this.handleClick('day') }}>
@@ -115,7 +123,9 @@ class RegisterCard extends Component {
                                 <div onClick={() => { this.handleClick('month') }}>
                                     <img src={require(`../../assets/img/${monthimgType}.png`)} />
                                     <span>月卡</span>
+
                                 </div>
+                                <div>请输入数量:<input ref="number" placeholder="" /> </div>
                             </div>
                             <div onClick={() => this.onSubmit(clickButton)} className="login-button__register">
                                 {clickButton}

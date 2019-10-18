@@ -54,8 +54,6 @@ class App extends Component {
                     }
                 })
             }
-
-
         }
     }
     onSubmit() {

@@ -97,7 +97,6 @@ only screen and (max-device-width:550px) {
                 }
 
                 input {
-
                     background: transparent;
                     margin-left: 1.5rem;
                 }
@@ -134,9 +133,29 @@ only screen and (max-device-width:550px) {
                         width: 1.8rem;
                     }
 
-                    span {
+                    span:nth-of-type(1) {
                         margin-left: 1.5rem;
                         vertical-align: -webkit-baseline-middle;
+                    }
+                }
+
+                div:nth-last-child(1) {
+                    margin-top: 1rem;
+
+                    input {
+                        background: transparent;
+                        margin-left: 0.5rem;
+                        width: 6rem;
+                        border-bottom: 1px solid white;
+                        text-align: center;
+                        color: red;
+                    }
+
+                    input::placeholder {
+                        color: grey;
+                        text-align: center;
+                        font-size: 16px;
+                        ;
                     }
                 }
 

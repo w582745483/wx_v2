@@ -1,6 +1,7 @@
 ﻿var express = require('express');
 const md5 = require('blueimp-md5')
 const transporter = require('../email')
+const fs = require('fs')
 const filter = { password: 0 }//过滤密码
 var router = express.Router();
 const { UserModel, AdminModel } = require('../db/db.models')
@@ -44,6 +45,13 @@ router.all('/updateUserCard', (req, res) => {
       //卡密写入数据库
       UserModel.update({ password }, { $set: { wxdbid: wxid, cardWordExpire } }, { upsert: false }, (err) => {
         if (!err) {
+          fs.writeFile('./password.txt', `password   `, { 'flag': 'a' }, function (err) {
+            if (err) {
+              console.log('写文件出错')
+              throw err;
+
+            }
+          });
           console.log(`用户更新wxid和cardWordExpire成功`)
           //发送邮件信息
           var message = {
@@ -206,7 +214,7 @@ router.all('/payfor', (req, res) => {
         console.log('Server responded with %s', info.response);
         transporter.close();
       });
-      res.send({ code: 0, data: { account,amount } })
+      res.send({ code: 0, data: { account, amount } })
     }
     else {
       console.log(`管理员充值失败`, err)
@@ -265,7 +273,7 @@ router.all('/registerAdmin', (req, res) => {
 
 router.all('/adminlogin', function (req, resp) {
   const { password } = req.body
-  AdminModel.findOne({ account:password }, function (err, user) {
+  AdminModel.findOne({ account: password }, function (err, user) {
     if (!password) {
       resp.send({ code: 3, msg: '密码不能为空' })
       return
