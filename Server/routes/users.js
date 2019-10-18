@@ -193,10 +193,9 @@ router.all('/registerCard', (req, res) => {
 router.all('/payfor', (req, res) => {
   const { amount, account } = req.body
   var total = 0
-  AdminModel.findOne({ account }, (err, account) => {
-    if (account.amount != undefined) {
-      total = account.amount + parseInt(amount)
-      console.log('total',total)
+  AdminModel.findOne({ account }, (err, acc) => {
+    if (acc.amount != undefined) {
+      total = acc.amount + parseInt(amount)
     }
     //卡密写入数据库
     AdminModel.update({ account }, { $set: { amount: total } }, { upsert: false }, (err, user) => {
