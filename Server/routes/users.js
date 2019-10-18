@@ -143,7 +143,7 @@ router.all('/registerCard', (req, res) => {
     //卡密写入数据库
     UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
       if (!err) {
-        fs.writeFile(`../password-.txt${new Date().toLocaleDateString} ${new Date().toLocaleTimeString()}}`, `${password}   `, { 'flag': 'a' }, function (err) {
+        fs.writeFile(`../password-.txt${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, `${password}   `, { 'flag': 'a' }, function (err) {
           if (err) {
             console.log('写文件出错')
             throw err;
