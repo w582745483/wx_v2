@@ -222,7 +222,7 @@ router.all('/payfor', (req, res) => {
           console.log('Server responded with %s', info.response);
           transporter.close();
         });
-        res.send({ code: 0, data: { account, amount } })
+        res.send({ code: 0, data: { account, total } })
       }
       else {
         console.log(`管理员充值失败`, err)
