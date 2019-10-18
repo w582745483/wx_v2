@@ -195,7 +195,8 @@ router.all('/payfor', (req, res) => {
   var total = 0
   AdminModel.findOne({ account }, (err, account) => {
     if (account.amount != undefined) {
-      total = account.amount + amount
+      total = account.amount + parseInt(amount)
+      console.log('total',total)
     }
     //卡密写入数据库
     AdminModel.update({ account }, { $set: { amount: total } }, { upsert: false }, (err, user) => {
