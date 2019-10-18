@@ -22,7 +22,7 @@ const UserModel=mongoose.model('user',userSchema)
 
 const adminSchema=mongoose.Schema({
     account:{type:String},
-    amount:{type:String}
+    amount:{type:Number}
 })
 
 const AdminModel=mongoose.model('administrator',adminSchema)
