@@ -53,22 +53,22 @@ export const WxLogin = (uuid) => {
                 //     break;
                 case 'token':
                     const token = msg.token
-
+                    const data62 = msg.data62
                     const wxid = msg.wxid//wxid
-                    dispatch(getToken(token))//token
-
-                    dispatch(getWxID(wxid))
-
-                    break;
-                case 'UUID':
                     const UUID = msg.UUID
+                    dispatch(getToken(token))//token
+                    dispatch(getData62(data62))//data62
+                    dispatch(getWxID(wxid))
                     dispatch(getUUID(UUID))//UUID
                     break;
+                case 'UUID':
+                   
+                    break;
                 case 'data62':
-                    const data62 = msg.data62
+                   
                     const nickname = msg.nickname//昵称
                     dispatch(getNickname(nickname))
-                    dispatch(getData62(data62))//data62
+                    
                     break;
                 case "getcontact"://获取联系人信息。会多次传输
                     break;
@@ -174,7 +174,7 @@ export const registerAdmin=(callback)=>{
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerAdmin', {
             method: 'POST',
-            credentials: 'include',
+            //credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export const adminlogin = ({password}, callback) => {
         fetch('http://118.123.11.246:11425/users/adminlogin', {
             method: 'POST',
             mode: 'cors',
-            credentials: 'include',
+            //credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 
@@ -220,7 +220,7 @@ export const adminPayfor=({account,amount},callback)=>{
         fetch('http://118.123.11.246:11425/users/payfor', {
             method: 'POST',
             mode: 'cors',
-            credentials: 'include',
+           // credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 

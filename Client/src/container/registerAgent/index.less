@@ -71,12 +71,6 @@ only screen and (max-device-width:550px) {
         box-sizing: border-box;
         position: relative;
 
-        .amount-num {
-            position: absolute;
-            right: 0;
-            color: red;
-        }
-
         .bottom_admin {
             top: 40%;
             position: absolute;
@@ -118,10 +112,10 @@ only screen and (max-device-width:550px) {
 
             .button {
                 &:extend(.ls-flex);
-                &:extend(.ls-justify-center);
+                &:extend(.ls-justify-space-between);
                 width: 80%;
 
-                .login {
+                .pay-for {
                     height: 2.5rem;
                     font-size: 16px;
                     color: #000000;
@@ -131,9 +125,11 @@ only screen and (max-device-width:550px) {
                     line-height: 2.5rem;
                     margin-top: 40px;
                     width: 7rem;
+
                 }
 
-                .register-card {
+
+                .login-button__register {
                     height: 2.5rem;
                     font-size: 16px;
                     color: #000000;
@@ -143,6 +139,28 @@ only screen and (max-device-width:550px) {
                     line-height: 2.5rem;
                     margin-top: 40px;
                     width: 7rem;
+
+                }
+
+            }
+
+            .card-type_admin {
+                color: #ff3a31;
+                margin-top: 1rem;
+                width: 60%;
+
+                div {
+                    &:extend(.ls-flex);
+                    &:extend(.ls-align-center);
+
+                    img {
+                        width: 1.8rem;
+                    }
+
+                    span {
+                        margin-left: 1.5rem;
+                        vertical-align: -webkit-baseline-middle;
+                    }
                 }
             }
 

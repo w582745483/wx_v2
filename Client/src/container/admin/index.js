@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { registerAdmin, adminlogin, adminPayfor } from '../../redux/actions'
+import { registerAdmin, adminlogin } from '../../redux/actions'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
@@ -11,45 +11,17 @@ class Admin extends Component {
             loading: false,
             dayimgType: 'no-choose',
             weekimgType: 'no-choose',
-            monthimgType: 'no-choose',          
+            monthimgType: 'no-choose',
             amount: '',
-            islogin:false,
-            loadingMessage:''
+            islogin: false,
+            loadingMessage: ''
         }
     }
 
-    handleClick(amount) {
-        switch (amount) {
-            case 50:
-                this.setState({
-                    dayimgType: 'choose',
-                    weekimgType: 'no-choose',
-                    monthimgType: 'no-choose',
-                    amount: 50
-                })
-                break;
-            case 100:
-                this.setState({
-                    dayimgType: 'no-choose',
-                    weekimgType: 'choose',
-                    monthimgType: 'no-choose',
-                    amount: 100
-                })
-                break;
-            case 500:
-                this.setState({
-                    dayimgType: 'no-choose',
-                    weekimgType: 'no-choose',
-                    monthimgType: 'choose',
-                    amount: 500
-                })
-                break;
-        }
-    }
     register() {
         this.setState({
             loading: true,
-            loadingMessage:'正在注册'
+            loadingMessage: '正在注册'
         })
         this.props.registerAdmin((code) => {
             this.setState({
@@ -64,78 +36,53 @@ class Admin extends Component {
         })
 
     }
-    Payfor() {
-        const { amount } = this.state
-        if (!this.refs.password.value&&!amount) {
-            this.refs.toast.setVal2("账号和金额不能为空")
-            return
-        }
-        const adminData = {
-            account: this.refs.password.value,
-            amount
-        }
-        this.props.adminPayfor(adminData, (code) => {
-            if (code == 0) {
-                this.refs.toast.setVal2("充值成功")
-            }
-            else {
-                this.refs.toast.setVal2("充值失败")
-            }
-        })
-    }
-    login(){
-       
+    login() {
+
         if (!this.refs.password.value) {
             this.refs.toast.setVal2("账号不能为空")
             return
         }
         this.setState({
             loading: true,
-            loadingMessage:'正在登录'
+            loadingMessage: '正在登录'
         })
-        this.props.adminlogin({password:this.refs.password.value},(code)=>{
+        this.props.adminlogin({ password: this.refs.password.value }, (code) => {
+            if (code == 1) {
+                this.setState({
+                    loading: false,
+                    loadingMessage: '正在登录'
+                })
+                this.refs.toast.setVal2("密码错误")
+                return
+            }
+
             this.setState({
                 loading: false,
-                islogin:true
+                islogin: true
             })
         })
     }
+    registerCard() {
+        this.props.history.push('/registerCard')
+    }
     render() {
 
-        const { loading, dayimgType, weekimgType, monthimgType, loadingMessage ,islogin} = this.state
+        const { loading, dayimgType, weekimgType, monthimgType, loadingMessage, islogin } = this.state
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
+                        {islogin && <div className="amount-num">积分金额:&nbsp;&nbsp;&nbsp;&nbsp;{this.props.amount}</div>}
                         <div className="bottom_admin">
                             <div className="login-content_admin">
                                 <img src={require("../../assets/img/wxaccount.png")} />
                                 <input defaultValue={this.props.password} ref="password" placeholder="请输入账号" />
                             </div>
                             <div className="button">
-                                {!islogin&&<div className="login-button__register" onClick={() => this.register()}>注册代理</div>}
-                               { !islogin&&<div className="login" onClick={() => { this.login() }}>登录</div>}
-                              {  islogin&&<div className="pay-for" onClick={() => { this.Payfor() }}>充值</div>}
-                         
+                                {!islogin && <div className="login" onClick={() => { this.login() }}>登录</div>}
+                                {islogin && <div className="register-card" onClick={() => { this.registerCard() }}>注册卡密</div>}
                             </div>
-                            {
-                                islogin&& <div className='card-type_admin'>
-                                    <div onClick={() => { this.handleClick(50) }}>
-                                        <img src={require(`../../assets/img/${dayimgType}.png`)} />
-                                        <span>￥50元</span>
-                                    </div>
-                                    <div onClick={() => { this.handleClick(100) }}>
-                                        <img src={require(`../../assets/img/${weekimgType}.png`)} />
-                                        <span>￥100元</span>
-                                    </div>
-                                    <div onClick={() => { this.handleClick(500) }}>
-                                        <img src={require(`../../assets/img/${monthimgType}.png`)} />
-                                        <span>￥500元</span>
-                                    </div>
-                                </div>
-                            }
-
                         </div>
 
                     </div>
@@ -149,5 +96,5 @@ class Admin extends Component {
 }
 export default connect(
     state => state.Admin,
-    { registerAdmin, adminlogin, adminPayfor }
+    { registerAdmin, adminlogin }
 )(Admin)

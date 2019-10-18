@@ -108,6 +108,9 @@ class App extends Component {
     agentLogin(){
         this.props.history.push('/admin')
     }
+    registerAgent(){
+        this.props.history.push('/registerAgent')
+    }
     render() {
         const { header, nickname, qr, loading } = this.props
         const { isSubmit } = this.state
@@ -139,8 +142,8 @@ class App extends Component {
                                 卡密登录
                              </div>
                             <div className="account-manage">
-                                <div>
-                                    <span>注册账号</span>方便卡密管理
+                                <div onClick={()=>this.registerAgent()}>
+                                    <span>注册代理</span>方便卡密管理
                                 </div>
                                 <div onClick={()=>this.agentLogin()}>代理登录</div>
                             </div>

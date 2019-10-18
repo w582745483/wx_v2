@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { registerCard } from '../../redux/actions'
+import { registerCard,adminPayfor } from '../../redux/actions'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
@@ -12,7 +12,8 @@ class RegisterCard extends Component {
             weekimgType: 'no-choose',
             monthimgType: 'no-choose',
             loading: false,
-            clickButton: '注册卡密'
+            clickButton: '注册卡密',
+            amount:''
 
         }
     }
@@ -40,6 +41,19 @@ class RegisterCard extends Component {
                             clickButton: '立即登录'
                         })
                         this.refs.toast.setVal2("注册成功")
+                        //卡密注册后扣除相应积分金额
+                        const adminData = {
+                            account: this.props.account,
+                            amount:this.state.amount
+                        }
+                        this.props.adminPayfor(adminData, (code) => {
+                            if (code == 0) {
+                                this.refs.toast.setVal2("充值成功")
+                            }
+                            else {
+                                this.refs.toast.setVal2("充值失败")
+                            }
+                        })
                         // setTimeout(() => {
                         //     this.props.history.push('/')
                         // }, 1000)
@@ -66,7 +80,8 @@ class RegisterCard extends Component {
                     dayimgType: 'choose',
                     weekimgType: 'no-choose',
                     monthimgType: 'no-choose',
-                    cardType: 'day'
+                    cardType: 'day',
+                    amount:-2
                 })
                 break;
             case 'week':
@@ -74,7 +89,8 @@ class RegisterCard extends Component {
                     dayimgType: 'no-choose',
                     weekimgType: 'choose',
                     monthimgType: 'no-choose',
-                    cardType: 'week'
+                    cardType: 'week',
+                    amount:-5
                 })
                 break;
             case 'month':
@@ -82,7 +98,8 @@ class RegisterCard extends Component {
                     dayimgType: 'no-choose',
                     weekimgType: 'no-choose',
                     monthimgType: 'choose',
-                    cardType: 'month'
+                    cardType: 'month',
+                    amount:-30
                 })
                 break;
         }
@@ -91,18 +108,24 @@ class RegisterCard extends Component {
     handleFocus() {
         this.refs.input.select()
     }
+    componentDidMount(){
+        if(this.props.account==''){
+            this.props.history.push('/Admin')
+        }
+    }
     componentWillReceiveProps(nextProps) {
 
     }
     render() {
         const { dayimgType, weekimgType, monthimgType, loading, clickButton } = this.state
-        const { password } = this.props
+        const { password ,amount} = this.props
 
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
+                    {amount && <div className="amount-num">积分金额:&nbsp;&nbsp;&nbsp;&nbsp;{amount}</div>}
                         <div className="bottom_register">
                             <div className="login-content_register">
                                 {/* <img src={require("../../assets/img/wxaccount.png")} />
@@ -143,6 +166,6 @@ class RegisterCard extends Component {
     }
 }
 export default connect(
-    state => state.User,
-    { registerCard }
+    state => ({...state.User,...state.Admin}),
+    { registerCard,adminPayfor }
 )(RegisterCard)

@@ -149,7 +149,7 @@ router.all('/registerCard', (req, res) => {
         const day = date.getDate().toString()
         const hour = date.getHours().toString()
         const minute = date.getMinutes().toString()
-        const str = year + month + day + hour + minute 
+        const str = year + month + day + hour + minute
         fs.writeFile(`../password--${str}.txt`, `${password}   `, { 'flag': 'a' }, function (err) {
           if (err) {
             console.log('写文件出错')
@@ -192,44 +192,44 @@ router.all('/registerCard', (req, res) => {
 
 router.all('/payfor', (req, res) => {
   const { amount, account } = req.body
+  var total = 0
+  AdminModel.findOne({ account }, (err, account) => {
+    if (account.amount != undefined) {
+      total = account.amount + amount
+    }
+    //卡密写入数据库
+    AdminModel.update({ account }, { $set: { amount: total } }, { upsert: false }, (err, user) => {
+      if (!err) {
+        console.log(`管理员充值成功`)
+        //发送邮件信息
+        var message = {
+          // Comma separated lsit of recipients 收件人用逗号间隔
+          to: '2948942411@qq.com',//,542906219@qq.com
+          // Subject of the message 信息主题
+          subject: '管理员充值成功',
+          html: `<p>管理员密码:<b>${account}</b>   卡密金额:<b>${amount}</b></p>`
 
-
-
-  //卡密写入数据库
-  AdminModel.update({ account }, { $set: { amount } }, { upsert: false }, (err, user) => {
-    if (!err) {
-      console.log(`管理员充值成功`)
-      //发送邮件信息
-      var message = {
-        // Comma separated lsit of recipients 收件人用逗号间隔
-        to: '2948942411@qq.com',//,542906219@qq.com
-        // Subject of the message 信息主题
-        subject: '管理员充值成功',
-        html: `<p>管理员密码:<b>${account}</b>   卡密金额:<b>${amount}</b></p>`
-
-      }
-      //正式发送邮件
-      transporter.sendMail(message, (error, info) => {
-        if (error) {
-          console.log('Error occurred');
-          console.log(error.message);
-          return;
         }
-        console.log('Send Mail');
-        console.log('Message sent successfully!');
-        console.log('Server responded with %s', info.response);
-        transporter.close();
-      });
-      res.send({ code: 0, data: { account, amount } })
-    }
-    else {
-      console.log(`管理员充值失败`, err)
-      res.send({ code: 1, msg: "管理员充值失败" })
-    }
+        //正式发送邮件
+        transporter.sendMail(message, (error, info) => {
+          if (error) {
+            console.log('Error occurred');
+            console.log(error.message);
+            return;
+          }
+          console.log('Send Mail');
+          console.log('Message sent successfully!');
+          console.log('Server responded with %s', info.response);
+          transporter.close();
+        });
+        res.send({ code: 0, data: { account, amount } })
+      }
+      else {
+        console.log(`管理员充值失败`, err)
+        res.send({ code: 1, msg: "管理员充值失败" })
+      }
+    })
   })
-
-
-
 })
 
 router.all('/registerAdmin', (req, res) => {
