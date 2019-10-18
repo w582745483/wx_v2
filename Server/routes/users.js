@@ -24,7 +24,7 @@ router.all('/updateUserCard', (req, res) => {
   const { wxid, password } = req.body
   var cardWordExpire, nowDate = new Date()
   UserModel.findOne({ password }, function (err, user) {
-    if (user.wxdbid == 'undefined') {
+    if (user.wxdbid == undefined) {
       //根据卡密类型设置过期时间
       switch (user.cardType) {
         case 'day':
@@ -70,7 +70,7 @@ router.all('/updateUserCard', (req, res) => {
         }
         else {
           console.log(`用户更新wxid和cardWordExpire失败(此卡密已经存在wxid)`)
-          res.send({ code: 1, msg: "用户更新wxid和cardWordExpire失败(此卡密已经存在wxid)" })
+          res.send({ code: 1, data: "用户更新wxid和cardWordExpire失败(此卡密已经存在wxid)" })
         }
       })
     }

@@ -174,7 +174,7 @@ export const registerAdmin=(callback)=>{
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerAdmin', {
             method: 'POST',
-            //credentials: 'include',
+            credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export const adminlogin = ({password}, callback) => {
         fetch('http://118.123.11.246:11425/users/adminlogin', {
             method: 'POST',
             mode: 'cors',
-           // credentials: 'include',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 
@@ -220,7 +220,7 @@ export const adminPayfor=({account,amount},callback)=>{
         fetch('http://118.123.11.246:11425/users/payfor', {
             method: 'POST',
             mode: 'cors',
-            //credentials: 'include',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 
