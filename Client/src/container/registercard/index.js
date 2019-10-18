@@ -31,9 +31,9 @@ class RegisterCard extends Component {
             this.setState({
                 loading: true
             })
-            var arr=[]
             for (let i = 0; i < this.refs.number.value; i++) {
-                arr.push(this.props.registerCard(userCard, (result) => {
+              
+                this.props.registerCard(userCard, (result) => {
                     if (result == 0) {
                         this.setState({
                             loading: false,
@@ -48,12 +48,8 @@ class RegisterCard extends Component {
                         this.refs.toast.setVal2("注册失败,请重试!")
                     }
 
-                }))
-               
+                })
             }
-            Promise.all[arr].then(()=>{
-                console.log('请求完毕')
-            })
 
         }
         else if (text == "立即登录") {
