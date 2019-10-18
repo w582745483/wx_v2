@@ -1,4 +1,4 @@
-import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID,CARDINFO ,REGISTERADMIN} from './action-types'
+import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID, CARDINFO, REGISTERADMIN } from './action-types'
 import { ws, heartCheck } from '../components/socket'
 
 
@@ -15,8 +15,8 @@ const getregister = user => ({ type: REGISTER, data: user })
 const errorMsg = msg => ({ type: ERROR_MSG, data: msg })
 const authSuccess = user => ({ type: AUTH_SUCCESS, data: user })
 const updateusercard = wxdbid => ({ type: UPDATE_WXDBID, data: wxdbid })
-const getCardInfo=(cardinfo)=>({type:CARDINFO,data:cardinfo})
-const getregisterAdmin=(account)=>({type:REGISTERADMIN,data:account})
+const getCardInfo = (cardinfo) => ({ type: CARDINFO, data: cardinfo })
+const getregisterAdmin = (account) => ({ type: REGISTERADMIN, data: account })
 
 export const WxLogin = (uuid) => {
 
@@ -107,20 +107,24 @@ export const registerCard = ({ cardType }, callback) => {
 }
 export const updateUserCard = ({ wxid, password }, callback) => {
     return dispatch => {
-        fetch('http://118.123.11.246:11425/users/updateUserCard', {
-            method: 'POST',
-            credentials: 'include',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': ' application/json'
-            },
-            body: JSON.stringify({ wxid, password })
-        }).then(data => data.json())
-            .then(data => {
-                dispatch(updateusercard(data.data))
-                return callback && callback(data.code)
-            })
+        return new Promise((resolve, reject) => {
+            fetch('http://118.123.11.246:11425/users/updateUserCard', {
+                method: 'POST',
+                credentials: 'include',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': ' application/json'
+                },
+                body: JSON.stringify({ wxid, password })
+            }).then(data => data.json())
+                .then(data => {
+                    dispatch(updateusercard(data.data))
+                    resolve()
+                    return callback && callback(data.code)
+                })
+        })
+
     }
 }
 
@@ -133,12 +137,12 @@ export const login = (password, callback) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json',
-                'Token':localStorage.getItem('password')
+                'Token': localStorage.getItem('password')
             },
             body: JSON.stringify({ password })
         }).then(data => data.json())
             .then(data => {
-                localStorage.setItem('password',data.token)
+                localStorage.setItem('password', data.token)
                 if (data.code == 0) {
                     dispatch(authSuccess(data.data))
                     return callback && callback(data.code)
@@ -150,8 +154,8 @@ export const login = (password, callback) => {
     }
 }
 
-export const CardInfo=(callback)=>{
-    return dispatch=>{
+export const CardInfo = (callback) => {
+    return dispatch => {
         fetch('http://118.123.11.246:11425/users/log', {
             method: 'POST',
             mode: 'cors',
@@ -159,18 +163,18 @@ export const CardInfo=(callback)=>{
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json',
-                'Token':''
+                'Token': ''
             },
-           // body: JSON.stringify({ password })
-        }).then(data=>data.json())
-            .then(data=>{
-                if(data.code==0){
+            // body: JSON.stringify({ password })
+        }).then(data => data.json())
+            .then(data => {
+                if (data.code == 0) {
                     dispatch(getCardInfo(data.data))
                 }
             })
     }
 }
-export const registerAdmin=(callback)=>{
+export const registerAdmin = (callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerAdmin', {
             method: 'POST',
@@ -192,7 +196,7 @@ export const registerAdmin=(callback)=>{
             })
     }
 }
-export const adminlogin = ({password}, callback) => {
+export const adminlogin = ({ password }, callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/adminlogin', {
             method: 'POST',
@@ -200,7 +204,7 @@ export const adminlogin = ({password}, callback) => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': ' application/json', 
+                'Accept': ' application/json',
             },
             body: JSON.stringify({ password })
         }).then(data => data.json())
@@ -215,7 +219,7 @@ export const adminlogin = ({password}, callback) => {
             })
     }
 }
-export const adminPayfor=({account,amount},callback)=>{
+export const adminPayfor = ({ account, amount }, callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/payfor', {
             method: 'POST',
@@ -223,9 +227,9 @@ export const adminPayfor=({account,amount},callback)=>{
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': ' application/json', 
+                'Accept': ' application/json',
             },
-            body: JSON.stringify({account,amount})
+            body: JSON.stringify({ account, amount })
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
