@@ -28,6 +28,10 @@ class RegisterCard extends Component {
                 this.refs.toast.setVal2("输入的数量必须是数字!")
                 return
             }
+            if(this.props.amount+this.state.amount<0){
+                this.refs.toast.setVal2("账号积分值不足，请联系管理员充值")
+                return
+            }
             const userCard = { cardType: this.state.cardType }
             this.setState({
                 loading: true
