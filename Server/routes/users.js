@@ -131,12 +131,12 @@ router.all('/login', function (req, resp) {
 
 })
 
-router.all('/registerCard', (req, res) => {
+router.all('/registerCard', async(req, res) => {
   const { cardType, number, email } = req.body
   let path
   for (var i = 0; i < number; i++) {
     var password = createCode()
-    UserModel.findOne({ password }, async (err, user) => {
+    await UserModel.findOne({ password }, async (err, user) => {
       if (user) {
         password = createCode()
       }
