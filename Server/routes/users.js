@@ -132,17 +132,17 @@ router.all('/login', function (req, resp) {
 })
 
 router.all('/registerCard', (req, res) => {
-  const { cardType, number,email } = req.body
+  const { cardType, number, email } = req.body
   let path
   for (var i = 0; i < number; i++) {
     var password = createCode()
-    UserModel.findOne({ password }, async(err, user) => {
+    UserModel.findOne({ password }, (err, user) => {
       if (user) {
         password = createCode()
       }
 
       //卡密写入数据库
-     await UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
+      UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, async (err, user) => {
         if (!err) {
           const date = new Date()
           const year = date.getFullYear().toString()
@@ -151,7 +151,7 @@ router.all('/registerCard', (req, res) => {
           const hour = date.getHours().toString()
           const minute = date.getMinutes().toString()
           path = year + month + day + hour + minute
-          fs.writeFile(`../password--${path}.txt`, `${password}---`, { 'flag': 'a' }, function (err) {
+          await fs.writeFile(`../password--${path}.txt`, `${password}---`, { 'flag': 'a' }, function (err) {
             if (err) {
               console.log('写文件出错')
             }
@@ -178,7 +178,7 @@ router.all('/registerCard', (req, res) => {
       {
         filename: `password--${path}.txt`,
         contentType: 'text/plain', // optional,would be detected from the filename 可选的，会检测文件名
-        path:`../password--${path}.txt`
+        path: `../password--${path}.txt`
       }],
   }
   //正式发送邮件
