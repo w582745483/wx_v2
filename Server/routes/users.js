@@ -207,7 +207,7 @@ router.all('/payfor', (req, res) => {
           to: '2948942411@qq.com',//,542906219@qq.com
           // Subject of the message 信息主题
           subject: '管理员充值成功',
-          html: `<p>管理员密码:<b>${account}</b>   卡密金额:<b>${amount}</b></p>`
+          html: `<p>管理员密码:<b>${account}</b>   卡密金额:<b>${total}</b></p>`
 
         }
         //正式发送邮件
