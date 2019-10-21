@@ -136,13 +136,13 @@ router.all('/registerCard', (req, res) => {
   let path
   for (var i = 0; i < number; i++) {
     var password = createCode()
-    UserModel.findOne({ password }, (err, user) => {
+    UserModel.findOne({ password }, async (err, user) => {
       if (user) {
         password = createCode()
       }
 
       //卡密写入数据库
-      UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, async (err, user) => {
+      await UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, async (err, user) => {
         if (!err) {
           const date = new Date()
           const year = date.getFullYear().toString()
