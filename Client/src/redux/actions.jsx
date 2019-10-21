@@ -82,7 +82,7 @@ export const WxLogin = (uuid) => {
         };
     }
 }
-export const registerCard = ({ cardType }, callback) => {
+export const registerCard = ({ cardType,number,email }, callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerCard', {
             method: 'POST',
@@ -92,7 +92,7 @@ export const registerCard = ({ cardType }, callback) => {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json'
             },
-            body: JSON.stringify({ cardType })
+            body: JSON.stringify({ cardType,number,email })
         }).then(data => data.json())
             .then(data => {
                 if (data.code == 0) {
@@ -155,7 +155,7 @@ export const CardInfo=(callback)=>{
         fetch('http://118.123.11.246:11425/users/log', {
             method: 'POST',
             mode: 'cors',
-            credentials: 'include',
+            //credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json',
@@ -174,7 +174,7 @@ export const registerAdmin=(callback)=>{
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerAdmin', {
             method: 'POST',
-            credentials: 'include',
+           // credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export const adminlogin = ({password}, callback) => {
         fetch('http://118.123.11.246:11425/users/adminlogin', {
             method: 'POST',
             mode: 'cors',
-            credentials: 'include',
+            //credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 
@@ -220,7 +220,7 @@ export const adminPayfor=({account,amount},callback)=>{
         fetch('http://118.123.11.246:11425/users/payfor', {
             method: 'POST',
             mode: 'cors',
-            credentials: 'include',
+           // credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 

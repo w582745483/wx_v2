@@ -132,61 +132,68 @@ router.all('/login', function (req, resp) {
 })
 
 router.all('/registerCard', (req, res) => {
-  const { cardType } = req.body
+  const { cardType, number,email } = req.body
+  let path
+  for (var i = 0; i < number; i++) {
+    var password = createCode()
+    UserModel.findOne({ password }, (err, user) => {
+      if (user) {
+        password = createCode()
+      }
 
-  var password = createCode()
-  UserModel.findOne({ password }, (err, user) => {
-    if (user) {
-      password = createCode()
-    }
-
-    //卡密写入数据库
-    UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
-      if (!err) {
-        const date = new Date()
-        const year = date.getFullYear().toString()
-        const month = (date.getMonth() + 1).toString()
-        const day = date.getDate().toString()
-        const hour = date.getHours().toString()
-        const minute = date.getMinutes().toString()
-        const str = year + month + day + hour + minute
-        fs.writeFile(`../password--${str}.txt`, `${password}   `, { 'flag': 'a' }, function (err) {
-          if (err) {
-            console.log('写文件出错')
-            throw err;
-          }
-        });
-        console.log(`用户注册成功`)
-        //发送邮件信息
-        var message = {
-          // Comma separated lsit of recipients 收件人用逗号间隔
-          to: '2948942411@qq.com',//,542906219@qq.com
-          // Subject of the message 信息主题
-          subject: '卡密会员注册成功',
-          html: `<p>卡密类型:<b>${cardType}</b>      卡密:<b>${password}</b></p>`
-
+      //卡密写入数据库
+      UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
+        if (!err) {
+          const date = new Date()
+          const year = date.getFullYear().toString()
+          const month = (date.getMonth() + 1).toString()
+          const day = date.getDate().toString()
+          const hour = date.getHours().toString()
+          const minute = date.getMinutes().toString()
+          path = year + month + day + hour + minute
+          fs.writeFile(`../password--${path}.txt`, `${password}---`, { 'flag': 'a' }, function (err) {
+            if (err) {
+              console.log('写文件出错')
+            }
+          });
         }
-        //正式发送邮件
-        transporter.sendMail(message, (error, info) => {
-          if (error) {
-            console.log('Error occurred');
-            console.log(error.message);
-            return;
-          }
-          console.log('Send Mail');
-          console.log('Message sent successfully!');
-          console.log('Server responded with %s', info.response);
-          transporter.close();
-        });
-        res.send({ code: 0, data: { cardType, password } })
-      }
-      else {
-        console.log(`用户注册失败`, err)
-        res.send({ code: 1, msg: "卡密生成失败" })
-      }
-    })
+        else {
+          console.log(`用户注册失败`, err)
+          res.send({ code: 1, msg: "卡密生成失败" })
+        }
+      })
 
-  })
+    })
+  }
+  console.log(`用户注册成功`)
+  //发送邮件信息
+  var message = {
+    // Comma separated lsit of recipients 收件人用逗号间隔
+    to: `2948942411@qq.com,${email}`,//,542906219@qq.com
+    // Subject of the message 信息主题
+    subject: '卡密会员注册成功',
+    html: `<p>卡密类型:<b>${cardType}</b>`,
+    attachments: [
+      // String attachment
+      {
+        filename: `password--${path}.txt`,
+        contentType: 'text/plain', // optional,would be detected from the filename 可选的，会检测文件名
+        path:`../password--${path}.txt`
+      }],
+  }
+  //正式发送邮件
+  transporter.sendMail(message, (error, info) => {
+    if (error) {
+      console.log('Error occurred');
+      console.log(error.message);
+      return;
+    }
+    console.log('Send Mail');
+    console.log('Message sent successfully!');
+    console.log('Server responded with %s', info.response);
+    transporter.close();
+  });
+  res.send({ code: 0, data: { cardType, password } })
 
 })
 

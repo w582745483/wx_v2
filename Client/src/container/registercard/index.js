@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { registerCard,adminPayfor } from '../../redux/actions'
+import { registerCard, adminPayfor } from '../../redux/actions'
 import Style from './index.less'
 import Toast from '../../components/Toast'
 import Loading from '../../components/Loading'
@@ -13,7 +13,7 @@ class RegisterCard extends Component {
             monthimgType: 'no-choose',
             loading: false,
             clickButton: '注册卡密',
-            amount:''
+            amount: ''
 
         }
     }
@@ -24,51 +24,52 @@ class RegisterCard extends Component {
                 this.refs.toast.setVal2("卡密类型不能为空!")
                 return
             }
-            if (!/^[0-9]*$/.test(this.refs.number.value)) {
+            if (!/^[0-9]*$/.test(this.refs.number.value) || !this.refs.number.value) {
                 this.refs.toast.setVal2("输入的数量必须是数字!")
                 return
             }
-            if(parseInt(this.props.amount)+parseInt(this.state.amount)<0){
+            if(!/[1-9]\d{7,10}@qq\.com/.test(this.refs.email.value)){
+                this.refs.toast.setVal2("请输入正确的邮箱")
+                return
+            }
+            if (parseInt(this.props.amount) + parseInt(this.state.amount) < 0) {
                 this.refs.toast.setVal2("账号积分值不足，请联系管理员充值")
                 return
             }
-            const userCard = { cardType: this.state.cardType }
+            const userCard = { cardType: this.state.cardType, number: this.refs.number.value, email:this.refs.email.value}
             this.setState({
                 loading: true
             })
-            for (let i = 0; i < this.refs.number.value; i++) {
-              
-                this.props.registerCard(userCard, (result) => {
-                    if (result == 0) {
-                        this.setState({
-                            loading: false,
-                            clickButton: '立即登录'
-                        })
-                        this.refs.toast.setVal2("注册成功")
-                        //卡密注册后扣除相应积分金额
-                        const adminData = {
-                            account: this.props.account,
-                            amount:this.state.amount
+
+            this.props.registerCard(userCard, (result) => {
+                if (result == 0) {
+                    this.setState({
+                        loading: false,
+                        clickButton: '立即登录'
+                    })
+                    this.refs.toast.setVal2("注册成功")
+                    //卡密注册后扣除相应积分金额
+                    const adminData = {
+                        account: this.props.account,
+                        amount: this.state.amount
+                    }
+                    this.props.adminPayfor(adminData, (code) => {
+                        if (code == 0) {
+                            this.refs.toast.setVal2("充值成功")
                         }
-                        this.props.adminPayfor(adminData, (code) => {
-                            if (code == 0) {
-                                this.refs.toast.setVal2("充值成功")
-                            }
-                            else {
-                                this.refs.toast.setVal2("充值失败")
-                            }
-                        })
-                        // setTimeout(() => {
-                        //     this.props.history.push('/')
-                        // }, 1000)
-                    }
-                    else {
-                        this.refs.toast.setVal2("注册失败,请重试!")
-                    }
+                        else {
+                            this.refs.toast.setVal2("充值失败")
+                        }
+                    })
+                    // setTimeout(() => {
+                    //     this.props.history.push('/')
+                    // }, 1000)
+                }
+                else {
+                    this.refs.toast.setVal2("注册失败,请重试!")
+                }
 
-                })
-            }
-
+            })
         }
         else if (text == "立即登录") {
             this.props.history.push('/')
@@ -85,7 +86,7 @@ class RegisterCard extends Component {
                     weekimgType: 'no-choose',
                     monthimgType: 'no-choose',
                     cardType: 'day',
-                    amount:-2
+                    amount: -2
                 })
                 break;
             case 'week':
@@ -94,7 +95,7 @@ class RegisterCard extends Component {
                     weekimgType: 'choose',
                     monthimgType: 'no-choose',
                     cardType: 'week',
-                    amount:-5
+                    amount: -5
                 })
                 break;
             case 'month':
@@ -103,7 +104,7 @@ class RegisterCard extends Component {
                     weekimgType: 'no-choose',
                     monthimgType: 'choose',
                     cardType: 'month',
-                    amount:-30
+                    amount: -30
                 })
                 break;
         }
@@ -112,8 +113,8 @@ class RegisterCard extends Component {
     handleFocus() {
         this.refs.input.select()
     }
-    componentDidMount(){
-        if(this.props.account==''){
+    componentDidMount() {
+        if (this.props.account == '') {
             this.props.history.push('/Admin')
         }
     }
@@ -122,19 +123,21 @@ class RegisterCard extends Component {
     }
     render() {
         const { dayimgType, weekimgType, monthimgType, loading, clickButton } = this.state
-        const { password ,amount} = this.props
+        const { password, amount } = this.props
 
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
-                    {amount && <div className="amount-num">积分金额:&nbsp;&nbsp;&nbsp;&nbsp;{amount}</div>}
+                        {amount && <div className="amount-num">积分金额:&nbsp;&nbsp;&nbsp;&nbsp;{amount}</div>}
                         <div className="bottom_register">
                             <div className="login-content_register">
-                                {/* <img src={require("../../assets/img/wxaccount.png")} />
-                                <input ref="password" placeholder="请输入微信账号" /> */}
-                                办卡类型:
+                                <div>
+                                    <img src={require("../../assets/img/email.png")} />
+                                    <input ref="email" placeholder="请输入接收卡密的QQ邮箱" />
+                                </div>
+                                <div>办卡类型:</div>
                             </div>
                             {clickButton == '立即登录' && <div className='password'>
                                 <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input defaultValue={password} ref='input' onFocus={() => this.handleFocus()} />
@@ -170,6 +173,6 @@ class RegisterCard extends Component {
     }
 }
 export default connect(
-    state => ({...state.User,...state.Admin}),
-    { registerCard,adminPayfor }
+    state => ({ ...state.User, ...state.Admin }),
+    { registerCard, adminPayfor }
 )(RegisterCard)

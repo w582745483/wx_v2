@@ -72,7 +72,7 @@ only screen and (max-device-width:550px) {
         position: relative;
 
         .bottom_register {
-            top: 40%;
+            top: 30%;
             position: absolute;
             padding-top: 2rem;
             width: 100%;
@@ -85,25 +85,35 @@ only screen and (max-device-width:550px) {
             .login-content_register {
                 &:extend(.ls-flex);
                 &:extend(.ls-align-center);
-
-                margin-right: 10rem;
+                &:extend(.ls-column);
+               // margin-right: 10rem;
                 padding-bottom: 0.3rem;
                 color: #FFFFFF;
-
-                img {
-                    width: 2rem;
-                    height: 2rem;
-                    overflow: visible;
+                
+                div:nth-of-type(1){
+                    &:extend(.ls-flex);
+                    img {
+                        width: 2rem;
+                        height: 2rem;
+                        overflow: visible;
+                    }
+                    input {
+                        background: transparent;
+                        margin-left: 1rem;
+                        border-bottom: 1px solid white;
+                    }
+    
+                    input::placeholder {
+                        font-size: 10px;
+                        margin-top:1rem;
+                        color: grey;
+                    }
                 }
-
-                input {
-                    background: transparent;
-                    margin-left: 1.5rem;
+                div:nth-of-type(2){
+                    margin-right: 7rem;
+                    margin-top:2rem;
                 }
-
-                input::placeholder {
-                    color: #FFFFFF;
-                }
+                
             }
 
             .password {

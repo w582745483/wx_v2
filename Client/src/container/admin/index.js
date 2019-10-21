@@ -67,7 +67,7 @@ class Admin extends Component {
     }
     render() {
 
-        const { loading, dayimgType, weekimgType, monthimgType, loadingMessage, islogin } = this.state
+        const { loading, loadingMessage, islogin } = this.state
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
@@ -75,10 +75,10 @@ class Admin extends Component {
                     <div className="containee">
                         {islogin && <div className="amount-num">积分金额:&nbsp;&nbsp;&nbsp;&nbsp;{this.props.amount}</div>}
                         <div className="bottom_admin">
-                            <div className="login-content_admin">
+                           { !islogin &&<div className="login-content_admin">
                                 <img src={require("../../assets/img/wxaccount.png")} />
                                 <input defaultValue={this.props.password} ref="password" placeholder="请输入账号" />
-                            </div>
+                            </div>}
                             <div className="button">
                                 {!islogin && <div className="login" onClick={() => { this.login() }}>登录</div>}
                                 {islogin && <div className="register-card" onClick={() => { this.registerCard() }}>注册卡密</div>}
