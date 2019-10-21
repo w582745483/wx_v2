@@ -131,7 +131,7 @@ router.all('/login', function (req, resp) {
 
 })
 
-router.all('/registerCard', (req, res) => {
+router.all('/registerCard', async(req, res) => {
   const { cardType, number,email } = req.body
   let path
   for (var i = 0; i < number; i++) {
@@ -142,7 +142,7 @@ router.all('/registerCard', (req, res) => {
       }
 
       //卡密写入数据库
-      UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
+     await UserModel.update({ password }, { $set: { cardType } }, { upsert: true }, (err, user) => {
         if (!err) {
           const date = new Date()
           const year = date.getFullYear().toString()
