@@ -131,7 +131,7 @@ router.all('/login', function (req, resp) {
 
 })
 
-router.all('/registerCard', async(req, res) => {
+router.all('/registerCard', async (req, res) => {
   const { cardType, number, email } = req.body
   let path
   for (var i = 0; i < number; i++) {
@@ -165,35 +165,38 @@ router.all('/registerCard', async(req, res) => {
 
     })
   }
-  console.log(`用户注册成功`)
-  //发送邮件信息
-  var message = {
-    // Comma separated lsit of recipients 收件人用逗号间隔
-    to: `2948942411@qq.com,${email}`,//,542906219@qq.com
-    // Subject of the message 信息主题
-    subject: '卡密会员注册成功',
-    html: `<p>卡密类型:<b>${cardType}</b>`,
-    attachments: [
-      // String attachment
-      {
-        filename: `password--${path}.txt`,
-        contentType: 'text/plain', // optional,would be detected from the filename 可选的，会检测文件名
-        path: `../password--${path}.txt`
-      }],
-  }
-  //正式发送邮件
-  transporter.sendMail(message, (error, info) => {
-    if (error) {
-      console.log('Error occurred');
-      console.log(error.message);
-      return;
+  setTimeout(() => {
+    console.log(`用户注册成功`)
+    //发送邮件信息
+    var message = {
+      // Comma separated lsit of recipients 收件人用逗号间隔
+      to: `2948942411@qq.com,${email}`,//,542906219@qq.com
+      // Subject of the message 信息主题
+      subject: '卡密会员注册成功',
+      html: `<p>卡密类型:<b>${cardType}</b>`,
+      attachments: [
+        // String attachment
+        {
+          filename: `password--${path}.txt`,
+          contentType: 'text/plain', // optional,would be detected from the filename 可选的，会检测文件名
+          path: `../password--${path}.txt`
+        }],
     }
-    console.log('Send Mail');
-    console.log('Message sent successfully!');
-    console.log('Server responded with %s', info.response);
-    transporter.close();
-  });
-  res.send({ code: 0, data: { cardType, password } })
+    //正式发送邮件
+    transporter.sendMail(message, (error, info) => {
+      if (error) {
+        console.log('Error occurred');
+        console.log(error.message);
+        return;
+      }
+      console.log('Send Mail');
+      console.log('Message sent successfully!');
+      console.log('Server responded with %s', info.response);
+      transporter.close();
+    });
+  }, 1000)
+
+  res.send({ code: 0, data: {} })
 
 })
 

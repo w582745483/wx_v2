@@ -32,7 +32,7 @@ class RegisterCard extends Component {
                 this.refs.toast.setVal2("请输入正确的邮箱")
                 return
             }
-            if (parseInt(this.props.amount) + parseInt(this.state.amount) < 0) {
+            if (parseInt(this.props.amount) + parseInt(this.state.amount)*parseInt(this.refs.number.value)< 0) {
                 this.refs.toast.setVal2("账号积分值不足，请联系管理员充值")
                 return
             }
@@ -51,7 +51,7 @@ class RegisterCard extends Component {
                     //卡密注册后扣除相应积分金额
                     const adminData = {
                         account: this.props.account,
-                        amount: this.state.amount
+                        amount: this.state.amount*this.refs.number.value
                     }
                     this.props.adminPayfor(adminData, (code) => {
                         if (code == 0) {
@@ -139,9 +139,9 @@ class RegisterCard extends Component {
                                 </div>
                                 <div>办卡类型:</div>
                             </div>
-                            {clickButton == '立即登录' && <div className='password'>
+                            {/* {clickButton == '立即登录' && <div className='password'>
                                 <div>卡&nbsp;&nbsp;&nbsp;&nbsp;密:</div><input defaultValue={password} ref='input' onFocus={() => this.handleFocus()} />
-                            </div>}
+                            </div>} */}
                             <div className='card-type_register'>
                                 <div onClick={() => { this.handleClick('day') }}>
                                     <img src={require(`../../assets/img/${dayimgType}.png`)} />
