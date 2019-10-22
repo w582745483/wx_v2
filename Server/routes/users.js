@@ -136,18 +136,13 @@ router.all('/registerCard', async (req, res) => {
   let path
   for (var i = 0; i < number; i++) {
     var password = createCode()
-    console.log(1111111)
-    let user = await UserModel.findOne({ password })
-    console.log(222222,user)
-    if (user) {
-      password = createCode()
-    }
-    console.log(333333)
-    //卡密写入数据库
-try{
-await UserModel.update({ password }, { $set: { cardType1 } }, { upsert: true }).exec()
-    console.log(444444)
-    if (true) {
+    try {
+      let user = await UserModel.findOne({ password })
+      if (user) {
+        password = createCode()
+      }
+      //卡密写入数据库
+      await UserModel.update({ password }, { $set: { cardType } }, { upsert: true }).exec()
       console.log(555555)
       const date = new Date()
       const year = date.getFullYear().toString()
@@ -160,18 +155,13 @@ await UserModel.update({ password }, { $set: { cardType1 } }, { upsert: true }).
         if (err) {
           console.log('写文件出错')
         }
-      });
-      console.log(66666)
+      })
     }
-}
-    
-    catch{
-      console.log(`用户注册失败`)
+    catch (err) {
+      console.log(`用户注册失败`, err)
       res.send({ code: 1, msg: "卡密生成失败" })
+      return
     }
-
-    console.log(777777)
-
   }
 
   console.log(`用户注册成功`)
