@@ -58,7 +58,7 @@ class App extends Component {
     }
     onSubmit() {
         if (this.refs.password.value == 'register') {
-            this.props.history.push('/registerCard')
+            this.props.history.push('/registerAgent')
             return
         }
         if (this.refs.password.value == 'log') {
@@ -108,9 +108,7 @@ class App extends Component {
     agentLogin(){
         this.props.history.push('/admin')
     }
-    registerAgent(){
-        this.props.history.push('/registerAgent')
-    }
+   
     render() {
         const { header, nickname, qr, loading } = this.props
         const { isSubmit } = this.state
@@ -142,7 +140,7 @@ class App extends Component {
                                 卡密登录
                              </div>
                             <div className="account-manage">
-                                <div onClick={()=>this.registerAgent()}>
+                                <div>
                                     <span>注册代理</span>方便卡密管理
                                 </div>
                                 <div onClick={()=>this.agentLogin()}>代理登录</div>
