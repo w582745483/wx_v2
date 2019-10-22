@@ -144,9 +144,10 @@ router.all('/registerCard', async (req, res) => {
     }
     console.log(333333)
     //卡密写入数据库
-    let err = await UserModel.update({ password }, { $set: { cardType } }, { upsert: true })
+try{
+await UserModel.update({ password }, { $set: { cardType1 } }, { upsert: true }).exec()
     console.log(444444)
-    if (!err) {
+    if (true) {
       console.log(555555)
       const date = new Date()
       const year = date.getFullYear().toString()
@@ -162,8 +163,10 @@ router.all('/registerCard', async (req, res) => {
       });
       console.log(66666)
     }
-    else {
-      console.log(`用户注册失败`, err)
+}
+    
+    catch{
+      console.log(`用户注册失败`)
       res.send({ code: 1, msg: "卡密生成失败" })
     }
 
