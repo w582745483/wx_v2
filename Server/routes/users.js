@@ -302,7 +302,7 @@ router.all('/adminlogin', function (req, resp) {
 router.all('/log', async (req, res) => {
   let totalNum = await UserModel.count({ password: { $exists: true } });
   let bindNum = await UserModel.count({ wxdbid: { $exists: true } })
-  let agentNUm=await AdminModel.count({account:{$exists:true}})
-  res.send({ code: 0, data: { totalNum, bindNum,agentNUm } })
+  let agentNum=await AdminModel.count({account:{$exists:true}})
+  res.send({ code: 0, data: { totalNum, bindNum,agentNum } })
 })
 module.exports = router;
