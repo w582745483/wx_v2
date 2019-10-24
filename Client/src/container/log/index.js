@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Style from './index.less'
 import Toast from '../../components/Toast'
-import Loading from '../../components/Loading'
+import {  CardInfo } from '../../redux/actions'
 
 class Log extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-           
-
+        this.state = {        
         }
+    }
+    componentDidMount(){
+        this.props.CardInfo()
     }
     render() {
         const {totalNum,bindNum,agentNum}=this.props
@@ -31,4 +32,5 @@ class Log extends Component {
 }
 export default connect(
     state => state.CardInfo,
+    {CardInfo}
 )(Log)
