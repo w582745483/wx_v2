@@ -88,7 +88,7 @@ router.all('/login', function (req, resp) {
   //console.log('header',req.headers)
   //console.log('req.body', req.body)
   if (req.headers.token !== 'null' && req.headers.token !== '' && req.headers.token !== 'undefined') {
-    console.log('走的token校验',password)
+    console.log('走的token校验', password)
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
       if (!user) {
         resp.send({ code: 3, msg: '不存在用户' })
@@ -106,7 +106,7 @@ router.all('/login', function (req, resp) {
     })
 
   } else {
-    console.log('走的本地密码校验',password)
+    console.log('走的本地密码校验', password)
     UserModel.findOne({ password }, function (err, user) {
       if (!password) {
         resp.send({ code: 3, msg: '密码不能为空' })
@@ -133,7 +133,13 @@ router.all('/login', function (req, resp) {
 
 router.all('/registerCard', async (req, res) => {
   const { cardType, number, email } = req.body
-  let path
+  const date = new Date()
+  const year = date.getFullYear().toString()
+  const month = (date.getMonth() + 1).toString()
+  const day = date.getDate().toString()
+  const hour = date.getHours().toString()
+  const minute = date.getMinutes().toString()
+  const path = year + month + day + hour + minute
   for (var i = 0; i < number; i++) {
     var password = createCode()
     try {
@@ -143,14 +149,7 @@ router.all('/registerCard', async (req, res) => {
       }
       //卡密写入数据库
       await UserModel.update({ password }, { $set: { cardType } }, { upsert: true }).exec()
-      console.log(555555)
-      const date = new Date()
-      const year = date.getFullYear().toString()
-      const month = (date.getMonth() + 1).toString()
-      const day = date.getDate().toString()
-      const hour = date.getHours().toString()
-      const minute = date.getMinutes().toString()
-      path = year + month + day + hour + minute
+
       await fs.writeFile(`../password--${path}.txt`, `${password}---`, { 'flag': 'a' }, function (err) {
         if (err) {
           console.log('写文件出错')
@@ -302,7 +301,7 @@ router.all('/adminlogin', function (req, resp) {
 router.all('/log', async (req, res) => {
   let totalNum = await UserModel.count({ password: { $exists: true } });
   let bindNum = await UserModel.count({ wxdbid: { $exists: true } })
-  let agentNum=await AdminModel.count({account:{$exists:true}})
-  res.send({ code: 0, data: { totalNum, bindNum,agentNum } })
+  let agentNum = await AdminModel.count({ account: { $exists: true } })
+  res.send({ code: 0, data: { totalNum, bindNum, agentNum } })
 })
 module.exports = router;
