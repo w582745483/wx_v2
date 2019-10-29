@@ -139,7 +139,8 @@ router.all('/registerCard', async (req, res) => {
   const day = date.getDate().toString()
   const hour = date.getHours().toString()
   const minute = date.getMinutes().toString()
-  const path = year + month + day + hour + minute
+  const second=date.getSeconds().toString()
+  const path = year + month + day + hour + minute+second
   for (var i = 0; i < number; i++) {
     var password = createCode()
     try {
