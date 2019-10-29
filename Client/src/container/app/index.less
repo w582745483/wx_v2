@@ -102,7 +102,31 @@ only screen and (max-device-width:550px) {
                 justify-content: center;
 
             }
+            .model-word{
+                margin-top: 2rem; 
+                align-self: flex-start;
+                font-size: 16px;
+                color: red;
+            }
+            .card-type_app{
+                color:greenyellow;
+                margin-top: 0.5rem; 
+                width: 60%;
 
+                div {
+                    &:extend(.ls-flex);
+                    &:extend(.ls-align-center);
+
+                    img {
+                        width: 1.8rem;
+                    }
+
+                    span {
+                        margin-left: 1.5rem;
+                        vertical-align: -webkit-baseline-middle;
+                    }
+                }
+            }
             .connect-server {
                 padding: 0 4rem 0;
                 height: 2.5rem;
@@ -123,7 +147,7 @@ only screen and (max-device-width:550px) {
         }
 
         .bottom {
-            top: 55%;
+            top: 40%;
             position: absolute;
             padding-top: 2rem;
 
@@ -195,6 +219,7 @@ only screen and (max-device-width:550px) {
                 font-size: 0.7rem;
 
             }
+           
         }
 
     }

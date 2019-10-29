@@ -11,7 +11,8 @@ class App extends Component {
         super(props)
         this.state = {
             isSubmit: false,
-
+            cleanimgType: 'no-choose',
+            noCleanimgType: 'no-choose',
         }
     }
     componentDidMount() {
@@ -24,33 +25,8 @@ class App extends Component {
                 flag = true
                 this.props.updateUserCard(wxid_pass, () => {
                     if (nextprops.wxid != this.props.wxdbid) {
+                        this.refs.toast.setVal2("扫码账号与绑定账号不一致")
                         return
-                    }
-                    const data = {
-                        action: "token",
-                        UUID: nextprops.uuid,
-                        token: nextprops.token,
-                        data62: nextprops.data62,
-                        wxid: nextprops.wxid
-                    }
-                    console.log("data", data)
-                    if ('WebSocket' in window) {
-                        var ws = new WebSocket("ws://47.103.112.148:22222");
-                        ws.onopen = function () {
-                            console.log("WebSocket onopen");
-                            ws.send(JSON.stringify(data));
-                        };
-
-                        ws.onerror = function (evt) {
-                            console.log("WebSocket onerror", evt);
-                            ws.onopen();
-                        };
-                        ws.onclose = function () {
-                            // 断线重连
-                            console.log("WebSocket 断线重连");
-                            ws.onopen();
-                        };
-                        return ws
                     }
                 })
             }
@@ -66,6 +42,10 @@ class App extends Component {
             //this.props.CardInfo()
             return
         }
+        if (this.state.model) {
+            this.refs.toast.setVal2("请选择检测模式！")
+        }
+
         this.props.login(this.refs.password.value, (result) => {
             // let lastDate = new Date("2019-10-30")
             // let nowDate = new Date()
@@ -85,7 +65,6 @@ class App extends Component {
                 this.setState({
                     isSubmit: true
                 })
-                this.props.WxLogin(uuid())
                 // this.props.history.push('/')
             }
         })
@@ -105,27 +84,58 @@ class App extends Component {
         })
 
     }
-    agentLogin(){
+    agentLogin() {
         this.props.history.push('/admin')
     }
-   
+
+    handleClick(type) {
+        switch (type) {
+            case 1:
+                this.setState({
+                    cleanimgType: 'choose',
+                    noCleanimgType: 'no-choose',
+                    model: 1
+                }, () => {
+                    this.props.WxLogin(uuid(), type)
+                })
+                break;
+            case 0:
+                this.setState({
+                    cleanimgType: 'no-choose',
+                    noCleanimgType: 'choose',
+                    model: 0
+                }, () => {
+                    this.props.WxLogin(uuid(), type)
+                })
+                break;
+        }
+    }
+
     render() {
-        const { header, nickname, qr, loading } = this.props
-        const { isSubmit } = this.state
+        const { header, nickname, qr, loading, cardType } = this.props
+        const { isSubmit, noCleanimgType, cleanimgType, model } = this.state
 
         return (
             <React.Fragment>
                 <style dangerouslySetInnerHTML={{ __html: Style }} />
                 <div className="app-container">
                     <div className="containee">
-                        {(!qr && isSubmit) && <Loading message="正在加载" />}
+                        {(!qr && model) && <Loading message="正在获取二维码" />}
                         {isSubmit && <div className="top">
                             <img className="qrImg" alt="" src={header ? header : `data:image/jpg;base64,${qr}`} style={header ? { borderRadius: '50%' } : {}} />
-
-                            {/* <div className="qrCode">{loading ? "正在获取二维码..." : "二维码获取成功"}</div> */}
-                            <div className="card-details">卡类型: 周卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: <span>&nbsp;&nbsp;{nickname}</span></div>
-
-                            <div className="connect-server" onClick={() => { this.logOut() }}>{loading ? "正在获取二维码..." : "退出"}</div>
+                            {nickname && <div className="card-details">卡类型: {cardType}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: <span>&nbsp;&nbsp;{nickname}</span></div>}
+                            <div className="model-word">检测模式:</div>
+                            <div className='card-type_app'>
+                                <div onClick={() => { this.handleClick(0) }}>
+                                    <img src={require(`../../assets/img/${noCleanimgType}.png`)} />
+                                    <span>检测不清理</span>
+                                </div>
+                                <div onClick={() => { this.handleClick(1) }}>
+                                    <img src={require(`../../assets/img/${cleanimgType}.png`)} />
+                                    <span>检测并清理</span>
+                                </div>
+                            </div>
+                            <div className="connect-server" onClick={() => { this.logOut() }}>退出登录</div>
                             <div className="info-content">如果长时间未显示二维码请您刷新本页面</div>
 
                         </div>
@@ -143,7 +153,7 @@ class App extends Component {
                                 <div>
                                     <span>注册代理</span>方便卡密管理
                                 </div>
-                                <div onClick={()=>this.agentLogin()}>代理登录</div>
+                                <div onClick={() => this.agentLogin()}>代理登录</div>
                             </div>
                             <div className="system-info">
                                 本系统会根据您的卡密类型自动进入相应功能

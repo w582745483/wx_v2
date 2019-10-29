@@ -18,10 +18,10 @@ const updateusercard = wxdbid => ({ type: UPDATE_WXDBID, data: wxdbid })
 const getCardInfo=(cardinfo)=>({type:CARDINFO,data:cardinfo})
 const getregisterAdmin=(account)=>({type:REGISTERADMIN,data:account})
 
-export const WxLogin = (uuid) => {
+export const WxLogin = (uuid,type) => {
 
     return dispatch => {
-        const wsInstace = ws(uuid)
+        const wsInstace = ws(uuid,type)
         wsInstace.onmessage = (evt) => {
             heartCheck.reset(wsInstace);
             var msg = JSON.parse(evt.data);
@@ -86,7 +86,7 @@ export const registerCard = ({ cardType,number,email }, callback) => {
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerCard', {
             method: 'POST',
-            //credentials: 'include',
+            credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ export const CardInfo=(callback)=>{
         fetch('http://118.123.11.246:11425/users/log', {
             method: 'POST',
             mode: 'cors',
-            //credentials: 'include',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json',
@@ -174,7 +174,7 @@ export const registerAdmin=(callback)=>{
     return dispatch => {
         fetch('http://118.123.11.246:11425/users/registerAdmin', {
             method: 'POST',
-           // credentials: 'include',
+            credentials: 'include',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export const adminlogin = ({password}, callback) => {
         fetch('http://118.123.11.246:11425/users/adminlogin', {
             method: 'POST',
             mode: 'cors',
-            //credentials: 'include',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 
@@ -220,7 +220,7 @@ export const adminPayfor=({account,amount},callback)=>{
         fetch('http://118.123.11.246:11425/users/payfor', {
             method: 'POST',
             mode: 'cors',
-           // credentials: 'include',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': ' application/json', 
