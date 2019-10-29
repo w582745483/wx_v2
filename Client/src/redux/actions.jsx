@@ -39,37 +39,15 @@ export const WxLogin = (uuid,type) => {
                     const qr = msg.context
                     dispatch(getQr({ qr, uuid }))
                     break;
-                // case 'wxid':
-                //     const wxid = msg.wxid//wxid
-                //     dispatch(getWxID(wxid))
-                //     break;
                 case 'headimgurl':
                     const header = msg.context//头像
                     dispatch(getHeader(header))
                     break;
-                // case 'nickname':
-                //     const nickname = msg.nickname//昵称
-                //     dispatch(getNickname(nickname))
-                //     break;
-                case 'token':
-                    const token = msg.token
-                    const data62 = msg.data62
-                    const wxid = msg.wxid//wxid
-                    const UUID = msg.UUID
-                    dispatch(getToken(token))//token
-                    dispatch(getData62(data62))//data62
-                    dispatch(getWxID(wxid))
-                    dispatch(getUUID(UUID))//UUID
-                    break;
-                case 'UUID':
-                   
-                    break;
-                case 'data62':
-                   
-                    const nickname = msg.nickname//昵称
+                case 'LoginSuccess':
+                    const wxid = msg.context//wxid
+                    const nickname = msg.NickName//昵称
                     dispatch(getNickname(nickname))
-                    
-                    break;
+                    dispatch(getWxID(wxid))
                 case "getcontact"://获取联系人信息。会多次传输
                     break;
                 case "getgroup"://获取群组信息。会多次传输

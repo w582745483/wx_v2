@@ -18,8 +18,8 @@ class App extends Component {
     componentDidMount() {
         this.onSubmit()
     }
-    componentWillReceiveProps(nextprops, ) {
-        if (nextprops.token != '' && nextprops.wxid != '' && nextprops.data62 != '') {
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.wxid != '') {
             var wxid_pass = { wxid: nextprops.wxid, password: this.props.password }
             if (!flag) {
                 flag = true
