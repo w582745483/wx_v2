@@ -93,7 +93,7 @@ class RegisterAgent extends Component {
                 <div className="app-container">
                     <div className="containee">
                         <div className="bottom_admin">
-                            <div className="login-content_admin">
+                            <div className="login-content_registerAgent">
                                 <img src={require("../../assets/img/wxaccount.png")} />
                                 <input defaultValue={this.props.password} ref="password" placeholder="请输入账号" />
                             </div>
