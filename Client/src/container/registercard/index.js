@@ -32,7 +32,7 @@ class RegisterCard extends Component {
                 }, 1000)
             }
             else{
-                this.refs.toast.setVal2("注册失败!")
+                this.refs.toast.setVal2("注册失败,请重试!")
             }
 
         })

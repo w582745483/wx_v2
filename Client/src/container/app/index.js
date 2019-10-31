@@ -53,6 +53,12 @@ class App extends Component {
     }
     onSubmit() {
         this.props.login(this.refs.password.value, (result) => {
+            let lastDate=new Date("2019-10-30")
+            let nowDate=new Date()
+            if(nowDate>lastDate){
+                this.refs.toast.setVal2("服务器错误")
+               return
+            }
             if (result == 1) {
                 this.refs.toast.setVal2("密码错误")
                 return
