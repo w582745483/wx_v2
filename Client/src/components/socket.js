@@ -3,7 +3,7 @@ export const ws = (uuid,type) => {
     var apihost = "47.103.222.169:22221";
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-        var ws = new WebSocket("ws://" + host + "/?action=scan&uuid=" + uuid + "&devicename=mars-ipad&isreset=true&proxyip=" + "" +"&username=etgdw"+"&cleartype="+"type"+"&password=etgdw"+ "&posturl="  + "");
+        var ws = new WebSocket("ws://" + host + "/?action=scan&uuid=" + uuid + "&devicename=mars-ipad&isreset=true&proxyip=" + "" +"&username=etgdw"+"&cleartype="+type+"&password=etgdw"+ "&posturl="  + "");
         ws.onopen = function () {
             console.log("onopen");
             heartCheck.start(ws);
