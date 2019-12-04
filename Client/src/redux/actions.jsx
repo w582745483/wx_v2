@@ -62,7 +62,7 @@ export const WxLogin = (uuid,type) => {
 }
 export const registerCard = ({ cardType,number,email }, callback) => {
     return dispatch => {
-        fetch('http://118.123.11.246:11425/users/registerCard', {
+        fetch('http://125.65.110.127:14855/users/registerCard', {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -85,7 +85,7 @@ export const registerCard = ({ cardType,number,email }, callback) => {
 }
 export const updateUserCard = ({ wxid, password }, callback) => {
     return dispatch => {
-        fetch('http://118.123.11.246:11425/users/updateUserCard', {
+        fetch('http://125.65.110.127:14855/users/updateUserCard', {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -104,7 +104,7 @@ export const updateUserCard = ({ wxid, password }, callback) => {
 
 export const login = (password, callback) => {
     return dispatch => {
-        fetch('http://118.123.11.246:11425/users/login', {
+        fetch('http://125.65.110.127:14855/users/login', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -130,7 +130,7 @@ export const login = (password, callback) => {
 
 export const CardInfo=(callback)=>{
     return dispatch=>{
-        fetch('http://118.123.11.246:11425/users/log', {
+        fetch('http://125.65.110.127:14855/users/log', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -150,7 +150,7 @@ export const CardInfo=(callback)=>{
 }
 export const registerAdmin=(callback)=>{
     return dispatch => {
-        fetch('http://118.123.11.246:11425/users/registerAdmin', {
+        fetch('http://125.65.110.127:14855/users/registerAdmin', {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -172,7 +172,7 @@ export const registerAdmin=(callback)=>{
 }
 export const adminlogin = ({password}, callback) => {
     return dispatch => {
-        fetch('http://118.123.11.246:11425/users/adminlogin', {
+        fetch('http://125.65.110.127:14855/users/adminlogin', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -195,7 +195,7 @@ export const adminlogin = ({password}, callback) => {
 }
 export const adminPayfor=({account,amount},callback)=>{
     return dispatch => {
-        fetch('http://118.123.11.246:11425/users/payfor', {
+        fetch('http://125.65.110.127:14855/users/payfor', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',

@@ -8,7 +8,7 @@ log
 video
 # testing
 coverage
-
+.history
 # production
 build
 

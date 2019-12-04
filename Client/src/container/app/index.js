@@ -70,7 +70,7 @@ class App extends Component {
         })
     }
     logOut() {
-        fetch('http://118.123.11.246:11425/users/', {
+        fetch('http://125.65.110.127:14855/users/', {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
