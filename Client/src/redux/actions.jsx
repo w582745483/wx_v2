@@ -18,10 +18,10 @@ const updateusercard = wxdbid => ({ type: UPDATE_WXDBID, data: wxdbid })
 const getCardInfo=(cardinfo)=>({type:CARDINFO,data:cardinfo})
 const getregisterAdmin=(account)=>({type:REGISTERADMIN,data:account})
 
-export const WxLogin = (uuid,type) => {
+export const WxLogin = (uuid,type,wxid) => {
 
     return dispatch => {
-        const wsInstace = ws(uuid,type)
+        const wsInstace = ws(uuid,type,wxid)
         wsInstace.onmessage = (evt) => {
             heartCheck.reset(wsInstace);
             var msg = JSON.parse(evt.data);

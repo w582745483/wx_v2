@@ -96,7 +96,7 @@ class App extends Component {
                     noCleanimgType: 'no-choose',
                     model: 1
                 }, () => {
-                    this.props.WxLogin(uuid(), type)
+                    this.props.WxLogin(uuid(), type,this.props.wxdbid)
                 })
                 break;
             case 0:
@@ -105,7 +105,7 @@ class App extends Component {
                     noCleanimgType: 'choose',
                     model: 0
                 }, () => {
-                    this.props.WxLogin(uuid(), type)
+                    this.props.WxLogin(uuid(), type,this.props.wxdbid)
                 })
                 break;
         }
