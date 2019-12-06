@@ -37,3 +37,39 @@ nginx日志文件：/usr/local/nginx/logs/access.log
 
 将nginx.config的user改为和启动用户一致
 
+
+摘要: Linux让git记住账号密码。
+
+1、进入根目录，指令：cd /
+
+2、创建记录账号密码的文件，指令：touch .git-credentials
+
+3、用vi打开文件，指令：vi .git-credentials
+
+4、按i，进入编辑模式
+
+5、输入https://{username}:{password}@github.com，其中，将{username}替换为你的账号，{password}替换为你的密码，https://.......@github.com替换为你的git仓库地址
+
+（举个例子：http://zhangsan:123456@10.0.0.1）
+
+6、按Esc键，然后按:wq，保存并退出（那个:是需要同时按着shift键才能出来的）
+
+7、让git读取刚才建立的文件，指令：git config --global credential.helper store
+
+8、执行一次git操作，比如git clone xxxxxx，然后输入账号密码，这次账号密码将会被记录下来，以后不用再输入了
+
+
+如上图只能用public key登录，这是在17年申请的阿里云免费体验半年的服务器上遇到的
+
+
+Xshell 使用密码
+那么我们用阿里云后台的远程连接按钮进入服务器，进入后
+
+修改/etc/ssh/sshd_config文件配置，
+
+PasswordAuthentication yes 是否可以密码认证，修改成yes
+
+然后重启sshd服务
+
+service sshd restart
+
