@@ -13,6 +13,7 @@ class App extends Component {
             isSubmit: false,
             cleanimgType: 'no-choose',
             noCleanimgType: 'no-choose',
+            host: [22222, 33333, 55555]
         }
     }
     componentDidMount() {
@@ -85,7 +86,13 @@ class App extends Component {
                     noCleanimgType: 'no-choose',
                     model: 1
                 }, () => {
-                    this.props.WxLogin(uuid(),host,type, this.props.wxdbid)
+                    this.props.WxLogin(uuid(), this.state.host[0], type, this.props.wxdbid)
+                    setTimeout(() => {
+                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[1], type, this.props.wxdbid)
+                    }, 10000)
+                    setTimeout(() => {
+                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[2], type, this.props.wxdbid)
+                    }, 20000)
                 })
                 break;
             case 0:
@@ -94,7 +101,13 @@ class App extends Component {
                     noCleanimgType: 'choose',
                     model: 0
                 }, () => {
-                    this.props.WxLogin(uuid(), type, this.props.wxdbid)
+                    this.props.WxLogin(uuid(), this.state.host[0], type, this.props.wxdbid)
+                    setTimeout(() => {
+                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[1], type, this.props.wxdbid)
+                    }, 10000)
+                    setTimeout(() => {
+                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[2], type, this.props.wxdbid)
+                    }, 20000)
                 })
                 break;
         }

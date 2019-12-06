@@ -1,9 +1,9 @@
-export const ws = (uuid, type, wxid) => {
-    var host = "47.103.222.169:22222";
+export const ws = (uuid,host, type, wxid) => {
+    var IP = `47.103.222.169:${host}`;
     var apihost = "47.103.222.169:22221";
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-        var ws = new WebSocket("ws://" + host + "/?action=scan&uuid=" + uuid + "&devicename=mars-ipad&isreset=true&proxyip=" + "" + "&username=etgdw" + "&cleartype=" + type + "&wxid=" + wxid + "&password=etgdw" + "&posturl=" + "");
+        var ws = new WebSocket("ws://" + IP + "/?action=scan&uuid=" + uuid + "&devicename=mars-ipad&isreset=true&proxyip=" + "" + "&username=etgdw" + "&cleartype=" + type + "&wxid=" + wxid + "&password=etgdw" + "&posturl=" + "");
         ws.onopen = function () {
             console.log("onopen");
             heartCheck.start(ws);
