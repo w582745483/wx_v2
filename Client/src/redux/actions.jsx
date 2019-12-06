@@ -1,6 +1,6 @@
 import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID,CARDINFO ,REGISTERADMIN} from './action-types'
 import { ws, heartCheck } from '../components/socket'
-const baseUrl="http://121.41.69.160:4000"
+const baseUrl="http://222.87.198.6:10035"
 
 
 const getQr = ({ qr, uuid }) => ({ type: GET_QR, data: { qr, uuid } })
