@@ -1,0 +1,39 @@
+git 安装 yum install -y git
+nodejs 安装 1：wget https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz
+			2：tar -xf node-v8.11.3-linux-x64.tar.xz
+			3：export NODE_HOME=/root/node-v8.11.3-linux-x64/bin{ 这里填解压之后node的路径}
+			   export PATH=$PATH:$NODE_HOME
+			4：vim /etc/profile 将第3部内容写进去
+			5：source /etc/profile
+mogodb 安装 1：curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz    # 下载
+			   tar -zxvf mongodb-linux-x86_64-3.0.6.tgz                                   # 解压
+
+               mv  mongodb-linux-x86_64-3.0.6/ /usr/local/mongodb                         # 将解压包拷贝到指定目录
+			2：mkdir -p /data/db
+			3：cd /usr/local/mongodb/bin
+			4：./mongo
+Nginx 安装  1：wget http://nginx.org/download/nginx-1.12.2.tar.gz
+			2：# 安装依赖
+			  yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
+			   # 解压缩
+			  tar -zxvf nginx-1.12.2.tar.gz
+			  cd nginx-1.12.2/
+			   # 执行配置
+             ./configure
+               # 编译安装(默认安装在/usr/local/nginx)
+              make
+              make install
+Nginx验证
+nginx主配置文件：/usr/local/nginx/conf/nginx.conf
+nginx日志文件：/usr/local/nginx/logs/access.log
+
+启动Nginx：/usr/local/nginx/sbin/nginx
+测试配置文件：${Nginx}/sbin/nginx -t
+启动命令：${Nginx}/sbin/nginx
+停止命令：${Nginx}/sbin/nginx -s stop/quit
+重启命令：${Nginx}/sbin/nginx -s reload
+查看进程命令：ps -ef | grep nginx
+平滑重启：kill -HUP [Nginx主进程号(即ps命令查到的PID)]
+
+将nginx.config的user改为和启动用户一致
+
