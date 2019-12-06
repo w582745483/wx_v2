@@ -1,6 +1,6 @@
 import { GET_QR, GET_HEADER, GET_NICK_NAME, GET_WXID, GET_LOGIN, REGISTER, ERROR_MSG, AUTH_SUCCESS, GET_TOKEN, GET_UUID, GET_DATA62, UPDATE_WXDBID,CARDINFO ,REGISTERADMIN} from './action-types'
 import { ws, heartCheck } from '../components/socket'
-
+const baseUrl="http://localhost:4000"
 
 
 const getQr = ({ qr, uuid }) => ({ type: GET_QR, data: { qr, uuid } })
@@ -62,7 +62,7 @@ export const WxLogin = (uuid,type,wxid) => {
 }
 export const registerCard = ({ cardType,number,email }, callback) => {
     return dispatch => {
-        fetch('http://125.65.110.127:14855/users/registerCard', {
+        fetch(`${baseUrl}/users/registerCard`, {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -85,7 +85,7 @@ export const registerCard = ({ cardType,number,email }, callback) => {
 }
 export const updateUserCard = ({ wxid, password }, callback) => {
     return dispatch => {
-        fetch('http://125.65.110.127:14855/users/updateUserCard', {
+        fetch(`${baseUrl}/users/updateUserCard`, {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -104,7 +104,7 @@ export const updateUserCard = ({ wxid, password }, callback) => {
 
 export const login = (password, callback) => {
     return dispatch => {
-        fetch('http://125.65.110.127:14855/users/login', {
+        fetch(`${baseUrl}/users/login`, {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -130,7 +130,7 @@ export const login = (password, callback) => {
 
 export const CardInfo=(callback)=>{
     return dispatch=>{
-        fetch('http://125.65.110.127:14855/users/log', {
+        fetch(`${baseUrl}/users/log`, {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -150,7 +150,7 @@ export const CardInfo=(callback)=>{
 }
 export const registerAdmin=(callback)=>{
     return dispatch => {
-        fetch('http://125.65.110.127:14855/users/registerAdmin', {
+        fetch(`${baseUrl}/users/registerAdmin`, {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -172,7 +172,7 @@ export const registerAdmin=(callback)=>{
 }
 export const adminlogin = ({password}, callback) => {
     return dispatch => {
-        fetch('http://125.65.110.127:14855/users/adminlogin', {
+        fetch(`${baseUrl}/users/adminlogin`, {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -195,7 +195,7 @@ export const adminlogin = ({password}, callback) => {
 }
 export const adminPayfor=({account,amount},callback)=>{
     return dispatch => {
-        fetch('http://125.65.110.127:14855/users/payfor', {
+        fetch(`${baseUrl}/users/payfor`, {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',

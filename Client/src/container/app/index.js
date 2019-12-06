@@ -70,19 +70,8 @@ class App extends Component {
         })
     }
     logOut() {
-        fetch('http://125.65.110.127:14855/users/', {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': ' application/json'
-            },
-        }).then(() => {
-            window.location.href = '/'
-            localStorage.setItem('password', '')
-        })
-
+        window.location.href = '/'
+        localStorage.setItem('password', '')
     }
     agentLogin() {
         this.props.history.push('/admin')
@@ -96,7 +85,7 @@ class App extends Component {
                     noCleanimgType: 'no-choose',
                     model: 1
                 }, () => {
-                    this.props.WxLogin(uuid(), type,this.props.wxdbid)
+                    this.props.WxLogin(uuid(),host,type, this.props.wxdbid)
                 })
                 break;
             case 0:
@@ -105,7 +94,7 @@ class App extends Component {
                     noCleanimgType: 'choose',
                     model: 0
                 }, () => {
-                    this.props.WxLogin(uuid(), type,this.props.wxdbid)
+                    this.props.WxLogin(uuid(), type, this.props.wxdbid)
                 })
                 break;
         }

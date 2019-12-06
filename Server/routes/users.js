@@ -85,8 +85,6 @@ router.all('/updateUserCard', (req, res) => {
 
 router.all('/login', function (req, resp) {
   const { password } = req.body
-  //console.log('header',req.headers)
-  //console.log('req.body', req.body)
   if (req.headers.token !== 'null' && req.headers.token !== '' && req.headers.token !== 'undefined') {
     console.log('走的token校验', password)
     UserModel.findOne({ password: req.headers.token }, (err, user) => {
