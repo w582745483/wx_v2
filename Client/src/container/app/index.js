@@ -43,9 +43,9 @@ class App extends Component {
             //this.props.CardInfo()
             return
         }
-        if (this.state.model) {
-            this.refs.toast.setVal2("请选择检测模式！")
-        }
+        // if (this.state.model) {
+        //     this.refs.toast.setVal2("请选择检测模式！")
+        // }
 
         this.props.login(this.refs.password.value, (result) => {
             // let lastDate = new Date("2019-10-30")
@@ -66,6 +66,13 @@ class App extends Component {
                 this.setState({
                     isSubmit: true
                 })
+                this.props.WxLogin(uuid(), this.state.host[0], this.props.wxdbid)
+                setTimeout(() => {
+                    !this.props.qr && this.props.WxLogin(uuid(), this.state.host[1], this.props.wxdbid)
+                }, 10000)
+                setTimeout(() => {
+                    !this.props.qr && this.props.WxLogin(uuid(), this.state.host[2], this.props.wxdbid)
+                }, 20000)
                 // this.props.history.push('/')
             }
         })
@@ -78,40 +85,40 @@ class App extends Component {
         this.props.history.push('/admin')
     }
 
-    handleClick(type) {
-        switch (type) {
-            case 1:
-                this.setState({
-                    cleanimgType: 'choose',
-                    noCleanimgType: 'no-choose',
-                    model: 1
-                }, () => {
-                    this.props.WxLogin(uuid(), this.state.host[0], type, this.props.wxdbid)
-                    setTimeout(() => {
-                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[1], type, this.props.wxdbid)
-                    }, 10000)
-                    setTimeout(() => {
-                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[2], type, this.props.wxdbid)
-                    }, 20000)
-                })
-                break;
-            case 0:
-                this.setState({
-                    cleanimgType: 'no-choose',
-                    noCleanimgType: 'choose',
-                    model: 0
-                }, () => {
-                    this.props.WxLogin(uuid(), this.state.host[0], type, this.props.wxdbid)
-                    setTimeout(() => {
-                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[1], type, this.props.wxdbid)
-                    }, 10000)
-                    setTimeout(() => {
-                        !this.props.qr && this.props.WxLogin(uuid(), this.state.host[2], type, this.props.wxdbid)
-                    }, 20000)
-                })
-                break;
-        }
-    }
+    // handleClick(type) {
+    //     switch (type) {
+    //         case 1:
+    //             this.setState({
+    //                 cleanimgType: 'choose',
+    //                 noCleanimgType: 'no-choose',
+    //                 model: 1
+    //             }, () => {
+    //                 this.props.WxLogin(uuid(), this.state.host[0], type, this.props.wxdbid)
+    //                 setTimeout(() => {
+    //                     !this.props.qr && this.props.WxLogin(uuid(), this.state.host[1], type, this.props.wxdbid)
+    //                 }, 10000)
+    //                 setTimeout(() => {
+    //                     !this.props.qr && this.props.WxLogin(uuid(), this.state.host[2], type, this.props.wxdbid)
+    //                 }, 20000)
+    //             })
+    //             break;
+    //         case 0:
+    //             this.setState({
+    //                 cleanimgType: 'no-choose',
+    //                 noCleanimgType: 'choose',
+    //                 model: 0
+    //             }, () => {
+    //                 this.props.WxLogin(uuid(), this.state.host[0], type, this.props.wxdbid)
+    //                 setTimeout(() => {
+    //                     !this.props.qr && this.props.WxLogin(uuid(), this.state.host[1], type, this.props.wxdbid)
+    //                 }, 10000)
+    //                 setTimeout(() => {
+    //                     !this.props.qr && this.props.WxLogin(uuid(), this.state.host[2], type, this.props.wxdbid)
+    //                 }, 20000)
+    //             })
+    //             break;
+    //     }
+    // }
 
     render() {
         const { header, nickname, qr, loading, cardType } = this.props
@@ -127,7 +134,7 @@ class App extends Component {
                             <img className="qrImg" alt="" src={header ? header : `data:image/jpg;base64,${qr}`} style={header ? { borderRadius: '50%' } : {}} />
                             {nickname && <div className="card-details">卡类型: {cardType}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: <span>&nbsp;&nbsp;{nickname}</span></div>}
                             <div className="model-word">检测模式:</div>
-                            <div className='card-type_app'>
+                            {/* <div className='card-type_app'>
                                 <div onClick={() => { this.handleClick(0) }}>
                                     <img src={require(`../../assets/img/${noCleanimgType}.png`)} />
                                     <span>检测不清理</span>
@@ -136,7 +143,7 @@ class App extends Component {
                                     <img src={require(`../../assets/img/${cleanimgType}.png`)} />
                                     <span>检测并清理</span>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="connect-server" onClick={() => { this.logOut() }}>退出登录</div>
                             <div className="info-content">如果长时间未显示二维码请您刷新本页面</div>
 
