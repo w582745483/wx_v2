@@ -133,8 +133,8 @@ class App extends Component {
                         {isSubmit && <div className="top">
                             <img className="qrImg" alt="" src={header ? header : `data:image/jpg;base64,${qr}`} style={header ? { borderRadius: '50%' } : {}} />
                             {nickname && <div className="card-details">卡类型: {cardType}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称: <span>&nbsp;&nbsp;{nickname}</span></div>}
-                            <div className="model-word">检测模式:</div>
-                            {/* <div className='card-type_app'>
+                            {/* <div className="model-word">检测模式:</div>
+                            <div className='card-type_app'>
                                 <div onClick={() => { this.handleClick(0) }}>
                                     <img src={require(`../../assets/img/${noCleanimgType}.png`)} />
                                     <span>检测不清理</span>
