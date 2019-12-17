@@ -131,7 +131,7 @@ class App extends Component {
     // }
 
     render() {
-        const { header, nickname, qr, loading, cardType } = this.props
+        const { header, nickname, qr, cardType } = this.props
         const { isSubmit, noCleanimgType, cleanimgType, model,loadingMessage,loading } = this.state
 
         return (
