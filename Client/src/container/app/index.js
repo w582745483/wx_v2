@@ -34,6 +34,10 @@ class App extends Component {
         }
     }
     onSubmit() {
+        this.setState({
+            loading:true,
+            loadingMessage:"正在登录"
+        })
         if (this.refs.password.value == 'register') {
             this.props.history.push('/registerAgent')
             return
@@ -54,6 +58,10 @@ class App extends Component {
             //     this.refs.toast.setVal2("服务器错误")
             //     return
             // }
+            this.setState({
+                loading:false,
+                loadingMessage:""
+            })
             if (result == 1) {
                 this.refs.toast.setVal2("密码错误")
                 return
@@ -171,7 +179,7 @@ class App extends Component {
                         }
                     </div>
                 </div>
-
+                {loading && <Loading message={loadingMessage} />}
                 <Toast ref="toast" />
             </React.Fragment>
         )
