@@ -13,7 +13,9 @@ class App extends Component {
             isSubmit: false,
             cleanimgType: 'no-choose',
             noCleanimgType: 'no-choose',
-            host: [22222, 33333, 55555]
+            host: [22222, 33333, 55555],
+            loadingMessage:'',
+            loading:''
         }
     }
     componentDidMount() {
